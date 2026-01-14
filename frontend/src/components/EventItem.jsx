@@ -1,14 +1,33 @@
 import React, { useState } from "react";
 
-function EventItem({ date, title, location, description, fullDetails }) {
+function EventItem({
+  date,
+  title,
+  location,
+  description,
+  fullDetails,
+  registrationLink,
+}) {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  // Parsing "YYYY-MM-DD" or similar string to get Day/Month
+  // Parsing the date string
   const eventDate = new Date(date);
-  const month = eventDate
-    .toLocaleString("default", { month: "short" })
-    .toUpperCase();
-  const day = eventDate.getDate();
+  const isValidDate = !isNaN(eventDate.getTime());
+
+  const month = isValidDate
+    ? eventDate.toLocaleString("default", { month: "short" }).toUpperCase()
+    : "TBA";
+  const day = isValidDate ? eventDate.getDate() : "--";
+
+  const handleRegister = (e) => {
+    e.stopPropagation(); // Stops the card from collapsing when the button is clicked
+    if (registrationLink) {
+      // Use _blank if you want it to open in a new tab, or window.location.href for same tab
+      window.open(registrationLink, "_blank");
+    } else {
+      alert("Registration for this event is not yet open.");
+    }
+  };
 
   return (
     <div
@@ -22,22 +41,13 @@ function EventItem({ date, title, location, description, fullDetails }) {
 
       <div className="event-content">
         <h3 className="event-title">{title}</h3>
-        <div className="event-venue">
-          <i className="fas fa-map-marker-alt"></i> {location}
-        </div>
+        <div className="event-venue">{location}</div>
         <p className="event-description">{description}</p>
 
         <div className="event-extra">
           <p>{fullDetails}</p>
           <div className="event-actions">
-            <button
-              onClick={(e) => {
-                e.stopPropagation();
-                alert("Registering for " + title);
-              }}
-            >
-              Register Now
-            </button>
+            <button onClick={handleRegister}>Register Now</button>
           </div>
         </div>
       </div>

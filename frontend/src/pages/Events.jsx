@@ -11,7 +11,11 @@ function Events() {
     const fetchEvents = async () => {
       try {
         const res = await getEvents();
-        setEventData(res.data);
+        // Sorting events by date (earliest first)
+        const sortedData = res.data.sort(
+          (a, b) => new Date(a.date) - new Date(b.date)
+        );
+        setEventData(sortedData);
       } catch (error) {
         console.error("Failed to fetch events", error);
       } finally {
@@ -40,20 +44,19 @@ function Events() {
 
       <div className="event-list">
         {eventData.length === 0 ? (
-          <p style={{ color: "#9fb0c5" }}>No upcoming events scheduled.</p>
+          <p style={{ color: "#9fb0c5" }}>No events available.</p>
         ) : (
-          eventData
-            .sort((a, b) => new Date(a.date) - new Date(b.date)) // Sort by date
-            .map((event) => (
-              <EventItem
-                key={event._id}
-                date={event.date}
-                title={event.title}
-                location={event.location}
-                description={event.description}
-                fullDetails={event.fullDetails}
-              />
-            ))
+          eventData.map((event) => (
+            <EventItem
+              key={event._id}
+              date={event.date}
+              title={event.title}
+              location={event.location}
+              description={event.description}
+              fullDetails={event.fullDetails}
+              registrationLink={event.registrationLink} // Pass the link here
+            />
+          ))
         )}
       </div>
     </div>
