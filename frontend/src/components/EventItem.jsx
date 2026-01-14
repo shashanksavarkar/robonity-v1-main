@@ -1,39 +1,48 @@
 import React, { useState } from "react";
 
-
 function EventItem({ date, title, location, description, fullDetails }) {
-    const [expanded, setExpanded] = useState(false);
-    const [month, day] = date.split(" ");
+  const [isExpanded, setIsExpanded] = useState(false);
 
-    return (
-        <div className={`event-card ${expanded ? "expanded" : ""}`}>
-            {/* DATE STRIP */}
-            <div className="event-date">
-                <span className="event-month">{month}</span>
-                <span className="event-day">{day}</span>
-            </div>
+  // Parsing "YYYY-MM-DD" or similar string to get Day/Month
+  const eventDate = new Date(date);
+  const month = eventDate
+    .toLocaleString("default", { month: "short" })
+    .toUpperCase();
+  const day = eventDate.getDate();
 
-            {/* EVENT CONTENT */}
-            <div className="event-content">
-                <h3 className="event-title">{title}</h3>
-                <div className="event-venue">{location}</div>
+  return (
+    <div
+      className={`event-card ${isExpanded ? "expanded" : ""}`}
+      onClick={() => setIsExpanded(!isExpanded)}
+    >
+      <div className="event-date">
+        <span className="event-month">{month}</span>
+        <span className="event-day">{day}</span>
+      </div>
 
-                <p className="event-description">{description}</p>
-
-                {/* EXPANDABLE CONTENT */}
-                <div className="event-extra">
-                    <p>{fullDetails}</p>
-                </div>
-
-                {/* CTA */}
-                <div className="event-actions">
-                    <button onClick={() => setExpanded(!expanded)}>
-                        {expanded ? "Hide Details" : "View Details"}
-                    </button>
-                </div>
-            </div>
+      <div className="event-content">
+        <h3 className="event-title">{title}</h3>
+        <div className="event-venue">
+          <i className="fas fa-map-marker-alt"></i> {location}
         </div>
-    );
+        <p className="event-description">{description}</p>
+
+        <div className="event-extra">
+          <p>{fullDetails}</p>
+          <div className="event-actions">
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                alert("Registering for " + title);
+              }}
+            >
+              Register Now
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default EventItem;
