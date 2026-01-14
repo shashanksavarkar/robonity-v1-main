@@ -1,0 +1,982 @@
+/* === Reset and Global Styles === */
+:root {
+  --primary-color: #00bfff;
+  --dark-color: #111827;      /* Navbar/Footer BG */
+  --bg-color: #1f2937;      /* Main Page BG */
+  --content-bg: #374151;    /* Card/Item BG */
+  --border-color: #4b5563;    /* Borders */
+  --text-light: #f9fafb;      /* Main Text */
+  --text-muted: #9ca3af;      /* Muted Text */
+  --font-family: 'Roboto Mono', Consolas, 'Source Code Pro', 'Lucida Console', Monaco, monospace, 
+                 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: var(--font-family);
+  line-height: 1.6;
+  background-color: var(--bg-color); 
+  color: var(--text-light);          
+}
+
+a {
+  color: var(--primary-color);
+  text-decoration: none;
+}
+
+ul {
+  list-style: none;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* === App Container === */
+.app-container {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+/* === Main Content === */
+.main-content {
+  flex-grow: 1;
+  padding: 2rem;
+  max-width: 1100px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+.page-header {
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--border-color); 
+  padding-bottom: 0.5rem;
+}
+
+/* === NEW: Hero Section Styles === */
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  padding: 3rem 0;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.hero-content {
+  flex: 1;
+}
+
+.hero-content h1 {
+  font-size: 3rem;
+  color: var(--text-light);
+  line-height: 1.2;
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  color: var(--text-muted);
+  margin: 1rem 0 2rem;
+}
+
+.hero-buttons .btn {
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  margin-right: 1rem;
+}
+
+.hero-buttons .btn-primary {
+  background-color: var(--primary-color);
+  color: var(--dark-color);
+}
+
+.hero-buttons .btn-primary:hover {
+  filter: brightness(1.2);
+}
+
+.hero-buttons .btn-secondary {
+  background-color: transparent;
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+}
+
+.hero-buttons .btn-secondary:hover {
+  background-color: var(--primary-color);
+  color: var(--dark-color);
+}
+
+.hero-image {
+  flex: 1;
+  max-width: 500px;
+  display: none; /* Hidden on mobile by default */
+}
+
+.hero-image img {
+  border-radius: 8px;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Show hero image on larger screens */
+@media (min-width: 768px) {
+  .hero-image {
+    display: block;
+  }
+}
+
+/* === UPDATED: Navbar Styles === */
+.navbar {
+  background-color: var(--dark-color);
+  color: var(--text-light);
+  padding: 0.75rem 2rem; /* Reduced padding */
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative; /* For mobile menu positioning */
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+.logo-link {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  text-decoration: none;
+}
+
+.logo-text {
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: var(--text-light); 
+  display: none; /* Hide text on small screens */
+}
+
+/* Show logo text on wider screens */
+@media (min-width: 480px) {
+  .logo-text {
+    display: block;
+  }
+}
+
+.nav-links {
+  display: flex;
+  gap: 1.5rem; /* Spacing for desktop */
+}
+
+.nav-links a {
+  color: var(--text-light); 
+  font-size: 1rem;
+  font-weight: 500;
+  padding-bottom: 0.25rem;
+  border-bottom: 2px solid transparent; /* Placeholder for active state */
+  transition: all 0.3s ease;
+}
+
+.nav-links a:hover {
+  color: var(--primary-color);
+}
+
+/* NEW: Active Link Style */
+.nav-links a.active {
+  color: var(--primary-color);
+  border-bottom-color: var(--primary-color);
+}
+
+/* NEW: Hamburger Menu Icon */
+.menu-icon {
+  display: none; /* Hidden on desktop */
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+}
+
+.menu-icon .bar {
+  width: 25px;
+  height: 3px;
+  background-color: var(--text-light);
+  border-radius: 2px;
+  transition: all 0.3s ease-in-out;
+}
+
+/* Hamburger "X" animation */
+.menu-icon .bar.open:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.menu-icon .bar.open:nth-child(2) {
+  opacity: 0;
+}
+.menu-icon .bar.open:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* === NEW: Mobile Responsive Styles === */
+@media (max-width: 900px) {
+  .nav-links {
+    display: none; /* Hide desktop links */
+    flex-direction: column;
+    position: absolute;
+    top: 66px; /* Height of navbar */
+    left: 0;
+    width: 100%;
+    background-color: var(--dark-color);
+    padding: 1rem 0;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    z-index: 100;
+  }
+
+  .nav-links.open {
+    display: flex; /* Show mobile menu when open */
+  }
+
+  .nav-links li {
+    width: 100%;
+    text-align: center;
+  }
+
+  .nav-links a {
+    display: block;
+    padding: 1rem 0;
+    width: 100%;
+    border-bottom: none; /* Remove bottom border for mobile */
+  }
+
+  .nav-links a:hover,
+  .nav-links a.active {
+    background-color: var(--content-bg); /* Highlight on hover/active */
+    color: var(--primary-color);
+  }
+
+  .menu-icon {
+    display: flex; /* Show hamburger icon */
+  }
+}
+
+/* === Footer === */
+.footer {
+  background-color: var(--dark-color);
+  color: var(--text-muted); 
+  text-align: center;
+  padding: 1.5rem;
+  margin-top: auto;
+}
+
+/* === Gallery Page Styles === */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+.gallery-item {
+  background-color: var(--content-bg); 
+  border: 1px solid var(--border-color); 
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  overflow: hidden; 
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.gallery-item:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); 
+}
+
+.gallery-image {
+  width: 100%;
+  height: 200px;
+  object-fit: cover; 
+}
+
+.gallery-item-content {
+  padding: 1rem;
+}
+
+.gallery-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: var(--text-light); 
+}
+
+.gallery-description {
+  font-size: 0.9rem;
+  color: var(--text-muted); 
+}
+
+/* === Events Page Styles === */
+.event-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.event-item {
+  display: flex;
+  flex-direction: column; /* Stack on mobile */
+  background-color: var(--content-bg); 
+  border: 1px solid var(--border-color); 
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  overflow: hidden;
+}
+
+/* Make event items side-by-side on larger screens */
+@media (min-width: 600px) {
+  .event-item {
+    flex-direction: row;
+  }
+}
+
+.event-date {
+  background-color: var(--primary-color);
+  color: var(--dark-color); 
+  font-weight: bold;
+  text-align: center;
+  padding: 1rem; /* Smaller padding for mobile */
+  font-size: 1.25rem;
+  display: flex;
+  flex-direction: row; /* For mobile */
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+@media (min-width: 600px) {
+  .event-date {
+    padding: 1.5rem;
+    flex-direction: column; /* Stack date text on desktop */
+    min-width: 120px; 
+  }
+}
+
+.event-details {
+  padding: 1.5rem;
+  flex-grow: 1;
+}
+
+.event-title {
+  font-size: 1.5rem;
+  color: var(--text-light); 
+  margin-bottom: 0.5rem;
+}
+
+.event-location {
+  font-size: 0.9rem;
+  color: var(--text-muted); 
+  margin-bottom: 0.75rem;
+  font-style: italic;
+}
+
+.event-description {
+  font-size: 1rem;
+  color: var(--text-light); 
+}
+
+/* === Newsletter Page Styles === */
+.newsletter-form {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin-top: 2rem;
+  gap: 1rem;
+}
+
+.newsletter-form input {
+  font-size: 1rem;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color); 
+  border-radius: 4px;
+  background-color: var(--bg-color); 
+  color: var(--text-light); 
+}
+
+.newsletter-form button {
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary-color);
+  color: var(--dark-color); 
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: filter 0.3s ease;
+}
+
+.newsletter-form button:hover {
+  filter: brightness(1.2); 
+}
+
+/* === Resources Page Styles === */
+.resource-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.resource-item {
+  background-color: var(--content-bg); 
+  border: 1px solid var(--border-color); 
+  border-radius: 8px;
+  padding: 1.5rem;
+  transition: box-shadow 0.3s ease;
+}
+
+.resource-item:hover {
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.resource-title {
+  font-size: 1.25rem;
+  margin-bottom: 0.5rem;
+}
+
+.resource-title a {
+  color: var(--text-light); 
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.resource-title a:hover {
+  color: var(--primary-color);
+  text-decoration: underline;
+}
+
+.resource-description {
+  color: var(--text-muted); 
+}
+
+/* === RoboShare Page Styles === */
+.roboshare-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1.5rem;
+}
+
+.roboshare-item {
+  background-color: var(--content-bg); 
+  border: 1px solid var(--border-color); 
+  border-radius: 8px;
+  padding: 1.5rem;
+  text-align: center;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+.roboshare-icon {
+  font-size: 3rem; 
+  color: var(--primary-color);
+  margin-bottom: 1rem;
+}
+
+.roboshare-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.roboshare-description {
+  font-size: 0.9rem;
+  color: var(--text-muted); 
+  margin-bottom: 1rem;
+}
+
+.roboshare-link {
+  font-size: 0.9rem;
+  font-weight: bold;
+}
+
+/* === Forum Page Styles === */
+.forum-header {
+  display: flex;
+  flex-direction: column; /* Stack on mobile */
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 2rem;
+}
+
+@media (min-width: 600px) {
+  .forum-header {
+    flex-direction: row; /* Side-by-side on desktop */
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.forum-header .page-header {
+  margin-bottom: 0;
+}
+
+.new-thread-btn {
+  font-size: 1rem;
+  padding: 0.6rem 1.2rem;
+  background-color: var(--primary-color);
+  color: var(--dark-color); 
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: filter 0.3s ease;
+  white-space: nowrap; /* Prevent line break */
+}
+
+.new-thread-btn:hover {
+  filter: brightness(1.2); 
+}
+
+.forum-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background-color: var(--border-color); 
+  border: 1px solid var(--border-color); 
+  border-radius: 8px;
+  overflow: hidden; 
+}
+
+.thread-item {
+  display: flex;
+  flex-direction: column; /* Stack on mobile */
+  gap: 0.5rem;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 1rem 1.5rem;
+  background-color: var(--content-bg); 
+}
+
+@media (min-width: 600px) {
+  .thread-item {
+    flex-direction: row; /* Side-by-side on desktop */
+    align-items: center;
+  }
+}
+
+.thread-item:last-child {
+  border-bottom: none;
+}
+
+.thread-details a {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-light); 
+  text-decoration: none;
+}
+
+.thread-details a:hover {
+  color: var(--primary-color);
+}
+
+.thread-metadata {
+  font-size: 0.9rem;
+  color: var(--text-muted); 
+  margin-top: 0.25rem;
+}
+
+.thread-stats {
+  text-align: left;
+  font-size: 0.9rem;
+  color: var(--text-light); 
+  min-width: 100px;
+  display: flex; /* Horizontal stats on mobile */
+  gap: 1rem;
+}
+
+@media (min-width: 600px) {
+  .thread-stats {
+    text-align: right; /* Right-align on desktop */
+    display: block; /* Stack stats on desktop */
+  }
+}
+/* === NEW: Auth Form Styles === */
+.auth-form-container {
+  max-width: 450px;
+  margin: 2rem auto;
+  padding: 2rem;
+  background-color: var(--content-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+}
+
+.auth-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.auth-form .page-header {
+  margin-bottom: 0;
+  text-align: center;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.form-group label {
+  font-weight: 500;
+  color: var(--text-muted);
+}
+
+.form-group input {
+  font-size: 1rem;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--bg-color);
+  color: var(--text-light);
+  font-family: var(--font-family);
+}
+
+.auth-form button {
+  font-size: 1rem;
+  padding: 0.75rem 1.5rem;
+  background-color: var(--primary-color);
+  color: var(--dark-color);
+  font-weight: bold;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: filter 0.3s ease;
+}
+
+.auth-form button:hover {
+  filter: brightness(1.2);
+}
+
+.auth-error {
+  color: #ff6b6b; /* A light red for errors */
+  background-color: rgba(255, 107, 107, 0.1);
+  border: 1px solid #ff6b6b;
+  border-radius: 4px;
+  padding: 0.75rem;
+  text-align: center;
+}
+
+.auth-switch {
+  text-align: center;
+  margin-top: 1.5rem;
+  color: var(--text-muted);
+}
+
+/* === NEW: Navbar Auth Link Styles === */
+
+/* This will be the <li> element */
+.auth-links {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+}
+
+/* Styles for login/signup/logout buttons */
+.btn-login,
+.btn-signup,
+.btn-logout {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border: 1px solid var(--primary-color);
+  border-radius: 4px;
+  font-weight: bold;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.btn-login,
+.btn-logout {
+  color: var(--primary-color);
+  background: transparent;
+}
+
+.btn-signup {
+  color: var(--dark-color);
+  background: var(--primary-color);
+}
+
+.btn-login:hover,
+.btn-logout:hover {
+  color: var(--dark-color);
+  background: var(--primary-color);
+}
+
+.btn-signup:hover {
+  filter: brightness(1.2);
+}
+
+/* Special styles for logout button */
+.btn-logout {
+  font-family: var(--font-family);
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+/* Adjust layout on mobile */
+@media (max-width: 900px) {
+  .auth-links {
+    flex-direction: column;
+    width: 100%;
+    padding: 1rem 0;
+  }
+  
+  .btn-login,
+  .btn-signup,
+  .btn-logout {
+    width: 90%;
+    text-align: center;
+  }
+}
+/* === NEW: Create Thread Form Styles === */
+.create-thread-form {
+  background-color: var(--content-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.create-thread-form h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.create-thread-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.create-thread-form input {
+  font-size: 1rem;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--bg-color);
+  color: var(--text-light);
+  font-family: var(--font-family);
+  flex-grow: 1;
+}
+
+.create-thread-form .new-thread-btn {
+  font-size: 1rem;
+  padding: 0.75rem 1.2rem; /* Match the input padding */
+}
+
+/* Make the form input and button side-by-side on desktop */
+@media (min-width: 600px) {
+  .create-thread-form .form-group {
+    flex-direction: row;
+  }
+}
+
+/* Override old forum header styles */
+.forum-header {
+  margin-bottom: 1rem;
+}
+/* === NEW: Single Thread Page Styles === */
+.back-link {
+  display: inline-block;
+  color: var(--text-muted);
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  text-decoration: none;
+}
+.back-link:hover {
+  color: var(--primary-color);
+}
+
+.thread-content {
+  background-color: var(--content-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem 2rem;
+  margin-bottom: 2rem;
+}
+
+.thread-content .page-header {
+  border-bottom: none;
+  padding-bottom: 0;
+  margin-bottom: 0.5rem;
+}
+
+.thread-author {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+}
+
+/* === NEW: Reply List Styles === */
+.reply-list {
+  margin-bottom: 2rem;
+}
+
+.reply-list h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 0.5rem;
+}
+
+.reply-item {
+  background-color: var(--content-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.reply-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: rgba(0,0,0,0.1); /* Slightly darker header */
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.reply-header strong {
+  color: var(--text-light);
+}
+
+.reply-date {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+}
+
+.reply-text {
+  padding: 1rem 1.25rem;
+  white-space: pre-wrap; /* Preserves line breaks */
+  color: var(--text-light);
+}
+
+/* === NEW: Post Reply Form Styles === */
+.post-reply-form {
+  background-color: var(--content-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.post-reply-form h3 {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.post-reply-form .form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.post-reply-form textarea {
+  font-size: 1rem;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--bg-color);
+  color: var(--text-light);
+  font-family: var(--font-family);
+  resize: vertical;
+}
+
+.post-reply-form .new-thread-btn {
+  font-size: 1rem;
+  padding: 0.75rem 1.2rem;
+  align-self: flex-start; /* Button doesn't stretch */
+}
+/* === NEW: Submit Project Form Styles === */
+.auth-form-container textarea {
+  font-size: 1rem;
+  padding: 0.75rem;
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  background-color: var(--bg-color);
+  color: var(--text-light);
+  font-family: var(--font-family);
+  resize: vertical;
+}
+
+/* Progress Bar */
+.progress-bar-container {
+  width: 100%;
+  height: 24px;
+  background-color: var(--bg-color);
+  border: 1px solid var(--border-color);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: var(--primary-color);
+  color: var(--dark-color);
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.85rem;
+  transition: width 0.3s ease;
+}
+
+/* Gallery Header */
+.gallery-header {
+  display: flex;
+  flex-direction: column; /* Stack on mobile */
+  gap: 1rem;
+  align-items: flex-start;
+  margin-bottom: 1rem;
+}
+
+@media (min-width: 600px) {
+  .gallery-header {
+    flex-direction: row; /* Side-by-side on desktop */
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+/* === NEW: 3D Model & Canvas Styles === */
+.hero-image {
+  flex: 1;
+  max-width: 500px;
+  display: none;
+  
+  /* This is critical for the canvas */
+  height: 400px; 
+  cursor: grab;
+}
+
+.hero-image:active {
+  cursor: grabbing;
+}
+
+/* Make canvas fill its container */
+.hero-image canvas {
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 8px;
+  background: radial-gradient(circle, var(--content-bg) 20%, var(--bg-color) 80%);
+}
+
+.loading-3d {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+  border-radius: 8px;
+  background-color: var(--content-bg);
+}
+
+/* Show hero image on larger screens */
+@media (min-width: 768px) {
+  .hero-image {
+    display: block;
+  }
+}

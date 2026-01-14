@@ -1,0 +1,213 @@
+.hero {
+  position: relative;
+  min-height: 85vh;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 120px 8% 90px;
+  overflow: visible;
+}
+
+.hero-content {
+  max-width: 620px;
+  z-index: 2;
+}
+
+.hero-content h1 {
+  font-size: 3.4rem;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 1.2rem;
+  color: #fff;
+}
+
+.hero-content p {
+  font-size: 1.1rem;
+  line-height: 1.75;
+  color: #b8c4d4;
+  margin-bottom: 2.5rem;
+}
+
+.hero-buttons {
+  display: flex;
+  gap: 18px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
+  box-shadow: 0 0 30px rgba(0, 198, 255, 0.45);
+}
+
+.btn-secondary {
+  color: #9fdcff;
+  border: 1px solid rgba(159, 220, 255, 0.35);
+}
+
+.btn-secondary:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.hero-image {
+  width: 440px;
+  height: 330px;
+  border-radius: 26px;
+  background: linear-gradient(rgba(15, 23, 34, 0.45), rgba(15, 23, 34, 0.45)),
+    url("../assets/TC.png") center/cover no-repeat;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 25px 60px rgba(0, 0, 0, 0.55);
+  position: relative;
+}
+
+.hero-image::after {
+  /* content: "Featured Projects / Community Preview"; */
+  position: absolute;
+  bottom: 18px;
+  left: 22px;
+  font-size: 0.85rem;
+  color: rgba(255, 255, 255, 0.35);
+}
+
+.get-started {
+  padding: 0 8% 90px;
+}
+
+.page-header {
+  margin: 4.5rem 8% 1.2rem;
+  font-size: 2.3rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.page-header::after {
+  content: "";
+  display: block;
+  width: 70px;
+  height: 3px;
+  margin-top: 10px;
+  background: linear-gradient(90deg, #00c6ff, transparent);
+}
+
+.gs-desc {
+  max-width: 720px;
+  margin: 0 8% 3.5rem;
+  font-size: 1.05rem;
+  line-height: 1.85;
+  color: #b8c4d4;
+}
+
+.gs-cards {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 32px;
+}
+
+.gs-card {
+  padding: 32px 28px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.04);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.04),
+    0 18px 40px rgba(0, 0, 0, 0.45);
+  transition: transform 0.45s ease, box-shadow 0.45s ease;
+}
+
+.gs-card:hover {
+  transform: translateY(-10px);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, 0.06),
+    0 28px 70px rgba(0, 198, 255, 0.25);
+}
+
+.gs-card.highlight {
+  border-color: rgba(0, 198, 255, 0.45);
+  box-shadow: inset 0 0 0 1px rgba(0, 198, 255, 0.15),
+    0 30px 80px rgba(0, 198, 255, 0.35);
+}
+
+.gs-card h3 {
+  font-size: 1.4rem;
+  font-weight: 700;
+  margin-bottom: 14px;
+  color: #fff;
+}
+
+.gs-card p {
+  margin-bottom: 28px;
+  font-size: 0.98rem;
+  line-height: 1.7;
+  color: #b8c4d4;
+}
+
+.gs-btn {
+  padding: 10px 22px;
+  border-radius: 999px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #9fdcff;
+  border: 1px solid rgba(159, 220, 255, 0.4);
+  transition: all 0.3s ease;
+}
+
+.gs-btn:hover {
+  background: rgba(0, 198, 255, 0.15);
+  color: #fff;
+}
+
+@media (max-width: 900px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 100px 6% 70px;
+  }
+  .hero-content {
+    margin-bottom: 45px;
+  }
+  .hero-buttons {
+    justify-content: center;
+  }
+  .hero-image {
+    width: 100%;
+    max-width: 360px;
+    height: 260px;
+  }
+  .gs-cards {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+  .get-started {
+    padding-bottom: 70px;
+  }
+}
+
+@media (max-width: 600px) {
+  .hero {
+    padding: 90px 5% 60px;
+  }
+  .hero-content h1 {
+    font-size: 2.4rem;
+  }
+  .hero-image {
+    max-width: 320px;
+    height: 220px;
+  }
+  .gs-card {
+    padding: 28px 24px;
+  }
+  .gs-card h3 {
+    font-size: 1.25rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero-content h1 {
+    font-size: 2.1rem;
+  }
+  .hero-image {
+    max-width: 280px;
+    height: 200px;
+  }
+}
