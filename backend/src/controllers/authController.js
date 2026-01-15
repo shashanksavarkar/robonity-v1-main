@@ -11,3 +11,26 @@ export const oauthSuccess = (req, res) => {
 
   res.redirect(redirectUrl);
 };
+
+export const registerUser = async (req, res) => {
+  try {
+    const { name, email, password } = req.body;
+
+    if (!name || !email || !password) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    // TEMP response (until DB logic)
+    res.status(201).json({
+      id: Date.now(),
+      name,
+      email,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Registration failed" });
+  }
+};
+
+export const loginUser = async (req, res) => {
+  res.status(200).json({ message: "Login OK (dummy)" });
+};

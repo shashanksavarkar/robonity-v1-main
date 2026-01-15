@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { loginUser, registerUser } from "../api/authApi";
+import { loginUser } from "../api/authApi";
+import { registerUser } from "../api/registrationApi"; // ✅ FIXED
 import { useAuth } from "../components/AuthContext";
 import { useNavigate } from "react-router-dom";
 import "../styles/Auth.css";
@@ -26,7 +27,7 @@ function Auth() {
     setLoading(true);
 
     try {
-      const res =
+      const data =
         mode === "login"
           ? await loginUser({ email, password })
           : await registerUser({
@@ -35,29 +36,30 @@ function Auth() {
               password,
             });
 
-      // Save user globally
-      localStorage.setItem("user", JSON.stringify(res.data));
-      setCurrentUser(res.data);
+      // ✅ Save user
+      localStorage.setItem("user", JSON.stringify(data));
+      setCurrentUser(data);
 
       setSuccess("You can now join the forum 🎉");
 
-      // Redirect after short delay
       setTimeout(() => {
         navigate("/forum");
       }, 1200);
     } catch (err) {
-      setError(err.response?.data?.message || "Authentication failed");
+      // ✅ FIXED error handling
+      setError(err.message || "Authentication failed");
     } finally {
       setLoading(false);
     }
   };
 
   /* =========================
-       REAL SOCIAL LOGIN (OAUTH)
+       SOCIAL LOGIN (OAUTH)
     ========================= */
   const handleSocial = (provider) => {
-    // Redirect to backend OAuth endpoint
-    window.location.href = `http://localhost:5000/api/auth/${provider}`;
+    window.location.href = `${
+      import.meta.env.VITE_API_URL
+    }/api/auth/${provider}`;
   };
 
   return (

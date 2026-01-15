@@ -10,7 +10,6 @@ function EventItem({
 }) {
   const [isExpanded, setIsExpanded] = useState(false);
 
-  // Parsing the date string
   const eventDate = new Date(date);
   const isValidDate = !isNaN(eventDate.getTime());
 
@@ -20,9 +19,8 @@ function EventItem({
   const day = isValidDate ? eventDate.getDate() : "--";
 
   const handleRegister = (e) => {
-    e.stopPropagation(); // Stops the card from collapsing when the button is clicked
+    e.stopPropagation();
     if (registrationLink) {
-      // Use _blank if you want it to open in a new tab, or window.location.href for same tab
       window.open(registrationLink, "_blank");
     } else {
       alert("Registration for this event is not yet open.");
