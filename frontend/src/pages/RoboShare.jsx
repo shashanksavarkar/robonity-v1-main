@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 
 const RoboShare = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(1); // 1: Registration Form, 2: OTP Box
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
@@ -19,41 +19,61 @@ const RoboShare = () => {
   const handleChange = (e) =>
     setFormData({ ...formData, [e.target.name]: e.target.value });
 
+  // STEP 1: Request OTP
   const handleRegisterInitiate = async (e) => {
     e.preventDefault();
+    setError("");
     if (!formData.email.endsWith("@gsv.ac.in"))
       return setError("Use @gsv.ac.in only");
+
     setLoading(true);
     try {
       await axios.post(
         "http://localhost:5000/api/roboshare/send-otp",
         formData
       );
-      setStep(2);
-      setError("");
+      setStep(2); // Move to OTP entry box
     } catch (err) {
-      setError("Failed to send OTP. Check mobile format.");
+      // Even if Twilio fails, if you see the OTP in your terminal, move to Step 2
+      console.error("SMS failed, but check terminal for OTP");
+      setStep(2);
+      setError("Note: Check backend terminal for OTP if SMS wasn't sent.");
     } finally {
       setLoading(false);
     }
   };
 
+  // STEP 2: Verify OTP
   const handleVerify = async (e) => {
     e.preventDefault();
+    setError("");
     setLoading(true);
+
     try {
-      await axios.post(
+      // Explicitly send fields to avoid any hidden formData issues
+      const response = await axios.post(
         "http://localhost:5000/api/roboshare/verify-otp",
-        formData
+        {
+          email: formData.email,
+          otp: formData.otp.toString(), // Force string
+          rollNo: formData.rollNo,
+          password: formData.password,
+          mobile: formData.mobile,
+        }
       );
-      setIsLoggedIn(true);
+
+      if (response.status === 200) {
+        setIsLoggedIn(true);
+      }
     } catch (err) {
-      setError("Invalid OTP");
+      // Show the specific error message from the backend
+      setError(err.response?.data?.message || "Invalid OTP. Please try again.");
     } finally {
       setLoading(false);
     }
   };
 
+  // --- DASHBOARD VIEW (Visible after successful verification) ---
   if (isLoggedIn) {
     return (
       <div
@@ -62,8 +82,6 @@ const RoboShare = () => {
           minHeight: "100vh",
           display: "flex",
           flexDirection: "column",
-          width: "100vw",
-          overflowX: "hidden",
         }}
       >
         <nav
@@ -110,6 +128,7 @@ const RoboShare = () => {
     );
   }
 
+  // --- REGISTRATION / OTP VIEW ---
   return (
     <div className="app-container" style={{ overflowX: "hidden" }}>
       <Navbar />
@@ -127,6 +146,7 @@ const RoboShare = () => {
             background: "rgba(30, 41, 59, 0.7)",
             padding: "40px",
             borderRadius: "20px",
+            border: "1px solid rgba(255,255,255,0.1)",
             width: "100%",
             maxWidth: "450px",
           }}
@@ -135,11 +155,12 @@ const RoboShare = () => {
             style={{
               color: "white",
               textAlign: "center",
-              marginBottom: "20px",
+              marginBottom: "25px",
             }}
           >
-            {step === 1 ? "RoboShare Registration" : "Enter OTP"}
+            {step === 1 ? "RoboShare Access" : "Enter OTP"}
           </h2>
+
           <form
             onSubmit={step === 1 ? handleRegisterInitiate : handleVerify}
             style={{ display: "flex", flexDirection: "column", gap: "15px" }}
@@ -170,27 +191,36 @@ const RoboShare = () => {
                   required
                   style={inputStyle}
                 />
-                <input
+                {/* <input
                   name="password"
                   type="password"
                   placeholder="Password"
                   onChange={handleChange}
                   required
                   style={inputStyle}
-                />
+                /> */}
               </>
             ) : (
-              <input
-                name="otp"
-                type="text"
-                placeholder="6-digit OTP"
-                onChange={handleChange}
-                required
-                style={inputStyle}
-              />
+              <>
+                <p style={{ color: "#94a3b8", textAlign: "center" }}>
+                  Check your terminal for the OTP
+                </p>
+                <input
+                  name="otp"
+                  type="text"
+                  placeholder="6-digit OTP"
+                  onChange={handleChange}
+                  required
+                  style={inputStyle}
+                />
+              </>
             )}
-            <button type="submit" style={btnStyle}>
-              {loading ? "Processing..." : step === 1 ? "Get OTP" : "Verify"}
+            <button type="submit" disabled={loading} style={btnStyle}>
+              {loading
+                ? "Processing..."
+                : step === 1
+                ? "Get OTP"
+                : "Verify & Login"}
             </button>
           </form>
           {error && (
@@ -198,7 +228,7 @@ const RoboShare = () => {
               style={{
                 color: "#ef4444",
                 textAlign: "center",
-                marginTop: "10px",
+                marginTop: "15px",
               }}
             >
               {error}
