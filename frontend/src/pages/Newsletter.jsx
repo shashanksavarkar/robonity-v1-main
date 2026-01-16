@@ -1,66 +1,55 @@
 import React, { useState } from 'react';
+import { motion } from 'framer-motion';
 import "../styles/Newsletter.css";
 
-function Newsletter() {
+export default function Newsletter() {
     const [submitted, setSubmitted] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setSubmitted(true);
-
-        // In a real app, send data to backend here
     };
 
     return (
         <div className="newsletter-page">
-            <div className="newsletter-card">
+            <motion.div
+                className="newsletter-card"
+                initial={{ opacity: 0, scale: 0.9 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
+            >
                 <h1 className="page-header">Newsletter</h1>
-
                 <p className="newsletter-description">
-                    Sign up for the Robonity newsletter to get the latest news,
-                    project highlights, and tutorials sent straight to your inbox.
+                    Sign up for the Robonity newsletter to get the latest news, project highlights, and tutorials sent straight to your inbox.
                 </p>
-
-                <form
-                    className={`newsletter-form ${submitted ? 'submitted' : ''}`}
-                    onSubmit={handleSubmit}
-                >
-                    {/* NAME */}
+                <form className={`newsletter-form ${submitted ? 'submitted' : ''}`} onSubmit={handleSubmit}>
                     <div className="newsletter-field">
-                        <input
-                            type="text"
-                            required
-                            placeholder=" "
-                            disabled={submitted}
-                        />
+                        <input type="text" required placeholder=" " disabled={submitted} />
                         <label>Your Name</label>
                     </div>
-
-                    {/* EMAIL */}
                     <div className="newsletter-field">
-                        <input
-                            type="email"
-                            required
-                            placeholder=" "
-                            disabled={submitted}
-                        />
+                        <input type="email" required placeholder=" " disabled={submitted} />
                         <label>Your Email Address</label>
                     </div>
-
-                    <button type="submit" disabled={submitted}>
+                    <motion.button
+                        type="submit"
+                        disabled={submitted}
+                        whileHover={{ scale: 1.05 }}
+                        whileTap={{ scale: 0.95 }}
+                    >
                         {submitted ? 'Subscribed ✓' : 'Subscribe'}
-                    </button>
+                    </motion.button>
                 </form>
-
-                {/* SUCCESS MESSAGE */}
                 {submitted && (
-                    <div className="newsletter-success">
+                    <motion.div
+                        className="newsletter-success"
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                    >
                         🎉 You’re subscribed! Check your inbox for updates.
-                    </div>
+                    </motion.div>
                 )}
-            </div>
+            </motion.div>
         </div>
     );
 }
-
-export default Newsletter;

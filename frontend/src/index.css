@@ -1,14 +1,20 @@
 /* === Reset and Global Styles === */
 :root {
   --primary-color: #00bfff;
-  --dark-color: #111827;      /* Navbar/Footer BG */
-  --bg-color: #1f2937;      /* Main Page BG */
-  --content-bg: #374151;    /* Card/Item BG */
-  --border-color: #4b5563;    /* Borders */
-  --text-light: #f9fafb;      /* Main Text */
-  --text-muted: #9ca3af;      /* Muted Text */
-  --font-family: 'Roboto Mono', Consolas, 'Source Code Pro', 'Lucida Console', Monaco, monospace, 
-                 -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --dark-color: #111827;
+  /* Navbar/Footer BG */
+  --bg-color: #1f2937;
+  /* Main Page BG */
+  --content-bg: #374151;
+  /* Card/Item BG */
+  --border-color: #4b5563;
+  /* Borders */
+  --text-light: #f9fafb;
+  /* Main Text */
+  --text-muted: #9ca3af;
+  /* Muted Text */
+  --font-family: 'Roboto Mono', Consolas, 'Source Code Pro', 'Lucida Console', Monaco, monospace,
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
 }
 
 * {
@@ -20,8 +26,28 @@
 body {
   font-family: var(--font-family);
   line-height: 1.6;
-  background-color: var(--bg-color); 
-  color: var(--text-light);          
+  background-color: var(--bg-color);
+  color: var(--text-light);
+
+  /* Animated Background */
+  background: radial-gradient(circle at 50% 50%, #1f2937, #111827);
+  background-size: 200% 200%;
+  animation: bgPulse 15s ease infinite alternate;
+  overflow-x: hidden;
+}
+
+@keyframes bgPulse {
+  0% {
+    background-position: 0% 50%;
+  }
+
+  50% {
+    background-position: 100% 50%;
+  }
+
+  100% {
+    background-position: 0% 50%;
+  }
 }
 
 a {
@@ -58,7 +84,7 @@ img {
 .page-header {
   font-size: 2.5rem;
   margin-bottom: 1.5rem;
-  border-bottom: 2px solid var(--border-color); 
+  border-bottom: 2px solid var(--border-color);
   padding-bottom: 0.5rem;
 }
 
@@ -120,7 +146,8 @@ img {
 .hero-image {
   flex: 1;
   max-width: 500px;
-  display: none; /* Hidden on mobile by default */
+  display: none;
+  /* Hidden on mobile by default */
 }
 
 .hero-image img {
@@ -141,12 +168,14 @@ img {
 .navbar {
   background-color: var(--dark-color);
   color: var(--text-light);
-  padding: 0.75rem 2rem; /* Reduced padding */
+  padding: 0.75rem 2rem;
+  /* Reduced padding */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  position: relative; /* For mobile menu positioning */
-  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+  position: relative;
+  /* For mobile menu positioning */
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .logo-link {
@@ -159,8 +188,9 @@ img {
 .logo-text {
   font-size: 1.5rem;
   font-weight: bold;
-  color: var(--text-light); 
-  display: none; /* Hide text on small screens */
+  color: var(--text-light);
+  display: none;
+  /* Hide text on small screens */
 }
 
 /* Show logo text on wider screens */
@@ -172,15 +202,17 @@ img {
 
 .nav-links {
   display: flex;
-  gap: 1.5rem; /* Spacing for desktop */
+  gap: 1.5rem;
+  /* Spacing for desktop */
 }
 
 .nav-links a {
-  color: var(--text-light); 
+  color: var(--text-light);
   font-size: 1rem;
   font-weight: 500;
   padding-bottom: 0.25rem;
-  border-bottom: 2px solid transparent; /* Placeholder for active state */
+  border-bottom: 2px solid transparent;
+  /* Placeholder for active state */
   transition: all 0.3s ease;
 }
 
@@ -196,7 +228,8 @@ img {
 
 /* NEW: Hamburger Menu Icon */
 .menu-icon {
-  display: none; /* Hidden on desktop */
+  display: none;
+  /* Hidden on desktop */
   flex-direction: column;
   gap: 5px;
   cursor: pointer;
@@ -214,9 +247,11 @@ img {
 .menu-icon .bar.open:nth-child(1) {
   transform: rotate(45deg) translate(5px, 5px);
 }
+
 .menu-icon .bar.open:nth-child(2) {
   opacity: 0;
 }
+
 .menu-icon .bar.open:nth-child(3) {
   transform: rotate(-45deg) translate(5px, -5px);
 }
@@ -224,20 +259,23 @@ img {
 /* === NEW: Mobile Responsive Styles === */
 @media (max-width: 900px) {
   .nav-links {
-    display: none; /* Hide desktop links */
+    display: none;
+    /* Hide desktop links */
     flex-direction: column;
     position: absolute;
-    top: 66px; /* Height of navbar */
+    top: 66px;
+    /* Height of navbar */
     left: 0;
     width: 100%;
     background-color: var(--dark-color);
     padding: 1rem 0;
-    box-shadow: 0 5px 10px rgba(0,0,0,0.2);
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
     z-index: 100;
   }
 
   .nav-links.open {
-    display: flex; /* Show mobile menu when open */
+    display: flex;
+    /* Show mobile menu when open */
   }
 
   .nav-links li {
@@ -249,24 +287,27 @@ img {
     display: block;
     padding: 1rem 0;
     width: 100%;
-    border-bottom: none; /* Remove bottom border for mobile */
+    border-bottom: none;
+    /* Remove bottom border for mobile */
   }
 
   .nav-links a:hover,
   .nav-links a.active {
-    background-color: var(--content-bg); /* Highlight on hover/active */
+    background-color: var(--content-bg);
+    /* Highlight on hover/active */
     color: var(--primary-color);
   }
 
   .menu-icon {
-    display: flex; /* Show hamburger icon */
+    display: flex;
+    /* Show hamburger icon */
   }
 }
 
 /* === Footer === */
 .footer {
   background-color: var(--dark-color);
-  color: var(--text-muted); 
+  color: var(--text-muted);
   text-align: center;
   padding: 1.5rem;
   margin-top: auto;
@@ -280,23 +321,23 @@ img {
 }
 
 .gallery-item {
-  background-color: var(--content-bg); 
-  border: 1px solid var(--border-color); 
+  background-color: var(--content-bg);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
-  overflow: hidden; 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
   transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .gallery-item:hover {
   transform: translateY(-5px);
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3); 
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
 }
 
 .gallery-image {
   width: 100%;
   height: 200px;
-  object-fit: cover; 
+  object-fit: cover;
 }
 
 .gallery-item-content {
@@ -306,12 +347,12 @@ img {
 .gallery-title {
   font-size: 1.25rem;
   margin-bottom: 0.5rem;
-  color: var(--text-light); 
+  color: var(--text-light);
 }
 
 .gallery-description {
   font-size: 0.9rem;
-  color: var(--text-muted); 
+  color: var(--text-muted);
 }
 
 /* === Events Page Styles === */
@@ -323,11 +364,12 @@ img {
 
 .event-item {
   display: flex;
-  flex-direction: column; /* Stack on mobile */
-  background-color: var(--content-bg); 
-  border: 1px solid var(--border-color); 
+  flex-direction: column;
+  /* Stack on mobile */
+  background-color: var(--content-bg);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   overflow: hidden;
 }
 
@@ -340,13 +382,15 @@ img {
 
 .event-date {
   background-color: var(--primary-color);
-  color: var(--dark-color); 
+  color: var(--dark-color);
   font-weight: bold;
   text-align: center;
-  padding: 1rem; /* Smaller padding for mobile */
+  padding: 1rem;
+  /* Smaller padding for mobile */
   font-size: 1.25rem;
   display: flex;
-  flex-direction: row; /* For mobile */
+  flex-direction: row;
+  /* For mobile */
   justify-content: center;
   align-items: center;
   gap: 0.5rem;
@@ -355,8 +399,9 @@ img {
 @media (min-width: 600px) {
   .event-date {
     padding: 1.5rem;
-    flex-direction: column; /* Stack date text on desktop */
-    min-width: 120px; 
+    flex-direction: column;
+    /* Stack date text on desktop */
+    min-width: 120px;
   }
 }
 
@@ -367,20 +412,20 @@ img {
 
 .event-title {
   font-size: 1.5rem;
-  color: var(--text-light); 
+  color: var(--text-light);
   margin-bottom: 0.5rem;
 }
 
 .event-location {
   font-size: 0.9rem;
-  color: var(--text-muted); 
+  color: var(--text-muted);
   margin-bottom: 0.75rem;
   font-style: italic;
 }
 
 .event-description {
   font-size: 1rem;
-  color: var(--text-light); 
+  color: var(--text-light);
 }
 
 /* === Newsletter Page Styles === */
@@ -395,17 +440,17 @@ img {
 .newsletter-form input {
   font-size: 1rem;
   padding: 0.75rem;
-  border: 1px solid var(--border-color); 
+  border: 1px solid var(--border-color);
   border-radius: 4px;
-  background-color: var(--bg-color); 
-  color: var(--text-light); 
+  background-color: var(--bg-color);
+  color: var(--text-light);
 }
 
 .newsletter-form button {
   font-size: 1rem;
   padding: 0.75rem 1.5rem;
   background-color: var(--primary-color);
-  color: var(--dark-color); 
+  color: var(--dark-color);
   font-weight: bold;
   border: none;
   border-radius: 4px;
@@ -414,7 +459,7 @@ img {
 }
 
 .newsletter-form button:hover {
-  filter: brightness(1.2); 
+  filter: brightness(1.2);
 }
 
 /* === Resources Page Styles === */
@@ -425,8 +470,8 @@ img {
 }
 
 .resource-item {
-  background-color: var(--content-bg); 
-  border: 1px solid var(--border-color); 
+  background-color: var(--content-bg);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 1.5rem;
   transition: box-shadow 0.3s ease;
@@ -442,7 +487,7 @@ img {
 }
 
 .resource-title a {
-  color: var(--text-light); 
+  color: var(--text-light);
   text-decoration: none;
   font-weight: 600;
 }
@@ -453,7 +498,7 @@ img {
 }
 
 .resource-description {
-  color: var(--text-muted); 
+  color: var(--text-muted);
 }
 
 /* === RoboShare Page Styles === */
@@ -464,16 +509,16 @@ img {
 }
 
 .roboshare-item {
-  background-color: var(--content-bg); 
-  border: 1px solid var(--border-color); 
+  background-color: var(--content-bg);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 1.5rem;
   text-align: center;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 .roboshare-icon {
-  font-size: 3rem; 
+  font-size: 3rem;
   color: var(--primary-color);
   margin-bottom: 1rem;
 }
@@ -486,7 +531,7 @@ img {
 
 .roboshare-description {
   font-size: 0.9rem;
-  color: var(--text-muted); 
+  color: var(--text-muted);
   margin-bottom: 1rem;
 }
 
@@ -498,7 +543,8 @@ img {
 /* === Forum Page Styles === */
 .forum-header {
   display: flex;
-  flex-direction: column; /* Stack on mobile */
+  flex-direction: column;
+  /* Stack on mobile */
   gap: 1rem;
   align-items: flex-start;
   margin-bottom: 2rem;
@@ -506,7 +552,8 @@ img {
 
 @media (min-width: 600px) {
   .forum-header {
-    flex-direction: row; /* Side-by-side on desktop */
+    flex-direction: row;
+    /* Side-by-side on desktop */
     justify-content: space-between;
     align-items: center;
   }
@@ -520,42 +567,45 @@ img {
   font-size: 1rem;
   padding: 0.6rem 1.2rem;
   background-color: var(--primary-color);
-  color: var(--dark-color); 
+  color: var(--dark-color);
   font-weight: bold;
   border: none;
   border-radius: 4px;
   cursor: pointer;
   transition: filter 0.3s ease;
-  white-space: nowrap; /* Prevent line break */
+  white-space: nowrap;
+  /* Prevent line break */
 }
 
 .new-thread-btn:hover {
-  filter: brightness(1.2); 
+  filter: brightness(1.2);
 }
 
 .forum-list {
   display: flex;
   flex-direction: column;
   gap: 1px;
-  background-color: var(--border-color); 
-  border: 1px solid var(--border-color); 
+  background-color: var(--border-color);
+  border: 1px solid var(--border-color);
   border-radius: 8px;
-  overflow: hidden; 
+  overflow: hidden;
 }
 
 .thread-item {
   display: flex;
-  flex-direction: column; /* Stack on mobile */
+  flex-direction: column;
+  /* Stack on mobile */
   gap: 0.5rem;
   justify-content: space-between;
   align-items: flex-start;
   padding: 1rem 1.5rem;
-  background-color: var(--content-bg); 
+  background-color: var(--content-bg);
 }
 
 @media (min-width: 600px) {
   .thread-item {
-    flex-direction: row; /* Side-by-side on desktop */
+    flex-direction: row;
+    /* Side-by-side on desktop */
     align-items: center;
   }
 }
@@ -567,7 +617,7 @@ img {
 .thread-details a {
   font-size: 1.1rem;
   font-weight: 600;
-  color: var(--text-light); 
+  color: var(--text-light);
   text-decoration: none;
 }
 
@@ -577,25 +627,29 @@ img {
 
 .thread-metadata {
   font-size: 0.9rem;
-  color: var(--text-muted); 
+  color: var(--text-muted);
   margin-top: 0.25rem;
 }
 
 .thread-stats {
   text-align: left;
   font-size: 0.9rem;
-  color: var(--text-light); 
+  color: var(--text-light);
   min-width: 100px;
-  display: flex; /* Horizontal stats on mobile */
+  display: flex;
+  /* Horizontal stats on mobile */
   gap: 1rem;
 }
 
 @media (min-width: 600px) {
   .thread-stats {
-    text-align: right; /* Right-align on desktop */
-    display: block; /* Stack stats on desktop */
+    text-align: right;
+    /* Right-align on desktop */
+    display: block;
+    /* Stack stats on desktop */
   }
 }
+
 /* === NEW: Auth Form Styles === */
 .auth-form-container {
   max-width: 450px;
@@ -655,7 +709,8 @@ img {
 }
 
 .auth-error {
-  color: #ff6b6b; /* A light red for errors */
+  color: #ff6b6b;
+  /* A light red for errors */
   background-color: rgba(255, 107, 107, 0.1);
   border: 1px solid #ff6b6b;
   border-radius: 4px;
@@ -726,7 +781,7 @@ img {
     width: 100%;
     padding: 1rem 0;
   }
-  
+
   .btn-login,
   .btn-signup,
   .btn-logout {
@@ -734,6 +789,7 @@ img {
     text-align: center;
   }
 }
+
 /* === NEW: Create Thread Form Styles === */
 .create-thread-form {
   background-color: var(--content-bg);
@@ -767,7 +823,8 @@ img {
 
 .create-thread-form .new-thread-btn {
   font-size: 1rem;
-  padding: 0.75rem 1.2rem; /* Match the input padding */
+  padding: 0.75rem 1.2rem;
+  /* Match the input padding */
 }
 
 /* Make the form input and button side-by-side on desktop */
@@ -781,6 +838,7 @@ img {
 .forum-header {
   margin-bottom: 1rem;
 }
+
 /* === NEW: Single Thread Page Styles === */
 .back-link {
   display: inline-block;
@@ -789,6 +847,7 @@ img {
   font-size: 0.9rem;
   text-decoration: none;
 }
+
 .back-link:hover {
   color: var(--primary-color);
 }
@@ -835,7 +894,8 @@ img {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: rgba(0,0,0,0.1); /* Slightly darker header */
+  background-color: rgba(0, 0, 0, 0.1);
+  /* Slightly darker header */
   padding: 0.75rem 1rem;
   border-bottom: 1px solid var(--border-color);
 }
@@ -851,7 +911,8 @@ img {
 
 .reply-text {
   padding: 1rem 1.25rem;
-  white-space: pre-wrap; /* Preserves line breaks */
+  white-space: pre-wrap;
+  /* Preserves line breaks */
   color: var(--text-light);
 }
 
@@ -888,8 +949,10 @@ img {
 .post-reply-form .new-thread-btn {
   font-size: 1rem;
   padding: 0.75rem 1.2rem;
-  align-self: flex-start; /* Button doesn't stretch */
+  align-self: flex-start;
+  /* Button doesn't stretch */
 }
+
 /* === NEW: Submit Project Form Styles === */
 .auth-form-container textarea {
   font-size: 1rem;
@@ -927,7 +990,8 @@ img {
 /* Gallery Header */
 .gallery-header {
   display: flex;
-  flex-direction: column; /* Stack on mobile */
+  flex-direction: column;
+  /* Stack on mobile */
   gap: 1rem;
   align-items: flex-start;
   margin-bottom: 1rem;
@@ -935,19 +999,21 @@ img {
 
 @media (min-width: 600px) {
   .gallery-header {
-    flex-direction: row; /* Side-by-side on desktop */
+    flex-direction: row;
+    /* Side-by-side on desktop */
     justify-content: space-between;
     align-items: center;
   }
 }
+
 /* === NEW: 3D Model & Canvas Styles === */
 .hero-image {
   flex: 1;
   max-width: 500px;
   display: none;
-  
+
   /* This is critical for the canvas */
-  height: 400px; 
+  height: 400px;
   cursor: grab;
 }
 

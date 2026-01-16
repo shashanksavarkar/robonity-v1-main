@@ -1,48 +1,16 @@
 import React from "react";
 
-// File type detection helper
-function getFileType(title) {
-  const ext = title.split(".").pop().toUpperCase();
-  return ext;
-}
+const getFileType = (title) => title.split(".").pop().toUpperCase();
+const FileIcon = ({ type }) => <div className="roboshare-icon">{{ STL: "🧩", PDF: "📕", INO: "💻", ZIP: "🗜️" }[type] || "📄"}</div>;
 
-// Icon based on file type
-function FileIcon({ type }) {
-  const icons = {
-    STL: "🧩",
-    PDF: "📕",
-    INO: "💻",
-    ZIP: "🗜️",
-    DEFAULT: "📄",
-  };
-
-  return <div className="roboshare-icon">{icons[type] || icons.DEFAULT}</div>;
-}
-
-function RoboShareItem({ title, description, url }) {
+export default function RoboShareItem({ title, description, url }) {
   const fileType = getFileType(title);
-
   return (
     <div className="roboshare-item">
       <FileIcon type={fileType} />
-
-      <h3 className="roboshare-title">
-        {title}
-        <span className="file-badge">{fileType}</span>
-      </h3>
-
+      <h3 className="roboshare-title">{title}<span className="file-badge">{fileType}</span></h3>
       <p className="roboshare-description">{description}</p>
-
-      <a
-        href={url}
-        className="roboshare-link"
-        download
-        aria-label={`Download ${title}`}
-      >
-        Download →
-      </a>
+      <a href={url} className="roboshare-link" download aria-label={`Download ${title}`}>Download →</a>
     </div>
   );
 }
-
-export default RoboShareItem;

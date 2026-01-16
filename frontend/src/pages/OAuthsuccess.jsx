@@ -2,13 +2,12 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../components/AuthContext";
 
-function OAuthSuccess() {
+export default function OAuthSuccess() {
     const navigate = useNavigate();
     const { setCurrentUser } = useAuth();
 
     useEffect(() => {
         const params = new URLSearchParams(window.location.search);
-
         const token = params.get("token");
         const name = params.get("name");
         const avatar = params.get("avatar");
@@ -23,5 +22,3 @@ function OAuthSuccess() {
 
     return null;
 }
-
-export default OAuthSuccess;

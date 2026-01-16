@@ -1,50 +1,27 @@
 import React, { useState } from "react";
 import { useAuth } from "./AuthContext";
 
-function CreateThread() {
+export default function CreateThread() {
   const [title, setTitle] = useState("");
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
-
   const { currentUser, isAuthenticated } = useAuth();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
+    if (!title.trim()) return setError("Title cannot be empty.");
+    if (!isAuthenticated || !currentUser) return setError("You must be logged in to post.");
 
-    if (!title.trim()) {
-      setError("Title cannot be empty.");
-      return;
-    }
-
-    if (!isAuthenticated || !currentUser) {
-      setError("You must be logged in to post.");
-      return;
-    }
-
+    setSubmitting(true);
     try {
-      setSubmitting(true);
-
       const res = await fetch("http://localhost:5000/api/threads", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        credentials: "include", // important for JWT cookies
-        body: JSON.stringify({
-          title: title.trim(),
-        }),
+        method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include", body: JSON.stringify({ title: title.trim() })
       });
-
       const data = await res.json();
-
-      if (!res.ok) {
-        throw new Error(data.message || "Failed to create thread.");
-      }
-
+      if (!res.ok) throw new Error(data.message || "Failed to create thread.");
       setTitle("");
     } catch (err) {
-      console.error(err);
       setError(err.message || "Failed to create thread. Please try again.");
     } finally {
       setSubmitting(false);
@@ -52,31 +29,13 @@ function CreateThread() {
   };
 
   return (
-      <form className="create-thread-form" onSubmit={handleSubmit}>
-        <h3>Start a New Discussion</h3>
-
-        {error && <p className="auth-error">{error}</p>}
-
-        <div className="form-group">
-          <input
-              type="text"
-              placeholder="What do you want to discuss?"
-              value={title}
-              onChange={(e) => setTitle(e.target.value)}
-              disabled={submitting}
-              required
-          />
-
-          <button
-              type="submit"
-              className="new-thread-btn"
-              disabled={submitting}
-          >
-            {submitting ? "Posting…" : "Post Thread"}
-          </button>
-        </div>
-      </form>
+    <form className="create-thread-form" onSubmit={handleSubmit}>
+      <h3>Start a New Discussion</h3>
+      {error && <p className="auth-error">{error}</p>}
+      <div className="form-group">
+        <input type="text" placeholder="What do you want to discuss?" value={title} onChange={(e) => setTitle(e.target.value)} disabled={submitting} required />
+        <button type="submit" className="new-thread-btn" disabled={submitting}>{submitting ? "Posting…" : "Post Thread"}</button>
+      </div>
+    </form>
   );
 }
-
-export default CreateThread;

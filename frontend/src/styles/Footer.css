@@ -1,9 +1,7 @@
 .footer {
-    background: linear-gradient(
-            to top,
+    background: linear-gradient(to top,
             rgba(2, 6, 23, 0.95),
-            rgba(15, 23, 42, 0.9)
-    );
+            rgba(15, 23, 42, 0.9));
     color: #cbd5f5;
     padding: 3rem 2rem 1.5rem;
     margin-top: 5rem;
@@ -34,6 +32,33 @@
     font-size: 0.9rem;
     color: #94a3b8;
     line-height: 1.6;
+}
+
+/* Social Links */
+.social-links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.2rem;
+}
+
+.social-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.05);
+    color: #cbd5e1;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    transition: all 0.2s ease;
+}
+
+.social-icon:hover {
+    background: rgba(56, 189, 248, 0.15);
+    color: #38bdf8;
+    border-color: rgba(56, 189, 248, 0.3);
+    box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
 }
 
 /* =========================
@@ -85,6 +110,17 @@
         grid-template-columns: 1fr;
         gap: 2rem;
         text-align: center;
+    }
+
+    .footer-brand,
+    .footer-links {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .social-links {
+        justify-content: center;
     }
 
     .footer-bottom {
