@@ -18,7 +18,7 @@ import Gallery from "./pages/Gallery";
 import Resources from "./pages/Resources";
 import Auth from "./pages/Auth";
 import SingleThreadPage from "./pages/SingleThreadPage";
-import OAuthSuccess from "./pages/OAuthSuccess";
+import OAuthsuccess from "./pages/OAuthsuccess";
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -142,7 +142,7 @@ function App() {
           element={
             <StandardLayout>
               <AnimatedPage>
-                <OAuthSuccess />
+                <OAuthsuccess />
               </AnimatedPage>
             </StandardLayout>
           }
