@@ -13,10 +13,12 @@ export default function SingleThreadPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
   useEffect(() => {
     Promise.all([
-      fetch(`http://localhost:5000/api/threads/${threadId}`, { credentials: "include" }).then(r => r.json().then(d => !r.ok ? Promise.reject(d) : d)),
-      fetch(`http://localhost:5000/api/threads/${threadId}/replies`, { credentials: "include" }).then(r => r.json().then(d => !r.ok ? Promise.reject(d) : d))
+      fetch(`${apiUrl}/api/threads/${threadId}`, { credentials: "include" }).then(r => r.json().then(d => !r.ok ? Promise.reject(d) : d)),
+      fetch(`${apiUrl}/api/threads/${threadId}/replies`, { credentials: "include" }).then(r => r.json().then(d => !r.ok ? Promise.reject(d) : d))
     ])
       .then(([threadData, repliesData]) => {
         setThread(threadData.thread);
@@ -24,7 +26,7 @@ export default function SingleThreadPage() {
       })
       .catch(err => setError(err.message || "Failed to load data"))
       .finally(() => setLoading(false));
-  }, [threadId]);
+  }, [threadId, apiUrl]);
 
   if (loading) return <p>Loading thread...</p>;
   if (error) return (

@@ -1,14 +1,17 @@
+import { motion, useMotionTemplate, useMotionValue, useScroll, useTransform } from 'framer-motion';
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
-import { motion, useMotionTemplate, useMotionValue, useScroll, useTransform } from 'framer-motion';
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import "../styles/Home.css";
+import heroBg from '../assets/hero-bg.png';
 
-// --- Components ---
+gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const Typewriter = ({ text, delay = 100 }) => {
   const [currentText, setCurrentText] = useState('');
   const [currentIndex, setCurrentIndex] = useState(0);
-
   useEffect(() => {
     if (currentIndex < text.length) {
       const timeout = setTimeout(() => {
@@ -18,130 +21,116 @@ const Typewriter = ({ text, delay = 100 }) => {
       return () => clearTimeout(timeout);
     }
   }, [currentIndex, delay, text]);
-
   return <span>{currentText}<span className="cursor">|</span></span>;
 };
 
-const SpotlightCard = ({ children, className = "" }) => {
+const SpotlightCard = ({ children, className = "", style = {} }) => {
   const mouseX = useMotionValue(0);
   const mouseY = useMotionValue(0);
-
   function handleMouseMove({ currentTarget, clientX, clientY }) {
     const { left, top } = currentTarget.getBoundingClientRect();
     mouseX.set(clientX - left);
     mouseY.set(clientY - top);
   }
-
   return (
-    <div
-      className={`spotlight-card ${className}`}
-      onMouseMove={handleMouseMove}
-    >
-      <motion.div
-        className="spotlight-overlay"
-        style={{
-          background: useMotionTemplate`
-            radial-gradient(
-              650px circle at ${mouseX}px ${mouseY}px,
-              rgba(14, 165, 233, 0.15),
-              transparent 80%
-            )
-          `,
-        }}
-      />
+    <div className={`spotlight-card ${className}`} onMouseMove={handleMouseMove} style={style}>
+      <motion.div className="spotlight-overlay" style={{ background: useMotionTemplate`radial-gradient(650px circle at ${mouseX}px ${mouseY}px, rgba(14, 165, 233, 0.15), transparent 80%)` }} />
       {children}
     </div>
   );
 };
 
-// --- Framer Variants ---
-
 const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
 };
-
 const staggerContainer = {
   hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.2 }
-  }
+  visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
 };
 
 export default function Home() {
-  const ref = useRef(null);
-  const { scrollYProgress } = useScroll({ target: ref });
-  const y = useTransform(scrollYProgress, [0, 1], [0, -50]);
+  const container = useRef();
+
+  useGSAP(() => {
+    // Hero Text Parallax
+    gsap.to(".hero-content", {
+      y: -50,
+      opacity: 0.8,
+      scrollTrigger: {
+        trigger: ".hero",
+        start: "top top",
+        end: "bottom top",
+        scrub: true
+      }
+    });
+
+    // Stagger Fade In for Features
+    gsap.from(".feature-card", {
+      y: 50,
+      opacity: 0,
+      duration: 0.8,
+      stagger: 0.1,
+      scrollTrigger: {
+        trigger: ".features-grid",
+        start: "top 80%",
+        toggleActions: "play none none reverse"
+      }
+    });
+
+    // Stats Counter Animation
+    gsap.from(".stat-entry", {
+      opacity: 0,
+      duration: 0.6,
+      stagger: 0.2,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: ".stats-container",
+        start: "top 85%",
+        toggleActions: "play none none reverse"
+      }
+    });
+
+  }, { scope: container });
 
   return (
-    <div className="home-container" ref={ref}>
-      {/* Hero Section */}
+    <div className="home-container" ref={container}>
+
       <section className="hero">
-        <motion.div
-          className="hero-content"
-          initial={{ opacity: 0, x: -50 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 0.8 }}
-        >
-          {/* Fixed height to prevent layout shift if decided to not use nowrap in future, but nowrap logic added to CSS */}
+        <div className="hero-background" style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', zIndex: 0 }}>
+          <img
+            src={heroBg}
+            alt="Robotics Future"
+            style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.4)' }}
+          />
+        </div>
+        <div className="hero-content" style={{ zIndex: 1, position: 'relative' }}>
           <div style={{ minHeight: "80px" }}>
-            <h1><Typewriter text="Welcome to Robonity" /></h1>
+            <h1><Typewriter text="Welcome to Robonity" delay={40} /></h1>
           </div>
-          <motion.p
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 2.5, duration: 1 }}
-          >
+          <motion.p>
             The premier community for robotics creators, engineers, and hobbyists. Share, learn, and build the future together.
           </motion.p>
-          <motion.div
-            className="hero-buttons"
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 3, duration: 0.5 }}
-          >
+          <motion.div className="hero-buttons">
             <Link to="/forum" className="btn btn-primary">Join the Forum</Link>
             <Link to="/projects" className="btn btn-secondary">Explore Projects</Link>
           </motion.div>
-        </motion.div>
-        <motion.div
-          className="hero-image"
-          style={{ y }} // Parallax effect
-          initial={{ opacity: 0, x: 50, rotate: 5 }}
-          animate={{ opacity: 1, x: 0, rotate: 0 }}
-          transition={{ duration: 1, type: "spring" }}
-          whileHover={{ scale: 1.02, rotate: 2 }}
-        />
+        </div>
       </section>
 
-      {/* Features Section */}
       <section className="features-section">
-        <motion.div
-          className="section-header"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-        >
+        <motion.div className="section-header" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
           <h2>Why Join Robonity?</h2>
           <p>We provide the tools and community you need to excel in robotics.</p>
         </motion.div>
-
-        <motion.div
-          className="features-grid"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true, amount: 0.2 }}
-          variants={staggerContainer}
-        >
+        <div className="features-grid">
           {[
             { icon: "🤝", title: "Collaborate", desc: "Connect with like-minded peers to build complex robots and systems." },
             { icon: "🧠", title: "Learn", desc: "Access tutorials, resources, and expert advice from industry mentors." },
             { icon: "🚀", title: "Showcase", desc: "Share your projects with the world and get feedback from the diverse community." },
             { icon: "🏆", title: "Compete", desc: "Participate in challenges and hackathons to test your skills and win prizes." }
           ].map((feature, index) => (
-            <motion.div key={index} variants={fadeInUp}>
+            <motion.div key={index} className="feature-card-wrapper">
               <SpotlightCard className="feature-card">
                 <div className="feature-icon">{feature.icon}</div>
                 <h3>{feature.title}</h3>
@@ -149,32 +138,17 @@ export default function Home() {
               </SpotlightCard>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
       </section>
 
-      {/* Featured Projects Preview - NEW SECTION */}
       <section className="featured-projects">
-        <motion.div
-          className="section-header"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-        >
+        <motion.div className="section-header" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
           <h2>Built by the Community</h2>
           <p>See what our members have been working on lately.</p>
         </motion.div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
           {[1, 2, 3].map((item, i) => (
-            <motion.div
-              key={item}
-              className="project-preview"
-              initial={{ opacity: 0, scale: 0.9 }}
-              whileInView={{ opacity: 1, scale: 1 }}
-              transition={{ delay: i * 0.2 }}
-              viewport={{ once: true }}
-            >
-              {/* Placeholder images - usually these would be from props */}
+            <motion.div key={item} className="project-preview" initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.2 }} viewport={{ once: true }}>
               <div style={{ width: '100%', height: '100%', background: `linear-gradient(45deg, ${['#1e293b', '#0f172a'][i % 2]}, ${['#334155', '#1e293b'][i % 2]})` }} />
               <div className="project-overlay">
                 <h3>Project Alpha {item}</h3>
@@ -185,41 +159,23 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Stats Section */}
       <section className="stats-section">
-        <motion.div
-          className="stats-container"
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={staggerContainer}
-        >
+        <div className="stats-container">
           {[
             { value: "500+", label: "Active Members" },
             { value: "120+", label: "Projects Built" },
             { value: "50+", label: "Workshops Hosted" }
           ].map((stat, index) => (
-            <motion.div
-              key={index}
-              className="stat-item"
-              variants={fadeInUp}
-              whileHover={{ scale: 1.1, textShadow: "0 0 8px rgba(255,255,255,0.5)" }}
-            >
+            <div key={index} className="stat-entry">
               <h3>{stat.value}</h3>
               <p>{stat.label}</p>
-            </motion.div>
+            </div>
           ))}
-        </motion.div>
+        </div>
       </section>
 
-      {/* Testimonials - NEW SECTION */}
       <section className="testimonials-section">
-        <motion.h2
-          style={{ textAlign: 'center', marginBottom: '3rem', fontSize: '2.5rem', color: 'white' }}
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-        >
+        <motion.h2 style={{ textAlign: 'center', marginBottom: '3rem', fontSize: '2.5rem', color: 'white' }} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
           What Members Say
         </motion.h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
@@ -227,14 +183,7 @@ export default function Home() {
             { text: "Robonity changed the way I learn robotics. The community is incredibly supportive!", author: "Alex Chen", role: "Student" },
             { text: "Finding collaborators for my drone project was effortless here.", author: "Sarah Jones", role: "Engineer" }
           ].map((t, i) => (
-            <motion.div
-              key={i}
-              className="testimonial-card"
-              initial={{ x: i % 2 === 0 ? -50 : 50, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.6 }}
-              viewport={{ once: true }}
-            >
+            <motion.div key={i} className="testimonial-card" initial={{ x: i % 2 === 0 ? -50 : 50, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
               <p className="testimonial-text">"{t.text}"</p>
               <div className="testimonial-author">
                 <div className="author-avatar" />
@@ -248,59 +197,78 @@ export default function Home() {
         </div>
       </section>
 
-      {/* Get Started / CTA Section */}
-      <motion.section
-        className="cta-section"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={fadeInUp}
-      >
-        <motion.div
-          className="cta-content"
-          whileHover={{ scale: 1.02 }}
-          transition={{ type: "spring", stiffness: 300 }}
-        >
+      <motion.section className="cta-section" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
+        <motion.div className="cta-content" whileHover={{ scale: 1.02 }} transition={{ type: "spring", stiffness: 300 }}>
           <h2>Ready to Start Building?</h2>
-          <p>
-            Check out the <Link to="/projects">Projects</Link> page to see what others are creating, or dive right into the <Link to="/forum">Forum</Link>.
-          </p>
+          <p>Check out the <Link to="/projects">Projects</Link> page to see what others are creating, or dive right into the <Link to="/forum">Forum</Link>.</p>
           <Link to="/auth" className="btn btn-primary btn-large">Join Community Now</Link>
         </motion.div>
       </motion.section>
 
-      {/* Marquee Section */}
-      <section className="marquee-section">
-        <div className="marquee-wrapper">
-          <div className="marquee-track scroll-left">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="marquee-content">
-                <span>🚀 AI Hackathon 2026</span>
-                <span>🤖 Robotics Workshop 101</span>
-                <span>⚡ Drone Racing League</span>
-                <span>🔧 Arduino Masterclass</span>
-                <span>🌐 IoT Summit</span>
-                <span>🏆 National RoboWar</span>
-              </div>
-            ))}
-          </div>
+      <section className="flagship-events-section" style={{ padding: 0, position: 'relative', zIndex: 10 }}>
+        <div style={{ padding: '4rem 8% 2rem', textAlign: 'center' }}>
+          <motion.div className="section-header" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp} style={{ marginBottom: 0 }}>
+            <h2 style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>Flagship Events</h2>
+            <p style={{ color: '#94a3b8' }}>Join our biggest annual gatherings and competitions.</p>
+          </motion.div>
         </div>
 
-        <div className="marquee-wrapper">
-          <div className="marquee-track scroll-right">
-            {[...Array(6)].map((_, i) => (
-              <div key={i} className="marquee-content">
-                <span>💻 Full Stack Bootcamp</span>
-                <span>🧠 Machine Learning Seminar</span>
-                <span>🏎️ Autonomous Rover Challenge</span>
-                <span>📱 App Dev Sprint</span>
-                <span>🎮 Game Dev Weekend</span>
-                <span>☁️ Cloud Computing 101</span>
-              </div>
+        <div style={{ padding: '2rem 8% 4rem' }}>
+          <div className="events-grid">
+            {[
+              { title: "Robonity Hackathon 2026", desc: "48 hours of non-stop coding, building, and innovating with peers from around the globe.", color: "from-blue-500 to-cyan-500" },
+              { title: "Global Tech Summit", desc: "Hear from industry pioneers and robotics experts about the future of automation.", color: "from-purple-500 to-pink-500" },
+              { title: "Bot Wars Championship", desc: "The ultimate combat robotics tournament. Build, fight, and win glory.", color: "from-orange-500 to-red-500" }
+            ].map((event, i) => (
+              <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.15 }} viewport={{ once: true }} style={{ display: 'flex' }}>
+                <SpotlightCard className="event-card" style={{ width: '100%', height: '100%', minHeight: '320px', display: 'flex', flexDirection: 'column' }}>
+                  <div style={{ height: '140px', borderRadius: '12px', background: `linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))`, marginBottom: '1.5rem', position: 'relative', overflow: 'hidden' }}>
+                    <div style={{ position: 'absolute', top: '-50%', left: '-50%', width: '200%', height: '200%', background: `radial-gradient(circle, ${i === 0 ? '#3b82f6' : i === 1 ? '#a855f7' : '#f97316'} 0%, transparent 60%)`, opacity: 0.2 }} />
+                  </div>
+                  <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>{event.title}</h3>
+                  <p style={{ color: '#cbd5e1', lineHeight: '1.6', flex: 1 }}>{event.desc}</p>
+                  <Link to="/events" style={{ marginTop: '1.5rem', display: 'inline-flex', alignItems: 'center', color: 'white', fontWeight: '500' }}>
+                    View Details <span style={{ marginLeft: '0.5rem' }}>→</span>
+                  </Link>
+                </SpotlightCard>
+              </motion.div>
             ))}
           </div>
         </div>
       </section>
+
+      <section className="marquee-section">
+        <div className="marquee-wrapper">
+          <div className="marquee-track scroll-left">
+            <div className="marquee-content">
+              <span>ROBONITY 2026</span>
+              <span>BUILD THE FUTURE</span>
+              <span>INNOVATE</span>
+              <span>COLLABORATE</span>
+              <span>COMPETE</span>
+              <span>ROBONITY 2026</span>
+              <span>BUILD THE FUTURE</span>
+              <span>INNOVATE</span>
+              <span>COLLABORATE</span>
+              <span>COMPETE</span>
+            </div>
+            <div className="marquee-content" aria-hidden="true">
+              <span>ROBONITY 2026</span>
+              <span>BUILD THE FUTURE</span>
+              <span>INNOVATE</span>
+              <span>COLLABORATE</span>
+              <span>COMPETE</span>
+              <span>ROBONITY 2026</span>
+              <span>BUILD THE FUTURE</span>
+              <span>INNOVATE</span>
+              <span>COLLABORATE</span>
+              <span>COMPETE</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+
     </div >
   );
 }

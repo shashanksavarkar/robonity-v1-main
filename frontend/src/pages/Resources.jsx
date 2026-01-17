@@ -12,10 +12,7 @@ const resourceData = [
 
 const containerVariants = {
   hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1 }
-  }
+  visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
 };
 
 const itemVariants = {
@@ -25,7 +22,7 @@ const itemVariants = {
 
 export default function Resources() {
   return (
-    <div>
+    <div className="resources-page">
       <motion.h1
         className="page-header"
         initial={{ opacity: 0, y: -20 }}
@@ -35,7 +32,7 @@ export default function Resources() {
         Resources
       </motion.h1>
       <motion.p
-        style={{ marginBottom: '2rem' }}
+        className="page-subtext"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.2 }}

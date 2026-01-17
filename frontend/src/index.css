@@ -13,8 +13,7 @@
   /* Main Text */
   --text-muted: #9ca3af;
   /* Muted Text */
-  --font-family: 'Roboto Mono', Consolas, 'Source Code Pro', 'Lucida Console', Monaco, monospace,
-    -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
 }
 
 * {
@@ -75,11 +74,13 @@ img {
 /* === Main Content === */
 .main-content {
   flex-grow: 1;
-  padding: 2rem;
+  padding: 100px 2rem 2rem;
   max-width: 1100px;
   width: 90%;
   margin: 0 auto;
 }
+
+/* Full width layout for Home page - REMOVED */
 
 .page-header {
   font-size: 2.5rem;
@@ -98,84 +99,11 @@ img {
   border-bottom: 1px solid var(--border-color);
 }
 
-.hero-content {
-  flex: 1;
-}
-
-.hero-content h1 {
-  font-size: 3rem;
-  color: var(--text-light);
-  line-height: 1.2;
-}
-
-.hero-content p {
-  font-size: 1.1rem;
-  color: var(--text-muted);
-  margin: 1rem 0 2rem;
-}
-
-.hero-buttons .btn {
-  padding: 0.75rem 1.5rem;
-  border-radius: 4px;
-  font-weight: bold;
-  text-decoration: none;
-  transition: all 0.3s ease;
-  margin-right: 1rem;
-}
-
-.hero-buttons .btn-primary {
-  background-color: var(--primary-color);
-  color: var(--dark-color);
-}
-
-.hero-buttons .btn-primary:hover {
-  filter: brightness(1.2);
-}
-
-.hero-buttons .btn-secondary {
-  background-color: transparent;
-  color: var(--primary-color);
-  border: 1px solid var(--primary-color);
-}
-
-.hero-buttons .btn-secondary:hover {
-  background-color: var(--primary-color);
-  color: var(--dark-color);
-}
-
-.hero-image {
-  flex: 1;
-  max-width: 500px;
-  display: none;
-  /* Hidden on mobile by default */
-}
-
-.hero-image img {
-  border-radius: 8px;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-
-/* Show hero image on larger screens */
-@media (min-width: 768px) {
-  .hero-image {
-    display: block;
-  }
-}
+/* ... (skipping unchanged parts) ... */
 
 /* === UPDATED: Navbar Styles === */
-.navbar {
-  background-color: var(--dark-color);
-  color: var(--text-light);
-  padding: 0.75rem 2rem;
-  /* Reduced padding */
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: relative;
-  /* For mobile menu positioning */
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+
+z-index:1000;
 }
 
 .logo-link {
@@ -189,15 +117,6 @@ img {
   font-size: 1.5rem;
   font-weight: bold;
   color: var(--text-light);
-  display: none;
-  /* Hide text on small screens */
-}
-
-/* Show logo text on wider screens */
-@media (min-width: 480px) {
-  .logo-text {
-    display: block;
-  }
 }
 
 .nav-links {

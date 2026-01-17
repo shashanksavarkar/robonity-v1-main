@@ -4,10 +4,7 @@ import "../styles/About.css";
 
 const containerVariants = {
     hidden: { opacity: 0 },
-    visible: {
-        opacity: 1,
-        transition: { staggerChildren: 0.2 }
-    }
+    visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
 };
 
 const itemVariants = {
@@ -26,16 +23,15 @@ export default function About() {
             >
                 About Robonity
             </motion.h1>
-
             <motion.p
                 className="about-intro"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.3, duration: 0.6 }}
             >
-                Robonity is a community-driven platform built for robotics enthusiasts, engineers, and innovators. Our goal is to create a space where ideas turn into real-world robotic solutions through collaboration and learning.
+                Robonity is a community-driven platform built for robotics enthusiasts, engineers, and i
+                nnovators. Our goal is to create a space where ideas turn into real-world robotic solutions through collaboration and learning.
             </motion.p>
-
             <motion.div
                 className="about-grid"
                 variants={containerVariants}
@@ -54,7 +50,6 @@ export default function About() {
                     </motion.div>
                 ))}
             </motion.div>
-
             <motion.div
                 className="about-highlight"
                 initial={{ opacity: 0, scale: 0.95 }}

@@ -42,7 +42,6 @@ export default function Events() {
       >
         Check out our calendar for workshops, competitions, and meetups.
       </motion.p>
-
       <motion.div
         className="event-list"
         initial="hidden"

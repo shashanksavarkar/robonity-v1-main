@@ -10,33 +10,23 @@ export default function Forum() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const { currentUser } = useAuth();
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/threads", { method: "GET", credentials: "include" })
+    fetch(`${apiUrl}/api/threads`, { method: "GET", credentials: "include" })
       .then(res => res.json().then(data => (!res.ok ? Promise.reject(data) : data)))
       .then(data => setThreads(data.threads || []))
       .catch(err => setError(err.message || "Error loading threads"))
       .finally(() => setLoading(false));
-  }, []);
+  }, [apiUrl]);
 
   return (
-    <div>
-      <motion.h1
-        className="page-header"
-        initial={{ opacity: 0, y: -20 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
-        Community Forum
-      </motion.h1>
-
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.2 }}
-      >
+    <div className="forum-page">
+      <motion.h1 className="page-header" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>Community Forum</motion.h1>
+      <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
         {currentUser ? <CreateThread /> : (
           <p className="auth-switch" style={{ textAlign: "left", margin: "2rem 0" }}>
-            Please <a href="/Auth">log in</a> or <a href="/Auth">sign up</a> to create a thread.
+            Please <a href="/auth">log in</a> or <a href="/auth">sign up</a> to create a thread.
           </p>
         )}
       </motion.div>
@@ -53,10 +43,7 @@ export default function Forum() {
           className="forum-list"
           initial="hidden"
           animate="visible"
-          variants={{
-            hidden: { opacity: 0 },
-            visible: { opacity: 1, transition: { staggerChildren: 0.1 } }
-          }}
+          variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } }}
         >
           {threads.length === 0 && (
             <p style={{ padding: "2rem", textAlign: "center", backgroundColor: "var(--content-bg)" }}>No threads yet. Be the first to post!</p>

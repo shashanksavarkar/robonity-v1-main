@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useLayoutEffect, useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import Lenis from "lenis";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import ProtectedRoute from "./components/ProtectedRoute";
@@ -16,6 +19,8 @@ import Resources from "./pages/Resources";
 import Auth from "./pages/Auth";
 import SingleThreadPage from "./pages/SingleThreadPage";
 import OAuthsuccess from "./pages/OAuthsuccess";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -36,15 +41,26 @@ const AnimatedPage = ({ children }) => (
   </motion.div>
 );
 
-const PageLayout = ({ children }) => (
-  <div className="app-container" style={{ overflowX: "hidden" }}>
-    <Navbar />
-    <main className="main-content" style={{ minHeight: "calc(100vh - 200px)" }}>
-      <AnimatedPage>{children}</AnimatedPage>
-    </main>
-    <Footer />
-  </div>
-);
+const PageLayout = ({ children }) => {
+  const location = useLocation();
+  const isHome = location.pathname === "/";
+
+  return (
+    <div className="app-container" style={{ overflowX: "hidden" }}>
+      <Navbar />
+      <main
+        className={`main-content ${isHome ? 'home-layout' : ''}`}
+        style={{
+          minHeight: "calc(100vh - 200px)",
+          ...(isHome ? { padding: 0, maxWidth: '100%', width: '100%', marginTop: 0 } : {})
+        }}
+      >
+        <AnimatedPage>{children}</AnimatedPage>
+      </main>
+      <Footer />
+    </div>
+  );
+};
 
 export default function App() {
   const location = useLocation();
@@ -59,6 +75,35 @@ export default function App() {
     { path: "/auth", Comp: Auth },
     { path: "/oauth-success", Comp: OAuthsuccess },
   ];
+
+  useEffect(() => {
+    const lenis = new Lenis({
+      duration: 1.2,
+      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      direction: 'vertical',
+      gestureDirection: 'vertical',
+      smooth: true,
+      mouseMultiplier: 1,
+      smoothTouch: false,
+      touchMultiplier: 2,
+    });
+
+    // Integrate Lenis with GSAP ScrollTrigger
+    lenis.on('scroll', ScrollTrigger.update);
+
+    // Use GSAP ticker to drive Lenis for perfect sync
+    const update = (time) => {
+      lenis.raf(time * 1000);
+    };
+
+    gsap.ticker.add(update);
+    gsap.ticker.lagSmoothing(0);
+
+    return () => {
+      gsap.ticker.remove(update);
+      lenis.destroy();
+    };
+  }, []);
 
   return (
     <AnimatePresence mode="wait">
