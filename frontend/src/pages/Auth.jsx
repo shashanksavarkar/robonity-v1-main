@@ -54,6 +54,8 @@ export default function Auth() {
         <AnimatePresence mode="wait">
           <motion.h1
             key={mode}
+            className="page-title glitch-effect"
+            data-text={mode === "login" ? "LOG IN" : "CREATE ACCOUNT"}
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
@@ -84,21 +86,40 @@ export default function Auth() {
         <form onSubmit={handleEmailAuth}>
           <AnimatePresence>
             {mode === "signup" && (
-              <motion.input
-                type="text"
-                className="auth-input"
-                placeholder="Display Name"
-                value={displayName}
-                onChange={(e) => setDisplayName(e.target.value)}
-                required
-                initial={{ opacity: 0, height: 0 }}
-                animate={{ opacity: 1, height: "auto" }}
-                exit={{ opacity: 0, height: 0 }}
-              />
+              <div className="auth-field">
+                <input
+                  type="text"
+                  placeholder=" "
+                  value={displayName}
+                  onChange={(e) => setDisplayName(e.target.value)}
+                  required
+                />
+                <label>Display Name</label>
+              </div>
             )}
           </AnimatePresence>
-          <input type="email" className="auth-input" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} required />
-          <input type="password" className="auth-input" placeholder="Password" value={password} onChange={(e) => setPassword(e.target.value)} required minLength={6} />
+          <div className="auth-field">
+            <input
+              type="email"
+              placeholder=" "
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+            />
+            <label>Email Address</label>
+          </div>
+
+          <div className="auth-field">
+            <input
+              type="password"
+              placeholder=" "
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              minLength={6}
+            />
+            <label>Password</label>
+          </div>
           <motion.button
             type="submit"
             className="auth-submit"

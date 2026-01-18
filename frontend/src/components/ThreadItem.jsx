@@ -9,11 +9,21 @@ export default function ThreadItem({ id, title, authorName, date, replies, views
       <div className="thread-item">
         <div className="thread-details">
           <h3 className="thread-title">{title}</h3>
-          <div className="thread-metadata">by <strong>{authorName || "Anonymous"}</strong> · {formatDate(date)}</div>
+          <div className="thread-metadata">
+            <span>AUTH: <strong>{authorName || "Anonymous"}</strong></span>
+            <span>•</span>
+            <span>{formatDate(date)}</span>
+          </div>
         </div>
         <div className="thread-stats">
-          <span><strong>{replies}</strong> replies</span>
-          <span><strong>{views}</strong> views</span>
+          <div className="stat-box">
+            <span className="stat-value">{replies}</span>
+            <span className="stat-label">Replies</span>
+          </div>
+          <div className="stat-box">
+            <span className="stat-value">{views}</span>
+            <span className="stat-label">Views</span>
+          </div>
         </div>
       </div>
     </Link>

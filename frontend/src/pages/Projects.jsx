@@ -1,71 +1,27 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
+import { projectsData as initialProjects } from '../api/data';
+import SkeletonCard from '../components/SkeletonCard';
 import '../styles/Projects.css';
 
 const ALL_CATEGORIES = ["All", "AI", "Robotics", "IoT", "Embedded", "Software"];
 
-const projectsData = [
-    {
-        id: 1,
-        title: "A-Bot",
-        desc: "An autonomous raspberry-pi rover capable of mapping its environment.",
-        category: "Robotics",
-        status: "Completed",
-        author: "DevTeam Alpha",
-        color: "linear-gradient(135deg, #FF6B6B 0%, #556270 100%)"
-    },
-    {
-        id: 2,
-        title: "Swarm Control",
-        desc: "Coordinated multi-agent system for search and rescue operations.",
-        category: "AI",
-        status: "In Progress",
-        author: "Sarah J.",
-        color: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)"
-    },
-    {
-        id: 3,
-        title: "Smart Arm",
-        desc: "Voice-controlled robotic arm assistance for home automation.",
-        category: "IoT",
-        status: "Beta",
-        author: "TechWiz",
-        color: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)"
-    },
-    {
-        id: 4,
-        title: "Neural Vision",
-        desc: "Computer vision pipeline for object detection in low light.",
-        category: "Software",
-        status: "Completed",
-        author: "Visionary",
-        color: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)"
-    },
-    {
-        id: 5,
-        title: "Underwater Drone",
-        desc: "Submersible exploration vehicle for pipeline inspection.",
-        category: "Robotics",
-        status: "Planning",
-        author: "DeepDive",
-        color: "linear-gradient(135deg, #30cfd0 0%, #330867 100%)"
-    },
-    {
-        id: 6,
-        title: "Home Brain",
-        desc: "Centralized home automation server with local LLM integration.",
-        category: "IoT",
-        status: "In Progress",
-        author: "NetRunner",
-        color: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
-    },
-];
-
 export default function Projects() {
     const [filter, setFilter] = useState("All");
     const [search, setSearch] = useState("");
+    const [projects, setProjects] = useState([]);
+    const [loading, setLoading] = useState(true);
 
-    const filteredProjects = projectsData.filter(project => {
+    // Simulate API Fetch
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setProjects(initialProjects);
+            setLoading(false);
+        }, 800); // 800ms shimmer effect
+        return () => clearTimeout(timer);
+    }, []);
+
+    const filteredProjects = projects.filter(project => {
         const matchesCategory = filter === "All" || project.category === filter;
         const matchesSearch = project.title.toLowerCase().includes(search.toLowerCase());
         return matchesCategory && matchesSearch;
@@ -141,7 +97,20 @@ export default function Projects() {
                     transition={{ duration: 0.8 }}
                 >
                     <AnimatePresence>
-                        {filteredProjects.map((project) => (
+                        {loading && (
+                            <>
+                                <motion.div layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                                    <SkeletonCard />
+                                </motion.div>
+                                <motion.div layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                                    <SkeletonCard />
+                                </motion.div>
+                                <motion.div layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+                                    <SkeletonCard />
+                                </motion.div>
+                            </>
+                        )}
+                        {!loading && filteredProjects.map((project) => (
                             <motion.div
                                 layout
                                 key={project.id}

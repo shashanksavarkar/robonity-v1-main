@@ -13,22 +13,50 @@ export default function SingleThreadPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+  // const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
+  useEffect(() => {
+    // Simulate API fetch with Mock Data
+    const mockDelay = setTimeout(() => {
+      const mockThread = {
+        _id: threadId,
+        title: threadId === '1' ? 'Welcome to the new Holographic Forum' :
+          threadId === '2' ? 'System Update: v2.4 Released' :
+            'Mock Thread Title',
+        authorName: 'Admin_Core',
+        createdAt: new Date().toISOString(),
+        content: "Welcome to the new system. This interface is designed for maximum efficiency and aesthetic pleasure. Enjoy the holographic data streams."
+      };
+
+      const mockReplies = [
+        { _id: 'r1', text: 'This looks amazing!', author: { name: 'User_01' }, createdAt: new Date().toISOString() },
+        { _id: 'r2', text: 'Love the new design.', author: { name: 'User_02' }, createdAt: new Date().toISOString() }
+      ];
+
+      setThread(mockThread);
+      setReplies(mockReplies);
+      setLoading(false);
+    }, 500);
+
+    return () => clearTimeout(mockDelay);
+  }, [threadId]);
+
+  /* 
+  // Original Fetch Logic
   useEffect(() => {
     Promise.all([
       fetch(`${apiUrl}/api/threads/${threadId}`, { credentials: "include" }).then(r => r.json().then(d => !r.ok ? Promise.reject(d) : d)),
       fetch(`${apiUrl}/api/threads/${threadId}/replies`, { credentials: "include" }).then(r => r.json().then(d => !r.ok ? Promise.reject(d) : d))
     ])
-      .then(([threadData, repliesData]) => {
-        setThread(threadData.thread);
-        setReplies(repliesData.replies || []);
-      })
-      .catch(err => setError(err.message || "Failed to load data"))
-      .finally(() => setLoading(false));
-  }, [threadId, apiUrl]);
+    ...
+  */
 
-  if (loading) return <p>Loading thread...</p>;
+  if (loading) return (
+    <div className="forum-page" style={{ justifyContent: 'center' }}>
+      <p style={{ color: '#00c6ff', fontFamily: 'JetBrains Mono' }}>LOADING DATA STREAM...</p>
+    </div>
+  );
+
   if (error) return (
     <div className="auth-error">
       <p><strong>An error occurred:</strong></p>
@@ -39,20 +67,41 @@ export default function SingleThreadPage() {
   if (!thread) return <p>Thread not found.</p>;
 
   return (
-    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.5 }}>
-      <Link to="/forum" className="back-link">&larr; Back to Forum</Link>
+    <motion.div
+      className="forum-page thread-detail-view"
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ duration: 0.5 }}
+    >
+      <div className="back-link-wrapper">
+        <Link to="/forum" className="back-link-custom">
+          &larr; RETURN TO LOG
+        </Link>
+      </div>
+
       <motion.div
-        className="thread-content"
+        className="thread-content-box"
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.2 }}
       >
-        <h1 className="page-header">{thread.title}</h1>
-        <p className="thread-author">Posted by <strong>{thread.authorName || "Anonymous"}</strong></p>
+        <h1 className="thread-title-large glitch-effect" data-text={thread.title}>{thread.title}</h1>
+
+        <div className="thread-meta-info">
+          <span><span className="meta-label">INITIATED BY:</span> <span className="meta-value">{thread.authorName || "Anonymous"}</span></span>
+          <span><span className="meta-label">DATE:</span> <span className="meta-value">{new Date(thread.createdAt).toLocaleDateString()}</span></span>
+        </div>
+
+        <div className="thread-body-text">
+          {thread.content || "No content data available."}
+        </div>
       </motion.div>
-      <div className="reply-list">
-        <h3>Replies</h3>
-        {replies.length === 0 && <p style={{ color: "var(--text-muted)", margin: "1rem 0" }}>Be the first to reply.</p>}
+
+      <div className="reply-section">
+        <h3 className="reply-section-header">TRANSMISSIONS ({replies.length})</h3>
+
+        {replies.length === 0 && <p style={{ color: "var(--text-muted)", margin: "1rem 0" }}>No transmissions yet.</p>}
+
         {replies.map((reply, i) => (
           <motion.div
             key={reply._id}
@@ -60,15 +109,26 @@ export default function SingleThreadPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 * i }}
           >
-            <ReplyItem reply={reply} />
+            <div className="reply-card">
+              <div className="reply-header-row">
+                <span className="reply-author">{reply.author?.name || 'Unknown'}</span>
+                <span>{new Date(reply.createdAt).toLocaleDateString()}</span>
+              </div>
+              <div className="reply-content">{reply.text}</div>
+            </div>
           </motion.div>
         ))}
       </div>
-      {currentUser ? <PostReply threadId={threadId} /> : (
-        <p className="auth-switch" style={{ textAlign: "left", margin: "2rem 0" }}>
-          Please <Link to="/login">log in</Link> or <Link to="/signup">sign up</Link> to reply.
-        </p>
-      )}
+
+      <div className="reply-input-wrapper">
+        <div className="reply-input-inner">
+          <textarea
+            className="reply-textarea"
+            placeholder="Enter transmission..."
+          />
+          <button className="btn-send-reply">TRANSMIT</button>
+        </div>
+      </div>
     </motion.div>
   );
 }

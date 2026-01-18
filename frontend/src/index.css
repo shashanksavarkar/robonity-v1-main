@@ -35,6 +35,25 @@ body {
   overflow-x: hidden;
 }
 
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f172a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #475569;
+}
+
 @keyframes bgPulse {
   0% {
     background-position: 0% 50%;
@@ -102,8 +121,8 @@ img {
 /* ... (skipping unchanged parts) ... */
 
 /* === UPDATED: Navbar Styles === */
-
-z-index:1000;
+.navbar {
+  z-index: 1000;
 }
 
 .logo-link {

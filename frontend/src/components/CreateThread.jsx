@@ -21,6 +21,8 @@ export default function CreateThread() {
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || "Failed to create thread.");
       setTitle("");
+      // Ideally trigger a refresh in parent, but for now just clear title
+      window.location.reload(); // Simple way to refresh list for now
     } catch (err) {
       setError(err.message || "Failed to create thread. Please try again.");
     } finally {
@@ -29,12 +31,22 @@ export default function CreateThread() {
   };
 
   return (
-    <form className="create-thread-form" onSubmit={handleSubmit}>
-      <h3>Start a New Discussion</h3>
+    <form className="create-thread-form glass-panel" onSubmit={handleSubmit}>
+      <h3 style={{ marginBottom: "20px", color: "#fff", textTransform: "uppercase", letterSpacing: "1px" }}>Start a New Discussion</h3>
       {error && <p className="auth-error">{error}</p>}
-      <div className="form-group">
-        <input type="text" placeholder="What do you want to discuss?" value={title} onChange={(e) => setTitle(e.target.value)} disabled={submitting} required />
-        <button type="submit" className="new-thread-btn" disabled={submitting}>{submitting ? "Posting…" : "Post Thread"}</button>
+      <div className="collection-field">
+        <input
+          type="text"
+          placeholder=" "
+          value={title}
+          onChange={(e) => setTitle(e.target.value)}
+          disabled={submitting}
+          required
+        />
+        <label>What do you want to discuss?</label>
+        <button type="submit" className="post-btn" disabled={submitting}>
+          {submitting ? "POSTING..." : "INITIATE THREAD"}
+        </button>
       </div>
     </form>
   );

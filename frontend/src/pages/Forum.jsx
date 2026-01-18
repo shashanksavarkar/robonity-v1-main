@@ -6,25 +6,52 @@ import CreateThread from "../components/CreateThread";
 import "../styles/Forum.css";
 
 export default function Forum() {
-  const [threads, setThreads] = useState([]);
-  const [loading, setLoading] = useState(true);
+  /* Mock Data for 'Offline/No-DB' Mode */
+  const mockThreads = [
+    { _id: '1', title: 'Welcome to the new Holographic Forum', author: { name: 'Admin_Core' }, createdAt: new Date().toISOString(), replies: 42, views: 1024 },
+    { _id: '2', title: 'System Update: v2.4 Released', author: { name: 'Dev_Ops' }, createdAt: new Date(Date.now() - 86400000).toISOString(), replies: 12, views: 340 },
+    { _id: '3', title: 'Robotics Workshop: Neural Networks', author: { name: 'Sarah J.' }, createdAt: new Date(Date.now() - 172800000).toISOString(), replies: 8, views: 156 },
+  ];
+
+  const [threads, setThreads] = useState(mockThreads);
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const { currentUser } = useAuth();
-  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
-  useEffect(() => {
-    fetch(`${apiUrl}/api/threads`, { method: "GET", credentials: "include" })
-      .then(res => res.json().then(data => (!res.ok ? Promise.reject(data) : data)))
-      .then(data => setThreads(data.threads || []))
-      .catch(err => setError(err.message || "Error loading threads"))
-      .finally(() => setLoading(false));
-  }, [apiUrl]);
+  // const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
+  // useEffect(() => {
+  //   fetch(`${apiUrl}/api/threads`, { method: "GET", credentials: "include" })
+  //     .then(res => res.json().then(data => (!res.ok ? Promise.reject(data) : data)))
+  //     .then(data => setThreads(data.threads || []))
+  //     .catch(err => setError(err.message || "Error loading threads"))
+  //     .finally(() => setLoading(false));
+  // }, [apiUrl]);
+
+  const handleCreateThread = (newThreadTitle) => {
+    const newThread = {
+      _id: Date.now().toString(),
+      title: newThreadTitle,
+      author: { name: "Guest_User" }, // Mock author since auth is disabled
+      createdAt: new Date().toISOString(),
+      replies: 0,
+      views: 0
+    };
+    setThreads([newThread, ...threads]);
+  };
 
   return (
     <div className="forum-page">
-      <motion.h1 className="page-header" initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }}>Community Forum</motion.h1>
+      <motion.h1
+        className="page-title glitch-effect"
+        data-text="COMMUNITY FORUM"
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+      >
+        COMMUNITY FORUM
+      </motion.h1>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
-        {currentUser ? <CreateThread /> : (
+        {true ? <CreateThread onCreateThread={handleCreateThread} /> : ( /* TODO: Re-enable auth check: currentUser ? ... */
           <p className="auth-switch" style={{ textAlign: "left", margin: "2rem 0" }}>
             Please <a href="/auth">log in</a> or <a href="/auth">sign up</a> to create a thread.
           </p>
@@ -50,7 +77,14 @@ export default function Forum() {
           )}
           {threads.map(thread => (
             <motion.div key={thread._id} variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}>
-              <ThreadItem id={thread._id} {...thread} date={thread.createdAt} />
+              <ThreadItem
+                id={thread._id}
+                title={thread.title}
+                authorName={thread.author?.name} // Handle potential missing author object in mock
+                date={thread.createdAt}
+                replies={thread.replies}
+                views={thread.views}
+              />
             </motion.div>
           ))}
         </motion.div>

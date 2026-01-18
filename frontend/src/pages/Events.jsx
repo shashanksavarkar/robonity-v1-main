@@ -1,38 +1,40 @@
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import EventItem from "../components/EventItem";
-import { getEvents } from "../api/eventApi";
+import SkeletonCard from "../components/SkeletonCard";
+import { getEvents } from "../api/eventApi"; // Restored API
 import "../styles/Events.css";
 
 export default function Events() {
   const [eventData, setEventData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     getEvents()
-      .then(res => setEventData(res.data.sort((a, b) => new Date(a.date) - new Date(b.date))))
-      .catch(error => console.error("Failed to fetch events", error))
-      .finally(() => setLoading(false));
+      .then(res => {
+        // Sort by date if needed, assuming backend returns unsorted
+        const sorted = res.data.sort((a, b) => new Date(a.date) - new Date(b.date));
+        setEventData(sorted);
+        setLoading(false);
+      })
+      .catch(err => {
+        console.error("Failed to fetch events", err);
+        setError("Failed to retrieve mission data. Connection Interrupted.");
+        setLoading(false);
+      });
   }, []);
-
-  if (loading) {
-    return (
-      <div className="events-page">
-        <h1 className="page-header">Events</h1>
-        <p className="page-subtitle">Loading events...</p>
-      </div>
-    );
-  }
 
   return (
     <div className="events-page">
       <motion.h1
-        className="page-header"
+        className="page-title glitch-effect"
+        data-text="EVENTS"
         initial={{ opacity: 0, y: -20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.5 }}
       >
-        Events
+        EVENTS
       </motion.h1>
       <motion.p
         className="page-subtitle"
@@ -42,6 +44,13 @@ export default function Events() {
       >
         Check out our calendar for workshops, competitions, and meetups.
       </motion.p>
+
+      {error && (
+        <div className="error-message">
+          {error}
+        </div>
+      )}
+
       <motion.div
         className="event-list"
         initial="hidden"
@@ -52,8 +61,15 @@ export default function Events() {
           visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
         }}
       >
-        {eventData.length === 0 ? (
-          <p style={{ color: "#9fb0c5" }}>No events available.</p>
+        {loading ? (
+          // Show 3 Skeletons while loading
+          <>
+            <SkeletonCard />
+            <SkeletonCard />
+            <SkeletonCard />
+          </>
+        ) : eventData.length === 0 && !error ? (
+          <p style={{ color: "#9fb0c5", textAlign: "center" }}>No active missions found.</p>
         ) : (
           eventData.map(event => (
             <motion.div

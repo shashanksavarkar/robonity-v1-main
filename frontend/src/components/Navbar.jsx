@@ -37,8 +37,35 @@ export default function Navbar() {
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
 
+  // Check for mobile view to apply animations only on small screens
+  const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
+
+  React.useEffect(() => {
+    const handleResize = () => setIsMobile(window.innerWidth <= 900);
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   const handleLinkClick = () => { setIsMobileMenuOpen(false); setIsProfileOpen(false); };
   const handleLogout = () => { logout(); setIsProfileOpen(false); navigate("/"); };
+
+  const menuVariants = {
+    closed: {
+      opacity: 0,
+      y: -20,
+      transition: { staggerChildren: 0.05, staggerDirection: -1 }
+    },
+    open: {
+      opacity: 1,
+      y: 0,
+      transition: { staggerChildren: 0.07, delayChildren: 0.2 }
+    }
+  };
+
+  const itemVariants = {
+    closed: { opacity: 0, y: -10 },
+    open: { opacity: 1, y: 0 }
+  };
 
   return (
     <nav className="navbar">
@@ -59,18 +86,26 @@ export default function Navbar() {
       </div>
       <motion.ul
         className={`nav-links ${isMobileMenuOpen ? "open" : ""}`}
+        variants={isMobile ? menuVariants : {}}
+        initial={isMobile ? "closed" : false}
+        animate={isMobile ? (isMobileMenuOpen ? "open" : "closed") : false}
       >
         {["Home", "Projects", "Gallery", "Forum", "Events", "RoboShare", "Resources", "Newsletter", "About"].map(item => (
-          <motion.li key={item} whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.95 }}>
+          <motion.li
+            key={item}
+            variants={isMobile ? itemVariants : {}}
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.95 }}
+          >
             <NavLink to={item === "Home" ? "/" : `/${item.toLowerCase()}`} end={item === "Home"} onClick={handleLinkClick}>{item}</NavLink>
           </motion.li>
         ))}
         {!currentUser ? (
-          <motion.li className="auth-links" whileHover={{ scale: 1.05 }}>
+          <motion.li className="auth-links" variants={isMobile ? itemVariants : {}} whileHover={{ scale: 1.05 }}>
             <NavLink to="/auth" onClick={handleLinkClick} className="btn-join">Join Community</NavLink>
           </motion.li>
         ) : (
-          <li className="auth-links profile-wrapper">
+          <motion.li className="auth-links profile-wrapper" variants={isMobile ? itemVariants : {}}>
             <motion.img
               src={currentUser.avatar || "/default-avatar.png"}
               alt="avatar"
@@ -78,6 +113,7 @@ export default function Navbar() {
               onClick={() => setIsProfileOpen(!isProfileOpen)}
               whileHover={{ scale: 1.1 }}
             />
+            {/* ... Dropdown ... */}
             <AnimatePresence>
               {isProfileOpen && (
                 <motion.div
@@ -91,7 +127,7 @@ export default function Navbar() {
                 </motion.div>
               )}
             </AnimatePresence>
-          </li>
+          </motion.li>
         )}
       </motion.ul>
     </nav>

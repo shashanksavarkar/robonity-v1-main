@@ -5,7 +5,6 @@
     min-height: 100vh;
     width: 100%;
     /* background: #0f172a; */
-    overflow-x: hidden;
     display: flex;
     flex-direction: column;
 }
@@ -46,14 +45,18 @@
 }
 
 /* Page Header & Text */
-.page-header {
+/* Page Header & Text */
+.page-title {
     font-size: 3.5rem;
     font-weight: 900;
-    letter-spacing: -2px;
-    color: #fff;
-    text-transform: uppercase;
-    text-shadow: 0 0 20px rgba(0, 198, 255, 0.5);
     margin-bottom: 15px;
+    background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+    text-shadow: none;
 }
 
 .page-subtext {
@@ -284,6 +287,7 @@
 /* Glitch Effect */
 .glitch-effect {
     position: relative;
+    display: inline-block;
 }
 
 .glitch-effect:hover::before,
@@ -321,27 +325,91 @@
 @media (max-width: 768px) {
     .gallery-page {
         height: auto;
-        padding: 100px 5%;
-        overflow-y: auto;
+        padding: 80px 0 40px;
+        overflow-x: hidden;
     }
 
+    .page-title {
+        font-size: 2.2rem;
+    }
+
+    .page-subtext {
+        font-size: 1rem;
+        padding: 0 20px;
+    }
+
+    /* Horizontal Scroll Filters */
+    .gallery-filters {
+        flex-wrap: nowrap;
+        overflow-x: auto;
+        justify-content: flex-start;
+        padding: 0 20px 10px;
+        gap: 10px;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+    }
+
+    .gallery-filters::-webkit-scrollbar {
+        display: none;
+    }
+
+    .filter-btn {
+        flex-shrink: 0;
+        padding: 8px 16px;
+        font-size: 0.85rem;
+    }
+
+    /* Flatten 3D Scene */
     .scene-container {
         perspective: none;
         display: block;
+        padding: 0 20px;
+        margin-top: 20px;
     }
 
     .gallery-plane {
         grid-template-columns: 1fr;
+        /* Single column */
         gap: 20px;
         transform: none !important;
+        /* Force reset tilt */
+        display: flex;
+        /* Or flex column */
+        flex-direction: column;
     }
 
     .holo-card {
+        height: auto;
+        min-height: 260px;
         transform: none !important;
-        margin-bottom: 20px;
+        margin-bottom: 0;
+        /* Mobile-safe styles */
+        background: rgba(15, 23, 42, 0.8);
+    }
+
+    .holo-visual {
+        height: 180px;
+        /* Fixed height for mobile */
+        flex-shrink: 0;
+    }
+
+    .holo-card:hover {
+        transform: none !important;
     }
 
     .gallery-bg-grid {
         display: none;
+        /* Hide expensive animation */
+    }
+
+    /* Lightbox Mobile */
+    .lightbox-content {
+        width: 90%;
+        max-height: 90vh;
+        overflow-y: auto;
+    }
+
+    .lightbox-image {
+        height: 200px;
     }
 }
