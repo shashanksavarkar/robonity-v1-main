@@ -61,7 +61,12 @@ export default function Newsletter() {
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
                     >
-                        {submitted ? 'Subscribed ✓' : 'Subscribe'}
+                        {submitted ? (
+                            <span style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '0.5rem' }}>
+                                Subscribed
+                                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12" /></svg>
+                            </span>
+                        ) : 'Subscribe'}
                     </motion.button>
                 </form>
                 {submitted && (
@@ -70,7 +75,10 @@ export default function Newsletter() {
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                     >
-                        🎉 You’re subscribed! Check your inbox for updates.
+                        <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" /><polyline points="22 4 12 14.01 9 11.01" /></svg>
+                            <span>You’re subscribed! Check your inbox for updates.</span>
+                        </div>
                     </motion.div>
                 )}
             </motion.div>

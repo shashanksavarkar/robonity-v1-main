@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import EventItem from "../components/EventItem";
 import SkeletonCard from "../components/SkeletonCard";
-import { getEvents } from "../api/eventApi"; // Restored API
+import { getEvents } from "../api/eventApi";
 import "../styles/Events.css";
 
 export default function Events() {
@@ -10,19 +10,49 @@ export default function Events() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
+  const DUMMY_EVENTS = [
+    {
+      _id: "dummy1",
+      date: "2026-03-15",
+      title: "Robonity Hackathon 2026",
+      location: "San Francisco, CA & Online",
+      description: "48 hours of non-stop coding, building, and innovating with peers from around the globe.",
+      fullDetails: "Join us for the biggest robotics hackathon of the year! Categories include Autonomous Systems, AI Integration, and Sustainable Robotics. Prizes worth $50k.",
+      registrationLink: "/register/hackathon"
+    },
+    {
+      _id: "dummy2",
+      date: "2026-04-10",
+      title: "Workshop: Advanced Drone Flight",
+      location: "Virtual",
+      description: "Master the art of autonomous drone navigation using ROS2 and PX4.",
+      fullDetails: "This hands-on workshop covers sensor fusion, path planning, and obstacle avoidance. Prerequisites: Basic Python and Linux knowledge.",
+      registrationLink: "/register/drone-workshop"
+    },
+    {
+      _id: "dummy3",
+      date: "2026-05-22",
+      title: "Global Tech Summit",
+      location: "London, UK",
+      description: "Hear from industry pioneers and robotics experts about the future of automation.",
+      fullDetails: "Keynote speakers from Boston Dynamics, Tesla, and NASA. Networking sessions included.",
+      registrationLink: "/register/tech-summit"
+    },
+    {
+      _id: "dummy4",
+      date: "2026-06-18",
+      title: "Bot Wars Championship",
+      location: "Tokyo, Japan",
+      description: "The ultimate combat robotics tournament. Build, fight, and win glory.",
+      fullDetails: "Witness 250lb combat robots clash in the arena. Team registration open now.",
+      registrationLink: "/register/bot-wars"
+    }
+  ];
+
   useEffect(() => {
-    getEvents()
-      .then(res => {
-        // Sort by date if needed, assuming backend returns unsorted
-        const sorted = res.data.sort((a, b) => new Date(a.date) - new Date(b.date));
-        setEventData(sorted);
-        setLoading(false);
-      })
-      .catch(err => {
-        console.error("Failed to fetch events", err);
-        setError("Failed to retrieve mission data. Connection Interrupted.");
-        setLoading(false);
-      });
+
+    setEventData(DUMMY_EVENTS);
+    setLoading(false);
   }, []);
 
   return (
@@ -51,18 +81,8 @@ export default function Events() {
         </div>
       )}
 
-      <motion.div
-        className="event-list"
-        initial="hidden"
-        whileInView="visible"
-        viewport={{ once: true }}
-        variants={{
-          hidden: { opacity: 0 },
-          visible: { opacity: 1, transition: { staggerChildren: 0.15 } }
-        }}
-      >
+      <div className="event-list">
         {loading ? (
-          // Show 3 Skeletons while loading
           <>
             <SkeletonCard />
             <SkeletonCard />
@@ -72,13 +92,7 @@ export default function Events() {
           <p style={{ color: "#9fb0c5", textAlign: "center" }}>No active missions found.</p>
         ) : (
           eventData.map(event => (
-            <motion.div
-              key={event._id}
-              variants={{
-                hidden: { opacity: 0, x: -20 },
-                visible: { opacity: 1, x: 0, transition: { duration: 0.4 } }
-              }}
-            >
+            <div key={event._id}>
               <EventItem
                 date={event.date}
                 title={event.title}
@@ -87,10 +101,10 @@ export default function Events() {
                 fullDetails={event.fullDetails}
                 registrationLink={event.registrationLink}
               />
-            </motion.div>
+            </div>
           ))
         )}
-      </motion.div>
+      </div>
     </div>
   );
 }

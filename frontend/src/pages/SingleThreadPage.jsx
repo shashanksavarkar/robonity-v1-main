@@ -13,10 +13,10 @@ export default function SingleThreadPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
-  // const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
+
 
   useEffect(() => {
-    // Simulate API fetch with Mock Data
+
     const mockDelay = setTimeout(() => {
       const mockThread = {
         _id: threadId,
@@ -41,15 +41,7 @@ export default function SingleThreadPage() {
     return () => clearTimeout(mockDelay);
   }, [threadId]);
 
-  /* 
-  // Original Fetch Logic
-  useEffect(() => {
-    Promise.all([
-      fetch(`${apiUrl}/api/threads/${threadId}`, { credentials: "include" }).then(r => r.json().then(d => !r.ok ? Promise.reject(d) : d)),
-      fetch(`${apiUrl}/api/threads/${threadId}/replies`, { credentials: "include" }).then(r => r.json().then(d => !r.ok ? Promise.reject(d) : d))
-    ])
-    ...
-  */
+
 
   if (loading) return (
     <div className="forum-page" style={{ justifyContent: 'center' }}>

@@ -1,6 +1,6 @@
 /* Page Container */
 .projects-page {
-    padding: 100px 0 60px;
+    padding: 90px 0 60px;
     min-height: 100vh;
     width: 100%;
     /* background: radial-gradient(circle at 50% 10%, rgba(30, 41, 59, 0.4), transparent); */
@@ -246,8 +246,8 @@
     display: inline-block;
 }
 
-.glitch-effect:hover::before,
-.glitch-effect:hover::after {
+.glitch-effect::before,
+.glitch-effect::after {
     content: attr(data-text);
     position: absolute;
     top: 0;
@@ -256,14 +256,14 @@
     height: 100%;
 }
 
-.glitch-effect:hover::before {
+.glitch-effect::before {
     left: 2px;
     text-shadow: -1px 0 #ff00c1;
     clip: rect(24px, 550px, 90px, 0);
     animation: glitch-anim-2 3s infinite linear alternate-reverse;
 }
 
-.glitch-effect:hover::after {
+.glitch-effect::after {
     left: -2px;
     text-shadow: -1px 0 #00fff9;
     clip: rect(85px, 550px, 140px, 0);
@@ -361,12 +361,15 @@
         overflow-x: auto;
         white-space: nowrap;
         -webkit-overflow-scrolling: touch;
-        padding-bottom: 10px; /* Space for scrollbar if visible */
-        scrollbar-width: none; /* Firefox */
+        padding-bottom: 10px;
+        /* Space for scrollbar if visible */
+        scrollbar-width: none;
+        /* Firefox */
     }
-    
+
     .category-filters::-webkit-scrollbar {
-        display: none; /* Chrome/Safari */
+        display: none;
+        /* Chrome/Safari */
     }
 
     .filter-btn {
@@ -374,7 +377,8 @@
         border: 1px solid rgba(255, 255, 255, 0.1);
         padding: 8px 16px;
         font-size: 0.85rem;
-        flex-shrink: 0; /* Prevent shrinking */
+        flex-shrink: 0;
+        /* Prevent shrinking */
     }
 
     .filter-btn.active {
@@ -384,20 +388,22 @@
 
     .search-input {
         width: 100%;
-        font-size: 1rem; /* Prevent zoom on iOS */
+        font-size: 1rem;
+        /* Prevent zoom on iOS */
     }
 
     /* Disable hover-based spotlight on mobile */
     .card-spotlight {
         display: none;
     }
-    
+
     /* Simplified Card for Mobile */
     .project-card {
-        transform: none !important; /* Disable tilt */
-        box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        transform: none !important;
+        /* Disable tilt */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
     }
-    
+
     .project-card:hover {
         transform: none !important;
     }

@@ -1,4 +1,4 @@
-import React, { useLayoutEffect, useEffect } from "react";
+import React, { useEffect } from "react";
 import { Routes, Route, useLocation } from "react-router-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import gsap from "gsap";
@@ -44,9 +44,11 @@ const AnimatedPage = ({ children }) => (
 const PageLayout = ({ children }) => {
   const location = useLocation();
   const isHome = location.pathname === "/";
+  const excludeGrid = ["/"];
+  const showGrid = !excludeGrid.includes(location.pathname);
 
   return (
-    <div className="app-container" style={{ overflowX: "hidden" }}>
+    <div className={`app-container ${showGrid ? 'bg-grid-pattern' : ''}`} style={{ overflowX: "hidden" }}>
       <Navbar />
       <main
         className={`main-content ${isHome ? 'home-layout' : ''}`}
@@ -88,10 +90,8 @@ export default function App() {
       touchMultiplier: 2,
     });
 
-    // Integrate Lenis with GSAP ScrollTrigger
     lenis.on('scroll', ScrollTrigger.update);
 
-    // Use GSAP ticker to drive Lenis for perfect sync
     const update = (time) => {
       lenis.raf(time * 1000);
     };

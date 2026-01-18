@@ -12,7 +12,6 @@ export default function Gallery() {
     const [gallery, setGallery] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Simulate API Fetch
     useEffect(() => {
         const timer = setTimeout(() => {
             setGallery(initialGallery);
@@ -23,17 +22,15 @@ export default function Gallery() {
 
     const filteredData = filter === "All" ? gallery : gallery.filter(item => item.category === filter);
 
-    // 3D Tilt Logic
     const x = useMotionValue(0);
     const y = useMotionValue(0);
 
     const mouseX = useSpring(x, { stiffness: 150, damping: 20 });
     const mouseY = useSpring(y, { stiffness: 150, damping: 20 });
 
-    const rotateX = useTransform(mouseY, [-0.5, 0.5], [15, -15]); // Tilt up/down
-    const rotateY = useTransform(mouseX, [-0.5, 0.5], [-15, 15]); // Tilt left/right
+    const rotateX = useTransform(mouseY, [-0.5, 0.5], [15, -15]);
+    const rotateY = useTransform(mouseX, [-0.5, 0.5], [-15, 15]);
 
-    // Parallax background movement
     const bgX = useTransform(mouseX, [-0.5, 0.5], [-20, 20]);
     const bgY = useTransform(mouseY, [-0.5, 0.5], [-20, 20]);
 

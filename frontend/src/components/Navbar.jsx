@@ -6,7 +6,6 @@ import "../styles/Navbar.css";
 
 const Logo = () => (
   <div style={{ position: 'relative', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-    {/* Rotating Gear */}
     <motion.svg
       width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary-color)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
       style={{ position: 'absolute' }}
@@ -18,7 +17,6 @@ const Logo = () => (
       <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" strokeWidth="1.5" />
     </motion.svg>
 
-    {/* Stationary Eye */}
     <motion.svg
       width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
       style={{ position: 'absolute', zIndex: 1 }}
@@ -37,7 +35,6 @@ export default function Navbar() {
   const { currentUser, logout } = useAuth();
   const navigate = useNavigate();
 
-  // Check for mobile view to apply animations only on small screens
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 900);
 
   React.useEffect(() => {
@@ -113,7 +110,6 @@ export default function Navbar() {
               onClick={() => setIsProfileOpen(!isProfileOpen)}
               whileHover={{ scale: 1.1 }}
             />
-            {/* ... Dropdown ... */}
             <AnimatePresence>
               {isProfileOpen && (
                 <motion.div

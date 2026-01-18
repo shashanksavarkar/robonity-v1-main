@@ -1,5 +1,5 @@
 .roboshare-page {
-    padding: 96px 8% 80px;
+    padding: 90px 8% 80px;
 }
 
 .roboshare-grid {
@@ -54,7 +54,8 @@
     word-break: break-all;
 }
 
-.roboshare-title::after, .file-badge {
+.roboshare-title::after,
+.file-badge {
     content: attr(data-ext);
     display: inline-block;
     margin-left: 8px;
@@ -95,20 +96,51 @@
 }
 
 @media (max-width: 900px) {
-    .roboshare-page { padding: 96px 6% 70px; }
-    .roboshare-grid { gap: 22px; }
+    .roboshare-page {
+        padding: 96px 6% 70px;
+    }
+
+    .roboshare-grid {
+        gap: 22px;
+    }
 }
 
 @media (max-width: 600px) {
-    .roboshare-page { padding: 88px 5% 60px; }
-    .roboshare-grid { grid-template-columns: 1fr; gap: 20px; }
-    .roboshare-item { padding: 20px 18px 22px; }
-    .roboshare-title { font-size: 1rem; }
-    .roboshare-description { font-size: 0.88rem; }
-    .roboshare-link { width: 100%; justify-content: center; }
+    .roboshare-page {
+        padding: 88px 5% 60px;
+    }
+
+    .roboshare-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+    }
+
+    .roboshare-item {
+        padding: 20px 18px 22px;
+    }
+
+    .roboshare-title {
+        font-size: 1rem;
+    }
+
+    .roboshare-description {
+        font-size: 0.88rem;
+    }
+
+    .roboshare-link {
+        width: 100%;
+        justify-content: center;
+    }
 }
 
 @media (max-width: 400px) {
-    .roboshare-title { font-size: 0.95rem; }
-    .roboshare-icon { width: 40px; height: 40px; font-size: 1.6rem; }
+    .roboshare-title {
+        font-size: 0.95rem;
+    }
+
+    .roboshare-icon {
+        width: 40px;
+        height: 40px;
+        font-size: 1.6rem;
+    }
 }

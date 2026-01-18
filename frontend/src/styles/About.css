@@ -1,5 +1,5 @@
 .about-page {
-    padding: 120px 8% 80px;
+    padding: 90px 8% 80px;
 }
 
 /* Page Title - Added for consistent Holo styling */
@@ -59,6 +59,27 @@
     box-shadow: 0 20px 50px rgba(0, 198, 255, 0.15);
 }
 
+.about-icon-wrapper {
+    width: 60px;
+    height: 60px;
+    background: rgba(0, 198, 255, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 20px;
+    color: #00c6ff;
+    box-shadow: 0 0 20px rgba(0, 198, 255, 0.2);
+    transition: all 0.3s ease;
+}
+
+.about-card:hover .about-icon-wrapper {
+    background: #00c6ff;
+    color: #0f172a;
+    box-shadow: 0 0 30px rgba(0, 198, 255, 0.6);
+    transform: scale(1.1) rotate(5deg);
+}
+
 .about-card h3 {
     margin: 0 0 16px;
     font-size: 1.5rem;
@@ -106,8 +127,8 @@
     display: inline-block;
 }
 
-.glitch-effect:hover::before,
-.glitch-effect:hover::after {
+.glitch-effect::before,
+.glitch-effect::after {
     content: attr(data-text);
     position: absolute;
     top: 0;
@@ -116,7 +137,7 @@
     height: 100%;
 }
 
-.glitch-effect:hover::before {
+.glitch-effect::before {
     left: 2px;
     text-shadow: -1px 0 #ff00c1;
     clip: rect(24px, 550px, 90px, 0);
@@ -175,7 +196,7 @@
     }
 }
 
-.glitch-effect:hover::after {
+.glitch-effect::after {
     left: -2px;
     text-shadow: -1px 0 #00fff9;
     clip: rect(85px, 550px, 140px, 0);

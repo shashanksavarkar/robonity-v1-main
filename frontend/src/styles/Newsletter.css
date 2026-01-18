@@ -1,7 +1,7 @@
 /* Newsletter.css */
 .newsletter-page {
     min-height: 100vh;
-    padding: 120px 20px 80px;
+    padding: 90px 20px 80px;
     display: flex;
     justify-content: center;
     align-items: flex-start;
@@ -48,7 +48,8 @@
 }
 
 /* Header & Typography */
-.page-title {
+/* Increased specificity to override .glitch-effect display property */
+.newsletter-card .page-title {
     font-size: 3.5rem;
     font-weight: 900;
     margin-bottom: 20px;
@@ -59,6 +60,12 @@
     text-transform: uppercase;
     letter-spacing: -2px;
     text-align: center;
+    display: block;
+    /* Override glitch effect inline-block */
+    margin-left: auto;
+    margin-right: auto;
+    width: fit-content;
+    /* Shrink to fit content so glitch effect works on text bounds */
 }
 
 .newsletter-description {
@@ -185,10 +192,12 @@
 .glitch-effect {
     position: relative;
     display: inline-block;
+    /* Keep inline-block for glitch width */
+    /* Ensure parent centers this inline-block */
 }
 
-.glitch-effect:hover::before,
-.glitch-effect:hover::after {
+.glitch-effect::before,
+.glitch-effect::after {
     content: attr(data-text);
     position: absolute;
     top: 0;
@@ -197,7 +206,7 @@
     height: 100%;
 }
 
-.glitch-effect:hover::before {
+.glitch-effect::before {
     left: 2px;
     text-shadow: -1px 0 #ff00c1;
     clip: rect(24px, 550px, 90px, 0);
@@ -256,7 +265,7 @@
     }
 }
 
-.glitch-effect:hover::after {
+.glitch-effect::after {
     left: -2px;
     text-shadow: -1px 0 #00fff9;
     clip: rect(85px, 550px, 140px, 0);

@@ -1,7 +1,7 @@
 /* Main Container */
 .gallery-page {
     position: relative;
-    padding: 80px 0 50px;
+    padding: 90px 0 50px;
     min-height: 100vh;
     width: 100%;
     /* background: #0f172a; */
@@ -290,8 +290,8 @@
     display: inline-block;
 }
 
-.glitch-effect:hover::before,
-.glitch-effect:hover::after {
+.glitch-effect::before,
+.glitch-effect::after {
     content: attr(data-text);
     position: absolute;
     top: 0;
@@ -302,14 +302,14 @@
     /* Match background to hide original text */
 }
 
-.glitch-effect:hover::before {
+.glitch-effect::before {
     left: 2px;
     text-shadow: -1px 0 #ff00c1;
     clip: rect(24px, 550px, 90px, 0);
     animation: glitch-anim-2 3s infinite linear alternate-reverse;
 }
 
-.glitch-effect:hover::after {
+.glitch-effect::after {
     left: -2px;
     text-shadow: -1px 0 #00fff9;
     clip: rect(85px, 550px, 140px, 0);

@@ -12,12 +12,11 @@ export default function Projects() {
     const [projects, setProjects] = useState([]);
     const [loading, setLoading] = useState(true);
 
-    // Simulate API Fetch
     useEffect(() => {
         const timer = setTimeout(() => {
             setProjects(initialProjects);
             setLoading(false);
-        }, 800); // 800ms shimmer effect
+        }, 800);
         return () => clearTimeout(timer);
     }, []);
 
@@ -27,16 +26,14 @@ export default function Projects() {
         return matchesCategory && matchesSearch;
     });
 
-    // 3D Wall Logic
     const x = useMotionValue(0);
     const y = useMotionValue(0);
 
     const mouseX = useSpring(x, { stiffness: 150, damping: 20 });
     const mouseY = useSpring(y, { stiffness: 150, damping: 20 });
 
-    // Wall rotation - wider range but subtle to feel large
-    const rotateY = useTransform(mouseX, [-0.5, 0.5], [-8, 8]); // Horizontal Pan
-    const rotateX = useTransform(mouseY, [-0.5, 0.5], [5, -5]); // Vertical Tilt
+    const rotateY = useTransform(mouseX, [-0.5, 0.5], [-8, 8]);
+    const rotateX = useTransform(mouseY, [-0.5, 0.5], [5, -5]);
 
     const handleMouseMove = (e) => {
         const { clientX, clientY } = e;
@@ -46,7 +43,6 @@ export default function Projects() {
         x.set(xPct);
         y.set(yPct);
 
-        // CSS variable update for spotlight
         const target = e.currentTarget;
         const rect = target.getBoundingClientRect();
         const xLocal = e.clientX - rect.left;
@@ -142,7 +138,6 @@ export default function Projects() {
                         ))}
                     </AnimatePresence>
 
-                    {/* Always show CTA card */}
                     <motion.div
                         layout
                         className="project-card cta-card"

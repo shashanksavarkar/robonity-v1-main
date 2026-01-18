@@ -35,23 +35,22 @@ body {
   overflow-x: hidden;
 }
 
-/* Custom Scrollbar */
+.bg-grid-pattern {
+  background-image:
+    linear-gradient(rgba(0, 198, 255, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 198, 255, 0.03) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+
+/* Custom Scrollbar - Hidden but functional */
 ::-webkit-scrollbar {
-  width: 8px;
-  height: 8px;
+  width: 0px;
+  background: transparent;
 }
 
-::-webkit-scrollbar-track {
-  background: #0f172a;
-}
-
-::-webkit-scrollbar-thumb {
-  background: #334155;
-  border-radius: 4px;
-}
-
-::-webkit-scrollbar-thumb:hover {
-  background: #475569;
+/* Optional: Hide scrollbar for Firefox */
+html {
+  scrollbar-width: none;
 }
 
 @keyframes bgPulse {

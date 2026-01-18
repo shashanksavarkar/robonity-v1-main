@@ -11,17 +11,15 @@ export default function Resources() {
   const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(true);
 
-  // 3D Tilt Logic
   const x = useMotionValue(0);
   const y = useMotionValue(0);
   const mouseX = useSpring(x, { stiffness: 150, damping: 20 });
   const mouseY = useSpring(y, { stiffness: 150, damping: 20 });
 
-  const rotateX = useTransform(mouseY, [-0.5, 0.5], [10, -10]); // Tilt up/down
-  const rotateY = useTransform(mouseX, [-0.5, 0.5], [-10, 10]); // Tilt left/right
+  const rotateX = useTransform(mouseY, [-0.5, 0.5], [10, -10]);
+  const rotateY = useTransform(mouseX, [-0.5, 0.5], [-10, 10]);
 
   const handlePageMouseMove = (e) => {
-    // Disable tilt on mobile
     if (window.innerWidth < 768) return;
 
     const { clientX, clientY } = e;
@@ -33,12 +31,10 @@ export default function Resources() {
   };
 
   useEffect(() => {
-    // Simulate data loading
     const timer = setTimeout(() => setLoading(false), 800);
     return () => clearTimeout(timer);
   }, []);
 
-  // Spotlight Logic (Per Card)
   const handleCardMouseMove = (e) => {
     const target = e.currentTarget;
     const rect = target.getBoundingClientRect();
@@ -137,7 +133,9 @@ export default function Resources() {
                   </div>
                   <div className="resource-meta">
                     <span className="resource-category">{item.category}</span>
-                    <span className="resource-link-icon">↗</span>
+                    <span className="resource-link-icon">
+                      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" /><polyline points="15 3 21 3 21 9" /><line x1="10" y1="14" x2="21" y2="3" /></svg>
+                    </span>
                   </div>
                 </div>
               </motion.a>

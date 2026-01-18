@@ -7,7 +7,7 @@
     padding: 20px;
     position: relative;
     overflow: hidden;
-    padding-top: 80px;
+    padding-top: 90px;
     /* Account for navbar */
 }
 
@@ -43,7 +43,8 @@
 
 /* Page Title (Imported from Global/Newsletter) */
 .auth-page .page-title {
-    font-size: 3.5rem;
+    font-size: clamp(1.8rem, 5vw, 2.8rem);
+    /* Smaller max size to fit single line */
     font-weight: 900;
     margin-bottom: 30px;
     background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
@@ -51,9 +52,16 @@
     background-clip: text;
     -webkit-text-fill-color: transparent;
     text-transform: uppercase;
-    letter-spacing: -2px;
-    text-align: left;
+    letter-spacing: -1px;
+    /* Tighter letter spacing helps */
+    text-align: center;
+    /* Center it as per previous context context imply */
     white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    /* Fallback if it still overflows */
+    line-height: normal;
 }
 
 /* Form Styles */
@@ -252,8 +260,8 @@
     display: inline-block;
 }
 
-.glitch-effect:hover::before,
-.glitch-effect:hover::after {
+.glitch-effect::before,
+.glitch-effect::after {
     content: attr(data-text);
     position: absolute;
     top: 0;
@@ -262,7 +270,7 @@
     height: 100%;
 }
 
-.glitch-effect:hover::before {
+.glitch-effect::before {
     left: 2px;
     text-shadow: -1px 0 #ff00c1;
     clip: rect(24px, 550px, 90px, 0);
@@ -321,7 +329,7 @@
     }
 }
 
-.glitch-effect:hover::after {
+.glitch-effect::after {
     left: -2px;
     text-shadow: -1px 0 #00fff9;
     clip: rect(85px, 550px, 140px, 0);
