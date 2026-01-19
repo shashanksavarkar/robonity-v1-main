@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { galleryData as initialGallery } from '../api/data';
+import { getGallery } from '../api/galleryApi';
 import SkeletonCard from '../components/SkeletonCard';
 import "../styles/Gallery.css";
 
@@ -13,11 +13,17 @@ export default function Gallery() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setGallery(initialGallery);
-            setLoading(false);
-        }, 800);
-        return () => clearTimeout(timer);
+        const fetchGallery = async () => {
+            try {
+                const { data } = await getGallery();
+                setGallery(data);
+            } catch (error) {
+                console.error("Failed to fetch gallery", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchGallery();
     }, []);
 
     const filteredData = filter === "All" ? gallery : gallery.filter(item => item.category === filter);

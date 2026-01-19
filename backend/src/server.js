@@ -8,6 +8,9 @@ import authRoutes from "./routes/authRoutes.js";
 import eventRoutes from "./routes/eventRoutes.js";
 import registrationRoutes from "./routes/registrationRoutes.js";
 import roboshareRoutes from './routes/roboshareRoutes.js';
+import projectRoutes from './routes/projectRoutes.js';
+import resourceRoutes from './routes/resourceRoutes.js';
+import galleryRoutes from './routes/galleryRoutes.js';
 import { errorHandler } from "./middlewares/errorMiddleware.js";
 
 dotenv.config();
@@ -22,6 +25,9 @@ app.use("/api/auth", authRoutes);
 app.use("/api/events", eventRoutes);
 app.use("/api/auth", registrationRoutes);
 app.use('/api/roboshare', roboshareRoutes);
+app.use('/api/projects', projectRoutes);
+app.use('/api/resources', resourceRoutes);
+app.use('/api/gallery', galleryRoutes);
 
 app.use(errorHandler);
 

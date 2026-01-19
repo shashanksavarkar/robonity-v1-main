@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { projectsData as initialProjects } from '../api/data';
+import { getProjects } from '../api/projectApi';
 import SkeletonCard from '../components/SkeletonCard';
 import '../styles/Projects.css';
 
@@ -13,11 +13,17 @@ export default function Projects() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setProjects(initialProjects);
-            setLoading(false);
-        }, 800);
-        return () => clearTimeout(timer);
+        const fetchProjects = async () => {
+            try {
+                const { data } = await getProjects();
+                setProjects(data);
+            } catch (error) {
+                console.error("Failed to fetch projects", error);
+            } finally {
+                setLoading(false);
+            }
+        };
+        fetchProjects();
     }, []);
 
     const filteredProjects = projects.filter(project => {

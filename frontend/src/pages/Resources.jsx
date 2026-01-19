@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
-import { resourcesData } from '../api/data';
+import { getResources } from '../api/resourceApi';
 import SkeletonCard from '../components/SkeletonCard';
 import "../styles/Resources.css";
 
@@ -9,6 +9,7 @@ const CATEGORIES = ["All", "Documentation", "Hardware", "Robotics", "AI/ML", "3D
 export default function Resources() {
   const [filter, setFilter] = useState("All");
   const [search, setSearch] = useState("");
+  const [resources, setResources] = useState([]);
   const [loading, setLoading] = useState(true);
 
   const x = useMotionValue(0);
@@ -31,8 +32,17 @@ export default function Resources() {
   };
 
   useEffect(() => {
-    const timer = setTimeout(() => setLoading(false), 800);
-    return () => clearTimeout(timer);
+    const fetchResources = async () => {
+      try {
+        const { data } = await getResources();
+        setResources(data);
+      } catch (error) {
+        console.error("Failed to fetch resources", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchResources();
   }, []);
 
   const handleCardMouseMove = (e) => {
@@ -44,7 +54,7 @@ export default function Resources() {
     target.style.setProperty("--mouse-y", `${y}px`);
   };
 
-  const filteredResources = resourcesData.filter(item => {
+  const filteredResources = resources.filter(item => {
     const matchesCategory = filter === "All" || item.category === filter;
     const matchesSearch = item.title.toLowerCase().includes(search.toLowerCase()) ||
       item.description.toLowerCase().includes(search.toLowerCase());
