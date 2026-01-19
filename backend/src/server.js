@@ -11,6 +11,9 @@ import roboshareRoutes from './routes/roboshareRoutes.js';
 import projectRoutes from './routes/projectRoutes.js';
 import resourceRoutes from './routes/resourceRoutes.js';
 import galleryRoutes from './routes/galleryRoutes.js';
+import testimonialRoutes from './routes/testimonialRoutes.js';
+import statRoutes from './routes/statRoutes.js';
+import aboutRoutes from './routes/aboutRoutes.js';
 import { errorHandler } from "./middlewares/errorMiddleware.js";
 
 dotenv.config();
@@ -28,6 +31,9 @@ app.use('/api/roboshare', roboshareRoutes);
 app.use('/api/projects', projectRoutes);
 app.use('/api/resources', resourceRoutes);
 app.use('/api/gallery', galleryRoutes);
+app.use('/api/testimonials', testimonialRoutes);
+app.use('/api/stats', statRoutes);
+app.use('/api/about', aboutRoutes);
 
 app.use(errorHandler);
 

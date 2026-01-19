@@ -7,6 +7,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import "../styles/Home.css";
 import heroBgVid from '../assets/Home_BG_Vid.mp4';
 import heroBgVidOth from '../assets/Home_BG_Oth_Sec.mp4';
+import { getProjects } from '../api/projectApi';
+import { getStats } from '../api/statApi';
+import { getTestimonials } from '../api/testimonialApi';
+import { getEvents } from '../api/eventApi';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -45,97 +49,62 @@ const fadeInUp = {
   hidden: { opacity: 0, y: 40 },
   visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
 };
-const staggerContainer = {
-  hidden: { opacity: 0 },
-  visible: { opacity: 1, transition: { staggerChildren: 0.2 } }
-};
 
 export default function Home() {
   const container = useRef();
+  const [featuredProjects, setFeaturedProjects] = useState([]);
+  const [stats, setStats] = useState([]);
+  const [testimonials, setTestimonials] = useState([]);
+  const [flagshipEvents, setFlagshipEvents] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const [projectsRes, statsRes, testimonialsRes, eventsRes] = await Promise.all([
+          getProjects(),
+          getStats(),
+          getTestimonials(),
+          getEvents()
+        ]);
+
+        setFeaturedProjects(projectsRes.data.filter(p => p.featured).slice(0, 3));
+        setStats(statsRes.data);
+        setTestimonials(testimonialsRes.data);
+        setFlagshipEvents(eventsRes.data.filter(e => e.flagship).slice(0, 3));
+      } catch (error) {
+        console.error("Error fetching home data:", error);
+      }
+    };
+    fetchData();
+  }, []);
 
   useGSAP(() => {
     gsap.to(".hero-content", {
-      y: -50,
-      opacity: 0.8,
-      scrollTrigger: {
-        trigger: ".hero",
-        start: "top top",
-        end: "bottom top",
-        scrub: true
-      }
+      y: -50, opacity: 0.8, scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
     });
-
     gsap.from(".feature-card", {
-      y: 50,
-      opacity: 0,
-      duration: 0.8,
-      stagger: 0.1,
-      scrollTrigger: {
-        trigger: ".features-grid",
-        start: "top 80%",
-        toggleActions: "play none none reverse"
-      }
+      y: 50, opacity: 0, duration: 0.8, stagger: 0.1, scrollTrigger: { trigger: ".features-grid", start: "top 80%", toggleActions: "play none none reverse" }
     });
-
     gsap.from(".stat-entry", {
-      opacity: 0,
-      duration: 0.6,
-      stagger: 0.2,
-      ease: "power2.out",
-      scrollTrigger: {
-        trigger: ".stats-container",
-        start: "top 85%",
-        toggleActions: "play none none reverse"
-      }
+      opacity: 0, duration: 0.6, stagger: 0.2, ease: "power2.out", scrollTrigger: { trigger: ".stats-container", start: "top 85%", toggleActions: "play none none reverse" }
     });
-
-    // Background Video Transition
     gsap.to(".bg-video-2", {
-      opacity: 1,
-      duration: 1,
-      scrollTrigger: {
-        trigger: ".features-section",
-        start: "top center",
-        toggleActions: "play none none reverse"
-      }
+      opacity: 1, duration: 1, scrollTrigger: { trigger: ".features-section", start: "top center", toggleActions: "play none none reverse" }
     });
-
   }, { scope: container });
 
   return (
     <div className="home-container" ref={container}>
       <div className="global-bg-video" style={{ position: 'fixed', top: 0, left: 0, width: '100%', height: '100%', zIndex: -1 }}>
-        <video
-          className="bg-video-1"
-          autoPlay
-          loop
-          muted
-          playsInline
-          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.4)', transition: 'opacity 0.5s ease' }}
-        >
-          <source src={heroBgVid} type="video/mp4" />
-        </video>
-        <video
-          className="bg-video-2"
-          autoPlay
-          loop
-          muted
-          playsInline
-          style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.4)', opacity: 0 }}
-        >
-          <source src={heroBgVidOth} type="video/mp4" />
-        </video>
+        <video className="bg-video-1" autoPlay loop muted playsInline style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.4)', transition: 'opacity 0.5s ease' }}><source src={heroBgVid} type="video/mp4" /></video>
+        <video className="bg-video-2" autoPlay loop muted playsInline style={{ position: 'absolute', top: 0, left: 0, width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(0.4)', opacity: 0 }}><source src={heroBgVidOth} type="video/mp4" /></video>
         <div style={{ position: 'absolute', inset: 0, background: 'rgba(15, 23, 42, 0.4)' }}></div>
       </div>
 
       <section className="hero" style={{ background: 'transparent' }}>
         <div className="hero-content" style={{ zIndex: 1, position: 'relative' }}>
-          <div className="hero-title-wrapper">
-            <h1><Typewriter text="Welcome to Robonity" delay={40} /></h1>
-          </div>
-          <motion.p>
-            The premier community for robotics creators, engineers, and hobbyists. Share, learn, and build the future together.
-          </motion.p>
+          <div className="hero-title-wrapper"><h1><Typewriter text="Welcome to Robonity" delay={40} /></h1></div>
+          <motion.p>The premier community for robotics creators, engineers, and hobbyists. Share, learn, and build the future together.</motion.p>
           <motion.div className="hero-buttons">
             <Link to="/forum" className="btn btn-primary">Join the Forum</Link>
             <Link to="/projects" className="btn btn-secondary">Explore Projects</Link>
@@ -149,27 +118,10 @@ export default function Home() {
           <p>We provide the tools and community you need to excel in robotics.</p>
         </motion.div>
         <div className="features-grid">
-          {[
-            {
-              icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>,
-              title: "Collaborate",
-              desc: "Connect with like-minded peers to build complex robots and systems."
-            },
-            {
-              icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" /></svg>,
-              title: "Learn",
-              desc: "Access tutorials, resources, and expert advice from industry mentors."
-            },
-            {
-              icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" /><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" /><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" /><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" /></svg>,
-              title: "Showcase",
-              desc: "Share your projects with the world and get feedback from the diverse community."
-            },
-            {
-              icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" /><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" /><path d="M4 22h16" /><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" /><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" /><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" /></svg>,
-              title: "Compete",
-              desc: "Participate in challenges and hackathons to test your skills and win prizes."
-            }
+          {[{ icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" /><circle cx="9" cy="7" r="4" /><path d="M22 21v-2a4 4 0 0 0-3-3.87" /><path d="M16 3.13a4 4 0 0 1 0 7.75" /></svg>, title: "Collaborate", desc: "Connect with like-minded peers to build complex robots and systems." },
+          { icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20" /></svg>, title: "Learn", desc: "Access tutorials, resources, and expert advice from industry mentors." },
+          { icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" /><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" /><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" /><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" /></svg>, title: "Showcase", desc: "Share your projects with the world and get feedback from the diverse community." },
+          { icon: <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6" /><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18" /><path d="M4 22h16" /><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22" /><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22" /><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z" /></svg>, title: "Compete", desc: "Participate in challenges and hackathons to test your skills and win prizes." }
           ].map((feature, index) => (
             <motion.div key={index} className="feature-card-wrapper">
               <SpotlightCard className="feature-card">
@@ -188,25 +140,25 @@ export default function Home() {
           <p>See what our members have been working on lately.</p>
         </motion.div>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-          {[1, 2, 3].map((item, i) => (
-            <motion.div key={item} className="project-preview" initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.2 }} viewport={{ once: true }}>
-              <div style={{ width: '100%', height: '100%', background: `linear-gradient(45deg, ${['#1e293b', '#0f172a'][i % 2]}, ${['#334155', '#1e293b'][i % 2]})` }} />
-              <div className="project-overlay">
-                <h3>Project Alpha {item}</h3>
-                <p style={{ color: '#cbd5e1' }}>An autonomous rover designed for tough terrain.</p>
-              </div>
-            </motion.div>
-          ))}
+          {featuredProjects.length > 0 ? (
+            featuredProjects.map((item, i) => (
+              <motion.div key={item._id || i} className="project-preview" initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.2 }} viewport={{ once: true }}>
+                <div style={{ width: '100%', height: '100%', background: item.color }} />
+                <div className="project-overlay">
+                  <h3>{item.title}</h3>
+                  <p style={{ color: '#cbd5e1' }}>{item.desc}</p>
+                </div>
+              </motion.div>
+            ))
+          ) : (
+            <p style={{ textAlign: 'center', color: '#94a3b8' }}>Loading projects...</p>
+          )}
         </div>
       </section>
 
       <section className="stats-section">
         <div className="stats-container">
-          {[
-            { value: "500+", label: "Active Members" },
-            { value: "120+", label: "Projects Built" },
-            { value: "50+", label: "Workshops Hosted" }
-          ].map((stat, index) => (
+          {stats.map((stat, index) => (
             <div key={index} className="stat-entry">
               <h3>{stat.value}</h3>
               <p>{stat.label}</p>
@@ -216,22 +168,14 @@ export default function Home() {
       </section>
 
       <section className="testimonials-section">
-        <motion.h2 style={{ textAlign: 'center', marginBottom: '3rem', fontSize: '2.5rem', color: 'white' }} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>
-          What Members Say
-        </motion.h2>
+        <motion.h2 style={{ textAlign: 'center', marginBottom: '3rem', fontSize: '2.5rem', color: 'white' }} initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }}>What Members Say</motion.h2>
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
-          {[
-            { text: "Robonity changed the way I learn robotics. The community is incredibly supportive!", author: "Alex Chen", role: "Student" },
-            { text: "Finding collaborators for my drone project was effortless here.", author: "Sarah Jones", role: "Engineer" }
-          ].map((t, i) => (
+          {testimonials.map((t, i) => (
             <motion.div key={i} className="testimonial-card" initial={{ x: i % 2 === 0 ? -50 : 50, opacity: 0 }} whileInView={{ x: 0, opacity: 1 }} transition={{ duration: 0.6 }} viewport={{ once: true }}>
               <p className="testimonial-text">"{t.text}"</p>
               <div className="testimonial-author">
                 <div className="author-avatar" />
-                <div className="author-info">
-                  <h4>{t.author}</h4>
-                  <span>{t.role}</span>
-                </div>
+                <div className="author-info"><h4>{t.author}</h4><span>{t.role}</span></div>
               </div>
             </motion.div>
           ))}
@@ -253,25 +197,18 @@ export default function Home() {
             <p style={{ color: '#94a3b8' }}>Join our biggest annual gatherings and competitions.</p>
           </motion.div>
         </div>
-
         <div style={{ padding: '2rem 8% 4rem' }}>
           <div className="events-grid">
-            {[
-              { title: "Robonity Hackathon 2026", desc: "48 hours of non-stop coding, building, and innovating with peers from around the globe.", color: "from-blue-500 to-cyan-500" },
-              { title: "Global Tech Summit", desc: "Hear from industry pioneers and robotics experts about the future of automation.", color: "from-purple-500 to-pink-500" },
-              { title: "Bot Wars Championship", desc: "The ultimate combat robotics tournament. Build, fight, and win glory.", color: "from-orange-500 to-red-500" }
-            ].map((event, i) => (
+            {flagshipEvents.map((event, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.15 }} viewport={{ once: true }} style={{ display: 'flex' }}>
                 <SpotlightCard className="event-card" style={{ width: '100%', height: '100%', minHeight: '320px', display: 'flex', flexDirection: 'column' }}>
                   <div style={{ height: '140px', borderRadius: '12px', background: `linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))`, marginBottom: '1.5rem', position: 'relative', overflow: 'hidden' }}>
                     <div style={{ position: 'absolute', top: '-50%', left: '-50%', width: '200%', height: '200%', background: `radial-gradient(circle, ${i === 0 ? '#3b82f6' : i === 1 ? '#a855f7' : '#f97316'} 0%, transparent 60%)`, opacity: 0.2 }} />
                   </div>
                   <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>{event.title}</h3>
-                  <p style={{ color: '#cbd5e1', lineHeight: '1.6', flex: 1 }}>{event.desc}</p>
+                  <p style={{ color: '#cbd5e1', lineHeight: '1.6', flex: 1 }}>{event.description}</p>
                   <Link to="/events" style={{ marginTop: '1.5rem', display: 'inline-flex', alignItems: 'center', color: 'white', fontWeight: '500' }}>
-                    View Details <span style={{ marginLeft: '0.5rem', display: 'inline-flex' }}>
-                      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg>
-                    </span>
+                    View Details <span style={{ marginLeft: '0.5rem', display: 'inline-flex' }}><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14" /><path d="m12 5 7 7-7 7" /></svg></span>
                   </Link>
                 </SpotlightCard>
               </motion.div>
@@ -283,35 +220,11 @@ export default function Home() {
       <section className="marquee-section">
         <div className="marquee-wrapper">
           <div className="marquee-track scroll-left">
-            <div className="marquee-content">
-              <span>ROBONITY 2026</span>
-              <span>BUILD THE FUTURE</span>
-              <span>INNOVATE</span>
-              <span>COLLABORATE</span>
-              <span>COMPETE</span>
-              <span>ROBONITY 2026</span>
-              <span>BUILD THE FUTURE</span>
-              <span>INNOVATE</span>
-              <span>COLLABORATE</span>
-              <span>COMPETE</span>
-            </div>
-            <div className="marquee-content" aria-hidden="true">
-              <span>ROBONITY 2026</span>
-              <span>BUILD THE FUTURE</span>
-              <span>INNOVATE</span>
-              <span>COLLABORATE</span>
-              <span>COMPETE</span>
-              <span>ROBONITY 2026</span>
-              <span>BUILD THE FUTURE</span>
-              <span>INNOVATE</span>
-              <span>COLLABORATE</span>
-              <span>COMPETE</span>
-            </div>
+            <div className="marquee-content">{Array(5).fill("ROBONITY 2026").map((t, i) => <span key={i}>{t}</span>)}</div>
+            <div className="marquee-content" aria-hidden="true">{Array(5).fill("ROBONITY 2026").map((t, i) => <span key={i}>{t}</span>)}</div>
           </div>
         </div>
       </section>
-
-
     </div >
   );
 }

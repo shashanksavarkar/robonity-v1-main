@@ -10,49 +10,18 @@ export default function Events() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  const DUMMY_EVENTS = [
-    {
-      _id: "dummy1",
-      date: "2026-03-15",
-      title: "Robonity Hackathon 2026",
-      location: "San Francisco, CA & Online",
-      description: "48 hours of non-stop coding, building, and innovating with peers from around the globe.",
-      fullDetails: "Join us for the biggest robotics hackathon of the year! Categories include Autonomous Systems, AI Integration, and Sustainable Robotics. Prizes worth $50k.",
-      registrationLink: "/register/hackathon"
-    },
-    {
-      _id: "dummy2",
-      date: "2026-04-10",
-      title: "Workshop: Advanced Drone Flight",
-      location: "Virtual",
-      description: "Master the art of autonomous drone navigation using ROS2 and PX4.",
-      fullDetails: "This hands-on workshop covers sensor fusion, path planning, and obstacle avoidance. Prerequisites: Basic Python and Linux knowledge.",
-      registrationLink: "/register/drone-workshop"
-    },
-    {
-      _id: "dummy3",
-      date: "2026-05-22",
-      title: "Global Tech Summit",
-      location: "London, UK",
-      description: "Hear from industry pioneers and robotics experts about the future of automation.",
-      fullDetails: "Keynote speakers from Boston Dynamics, Tesla, and NASA. Networking sessions included.",
-      registrationLink: "/register/tech-summit"
-    },
-    {
-      _id: "dummy4",
-      date: "2026-06-18",
-      title: "Bot Wars Championship",
-      location: "Tokyo, Japan",
-      description: "The ultimate combat robotics tournament. Build, fight, and win glory.",
-      fullDetails: "Witness 250lb combat robots clash in the arena. Team registration open now.",
-      registrationLink: "/register/bot-wars"
-    }
-  ];
-
   useEffect(() => {
-
-    setEventData(DUMMY_EVENTS);
-    setLoading(false);
+    const fetchEvents = async () => {
+      try {
+        const { data } = await getEvents();
+        setEventData(data);
+      } catch (err) {
+        setError("Failed to load events. Please try again later.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchEvents();
   }, []);
 
   return (
@@ -75,19 +44,11 @@ export default function Events() {
         Check out our calendar for workshops, competitions, and meetups.
       </motion.p>
 
-      {error && (
-        <div className="error-message">
-          {error}
-        </div>
-      )}
+      {error && <div className="error-message">{error}</div>}
 
       <div className="event-list">
         {loading ? (
-          <>
-            <SkeletonCard />
-            <SkeletonCard />
-            <SkeletonCard />
-          </>
+          <><SkeletonCard /><SkeletonCard /><SkeletonCard /></>
         ) : eventData.length === 0 && !error ? (
           <p style={{ color: "#9fb0c5", textAlign: "center" }}>No active missions found.</p>
         ) : (

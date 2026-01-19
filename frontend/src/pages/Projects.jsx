@@ -101,15 +101,9 @@ export default function Projects() {
                     <AnimatePresence>
                         {loading && (
                             <>
-                                <motion.div layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                                    <SkeletonCard />
-                                </motion.div>
-                                <motion.div layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                                    <SkeletonCard />
-                                </motion.div>
-                                <motion.div layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                                    <SkeletonCard />
-                                </motion.div>
+                                <motion.div layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}><SkeletonCard /></motion.div>
+                                <motion.div layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}><SkeletonCard /></motion.div>
+                                <motion.div layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}><SkeletonCard /></motion.div>
                             </>
                         )}
                         {!loading && filteredProjects.map((project) => (
@@ -120,19 +114,12 @@ export default function Projects() {
                                 initial={{ opacity: 0, z: 50 }}
                                 animate={{ opacity: 1, z: 0 }}
                                 exit={{ opacity: 0, z: 50 }}
-                                whileHover={{
-                                    scale: 1.05,
-                                    z: 60,
-                                    rotateX: 2,
-                                    rotateY: -2,
-                                }}
+                                whileHover={{ scale: 1.05, z: 60, rotateX: 2, rotateY: -2 }}
                                 transition={{ type: "spring", stiffness: 200, damping: 20 }}
                             >
                                 <div className="card-image" style={{ background: project.color }} />
                                 <div className="card-content">
-                                    <span className={`status-badge ${project.status.toLowerCase().replace(" ", "-")}`}>
-                                        {project.status}
-                                    </span>
+                                    <span className={`status-badge ${project.status.toLowerCase().replace(" ", "-")}`}>{project.status}</span>
                                     <h3>{project.title}</h3>
                                     <p>{project.desc}</p>
                                     <div className="card-footer">
@@ -151,10 +138,12 @@ export default function Projects() {
                         animate={{ opacity: 1 }}
                         whileHover={{ scale: 1.05, z: 50 }}
                     >
-                        <div className="cta-content">
-                            <h3>+ Submit Project</h3>
-                            <p>Have an idea? Share it with the world.</p>
-                        </div>
+                        <motion.a href="/auth" style={{ textDecoration: 'none', width: '100%', height: '100%', display: 'flex', flexDirection: 'column', justifyContent: 'center', alignItems: 'center' }}>
+                            <div className="cta-content">
+                                <h3>Join Community</h3>
+                                <p>Unlock full access to submit projects and collaborate.</p>
+                            </div>
+                        </motion.a>
                     </motion.div>
                 </motion.div>
             </div>

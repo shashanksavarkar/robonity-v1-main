@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { getGallery } from '../api/galleryApi';
 import SkeletonCard from '../components/SkeletonCard';
@@ -30,32 +30,24 @@ export default function Gallery() {
 
     const x = useMotionValue(0);
     const y = useMotionValue(0);
-
     const mouseX = useSpring(x, { stiffness: 150, damping: 20 });
     const mouseY = useSpring(y, { stiffness: 150, damping: 20 });
 
     const rotateX = useTransform(mouseY, [-0.5, 0.5], [15, -15]);
     const rotateY = useTransform(mouseX, [-0.5, 0.5], [-15, 15]);
-
     const bgX = useTransform(mouseX, [-0.5, 0.5], [-20, 20]);
     const bgY = useTransform(mouseY, [-0.5, 0.5], [-20, 20]);
 
     const handleMouseMove = (e) => {
         const { clientX, clientY } = e;
         const { innerWidth, innerHeight } = window;
-        const xPct = (clientX / innerWidth) - 0.5;
-        const yPct = (clientY / innerHeight) - 0.5;
-        x.set(xPct);
-        y.set(yPct);
+        x.set((clientX / innerWidth) - 0.5);
+        y.set((clientY / innerHeight) - 0.5);
     };
 
     return (
         <div className="gallery-page" onMouseMove={handleMouseMove}>
-            <motion.div
-                className="gallery-bg-grid"
-                style={{ x: bgX, y: bgY }}
-            />
-
+            <motion.div className="gallery-bg-grid" style={{ x: bgX, y: bgY }} />
             <div className="gallery-header-section">
                 <motion.h1
                     className="page-title glitch-effect"
@@ -94,17 +86,7 @@ export default function Gallery() {
                 >
                     <AnimatePresence mode="popLayout">
                         {loading && (
-                            <>
-                                <motion.div layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                                    <SkeletonCard />
-                                </motion.div>
-                                <motion.div layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                                    <SkeletonCard />
-                                </motion.div>
-                                <motion.div layout initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-                                    <SkeletonCard />
-                                </motion.div>
-                            </>
+                            <><SkeletonCard /><SkeletonCard /><SkeletonCard /></>
                         )}
                         {!loading && filteredData.map(item => (
                             <motion.div
@@ -116,13 +98,7 @@ export default function Gallery() {
                                 exit={{ opacity: 0, z: -100 }}
                                 transition={{ type: "spring", stiffness: 200, damping: 25 }}
                                 onClick={() => setActiveItem(item)}
-                                whileHover={{
-                                    z: 50,
-                                    scale: 1.1,
-                                    rotateX: 5,
-                                    rotateY: -5,
-                                    zIndex: 100
-                                }}
+                                whileHover={{ z: 50, scale: 1.1, rotateX: 5, rotateY: -5, zIndex: 100 }}
                             >
                                 <div className="holo-visual" style={{ background: item.color }}>
                                     <div className="scan-line"></div>

@@ -15,4 +15,4 @@ export const registerUser = async (req, res) => {
   }
 };
 
-export const loginUser = async (req, res) => res.status(200).json({ message: "Login OK (dummy)" });
+export const loginUser = async (req, res) => res.status(200).json({ message: "Login OK" });

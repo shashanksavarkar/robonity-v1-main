@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { useAuth } from "../components/AuthContext";
 import ThreadItem from "../components/ThreadItem";
 import CreateThread from "../components/CreateThread";
 import "../styles/Forum.css";
@@ -13,9 +12,8 @@ export default function Forum() {
   ];
 
   const [threads, setThreads] = useState(mockThreads);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState(null);
-  const { currentUser } = useAuth();
+  const loading = false;
+  const error = null;
 
   const handleCreateThread = (newThreadTitle) => {
     const newThread = {
@@ -40,20 +38,12 @@ export default function Forum() {
         COMMUNITY FORUM
       </motion.h1>
       <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.2 }}>
-        {true ? <CreateThread onCreateThread={handleCreateThread} /> : (
-          <p className="auth-switch" style={{ textAlign: "left", margin: "2rem 0" }}>
-            Please <a href="/auth">log in</a> or <a href="/auth">sign up</a> to create a thread.
-          </p>
-        )}
+        <CreateThread onCreateThread={handleCreateThread} />
       </motion.div>
 
       {loading && <p>Loading threads...</p>}
-      {error && (
-        <div className="auth-error">
-          <p><strong>Error loading threads:</strong></p>
-          <p style={{ fontFamily: "monospace", fontSize: "0.9rem", marginTop: "1rem" }}>{error}</p>
-        </div>
-      )}
+      {error && <div className="auth-error"><p><strong>Error:</strong> {error}</p></div>}
+
       {!loading && !error && (
         <motion.div
           className="forum-list"
@@ -61,9 +51,6 @@ export default function Forum() {
           animate="visible"
           variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } }}
         >
-          {threads.length === 0 && (
-            <p style={{ padding: "2rem", textAlign: "center", backgroundColor: "var(--content-bg)" }}>No threads yet. Be the first to post!</p>
-          )}
           {threads.map(thread => (
             <motion.div key={thread._id} variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}>
               <ThreadItem

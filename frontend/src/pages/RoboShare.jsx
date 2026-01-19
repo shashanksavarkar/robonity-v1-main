@@ -24,7 +24,7 @@ export default function RoboShare() {
       setStep(2);
     } catch {
       setStep(2);
-      setError("Note: Check backend terminal for OTP if SMS wasn't sent.");
+      setError("Note: Check backend terminal for OTP.");
     } finally {
       setLoading(false);
     }
@@ -60,8 +60,6 @@ export default function RoboShare() {
     );
   }
 
-
-
   return (
     <div className="auth-page">
       <motion.div
@@ -71,10 +69,7 @@ export default function RoboShare() {
         style={{ width: "100%", maxWidth: "650px" }}
       >
         <div style={{ marginBottom: "30px" }}>
-          <h1
-            className="page-title glitch-effect"
-            data-text={step === 1 ? "ROBOSHARE ACCESS" : "VERIFICATION"}
-          >
+          <h1 className="page-title glitch-effect" data-text={step === 1 ? "ROBOSHARE ACCESS" : "VERIFICATION"}>
             {step === 1 ? "RoboShare Access" : "Verification"}
           </h1>
           <p style={{ color: "#94a3b8", fontSize: "0.95rem", textAlign: "center" }}>
@@ -86,62 +81,28 @@ export default function RoboShare() {
           <AnimatePresence mode="wait">
             {step === 1 ? (
               <motion.div key="step1" initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }} style={{ display: "flex", flexDirection: "column", gap: "20px" }}>
-                <div className="auth-field">
-                  <input name="email" type="email" placeholder=" " onChange={handleChange} required />
-                  <label>Email Address (student@gsv.ac.in)</label>
-                </div>
-                <div className="auth-field">
-                  <input name="rollNo" type="text" placeholder=" " onChange={handleChange} required />
-                  <label>Roll Number</label>
-                </div>
-                <div className="auth-field">
-                  <input name="mobile" type="tel" placeholder=" " onChange={handleChange} required />
-                  <label>Mobile Number</label>
-                </div>
+                <div className="auth-field"><input name="email" type="email" placeholder=" " onChange={handleChange} required /><label>Email Address</label></div>
+                <div className="auth-field"><input name="rollNo" type="text" placeholder=" " onChange={handleChange} required /><label>Roll Number</label></div>
+                <div className="auth-field"><input name="mobile" type="tel" placeholder=" " onChange={handleChange} required /><label>Mobile Number</label></div>
               </motion.div>
             ) : (
               <motion.div key="step2" initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -10 }} style={{ display: "flex", flexDirection: "column" }}>
                 <div style={{ background: "rgba(59, 130, 246, 0.1)", padding: "12px", borderRadius: "10px", border: "1px solid rgba(59, 130, 246, 0.2)", marginBottom: "16px" }}>
-                  <p style={{ color: "#93c5fd", textAlign: "center", fontSize: "0.9rem", margin: 0 }}>
-                    OTP sent to {formData.mobile}
-                  </p>
+                  <p style={{ color: "#93c5fd", textAlign: "center", fontSize: "0.9rem", margin: 0 }}>OTP sent to {formData.mobile}</p>
                 </div>
                 <div className="auth-field">
-                  <input
-                    name="otp"
-                    type="text"
-                    placeholder=" "
-                    maxLength={6}
-                    onChange={handleChange}
-                    required
-                    style={{ letterSpacing: "8px", fontSize: "1.2rem", fontWeight: "bold" }}
-                  />
+                  <input name="otp" type="text" placeholder=" " maxLength={6} onChange={handleChange} required style={{ letterSpacing: "8px", fontSize: "1.2rem", fontWeight: "bold" }} />
                   <label>Verification Code</label>
                 </div>
               </motion.div>
             )}
           </AnimatePresence>
-
-          <motion.button
-            type="submit"
-            className="auth-submit"
-            disabled={loading}
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
+          <motion.button type="submit" className="auth-submit" disabled={loading} whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
             {loading ? "Processing..." : step === 1 ? "Send OTP" : "Verify & Access"}
           </motion.button>
         </form>
-
         {error && (
-          <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            className="auth-error"
-            style={{ marginTop: "20px", textAlign: "center" }}
-          >
-            {error}
-          </motion.div>
+          <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: "auto" }} className="auth-error" style={{ marginTop: "20px", textAlign: "center" }}>{error}</motion.div>
         )}
       </motion.div>
     </div>
