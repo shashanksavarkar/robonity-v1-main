@@ -1,5 +1,5 @@
 .about-page {
-    padding: 90px 8% 80px;
+    padding: 90px 4% 80px;
 }
 
 /* Page Title - Added for consistent Holo styling */
@@ -14,15 +14,12 @@
     -webkit-text-fill-color: transparent;
     text-transform: uppercase;
     letter-spacing: -2px;
-    text-align: center !important;
-    width: auto;
-    /* Shrink to text */
-    margin: 0;
-    display: inline-block;
-    /* Restore inline-block for glitch coordinates */
-    justify-content: normal;
-    /* Reset flex */
-    width: 100%;
+    margin: 0 auto 30px;
+    display: table;
+    /* Keeps glitch centered and tight */
+    width: fit-content;
+    position: relative;
+    /* Ensure stacking context */
 }
 
 .about-intro {
@@ -215,7 +212,8 @@
     }
 
     .dev-grid {
-        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 columns on tablet for better balance */
     }
 
     .dev-header h2 {
@@ -293,10 +291,12 @@
 
 .dev-grid {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    /* Force 3 columns as requested */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    /* Flexible grid to allow wider cards */
     gap: 30px;
     padding: 0;
+    max-width: 1400px;
+    margin: 0 auto;
 }
 
 .dev-card {

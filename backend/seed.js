@@ -44,6 +44,7 @@ const projectsData = [
         status: "Completed",
         author: "DevTeam Alpha",
         color: "linear-gradient(135deg, #FF6B6B 0%, #556270 100%)",
+        image: "/projects/rover.png",
         featured: true
     },
     {
@@ -54,6 +55,7 @@ const projectsData = [
         status: "In Progress",
         author: "Sarah J.",
         color: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+        image: "/projects/swarm.png",
         featured: true
     },
     {
@@ -64,6 +66,7 @@ const projectsData = [
         status: "Beta",
         author: "TechWiz",
         color: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
+        image: "/projects/arm.png",
         featured: true
     },
     {
@@ -105,30 +108,30 @@ const projectsData = [
 
 const eventsData = [
     {
-        date: "2026-03-15",
-        title: "Robonity Hackathon 2026",
-        location: "San Francisco, CA & Online",
-        description: "48 hours of non-stop coding, building, and innovating with peers from around the globe.",
+        date: "March 2026",
+        title: "RoboWars 2.0",
+        location: "GSV",
+        description: "High-intensity robotics combat competition where custom-built machines battle head-to-head to test engineering, strategy, and control.",
         fullDetails: "Join us for the biggest robotics hackathon of the year! Categories include Autonomous Systems, AI Integration, and Sustainable Robotics. Prizes worth $50k.",
-        registrationLink: "/register/hackathon",
+        registrationLink: "https://robowars-gsv.vercel.app/",
         flagship: true
     },
     {
-        date: "2026-04-10",
-        title: "Workshop: Advanced Drone Flight",
-        location: "Virtual",
+        date: "March 2026",
+        title: "RoboBlocks",
+        location: "GSV",
         description: "Master the art of autonomous drone navigation using ROS2 and PX4.",
         fullDetails: "This hands-on workshop covers sensor fusion, path planning, and obstacle avoidance. Prerequisites: Basic Python and Linux knowledge.",
-        registrationLink: "/register/drone-workshop",
+        registrationLink: "https://roboblocks-gsv.vercel.app/",
         flagship: false
     },
     {
-        date: "2026-05-22",
-        title: "Global Tech Summit",
-        location: "London, UK",
-        description: "Hear from industry pioneers and robotics experts about the future of automation.",
+        date: "January 2026",
+        title: "Choke with Coke",
+        location: "GSV",
+        description: "A fun-filled event where participants can showcase their skills in robotics and automation.",
         fullDetails: "Keynote speakers from Boston Dynamics, Tesla, and NASA. Networking sessions included.",
-        registrationLink: "/register/tech-summit",
+        registrationLink: "/register/choke-with-coke",
         flagship: true
     },
     {
@@ -147,24 +150,37 @@ const eventsData = [
 //              RESOURCES PAGE DATA
 // ==============================================
 
+
 const resourcesData = [
-    { id: 1, title: 'React Documentation', description: 'Official React docs for building UIs.', category: 'Documentation', url: 'https://react.dev/', icon: '⚛️' },
-    { id: 2, title: 'Arduino Hub', description: 'Tutorials and software for microcontrollers.', category: 'Hardware', url: 'https://www.arduino.cc/', icon: '♾️' },
-    { id: 3, title: 'ROS Wiki', description: 'The Robot Operating System documentation.', category: 'Robotics', url: 'http://wiki.ros.org/', icon: '🤖' },
-    { id: 4, title: 'Thingiverse', description: '3D models for printing robot parts.', category: '3D Printing', url: 'https://www.thingiverse.com/', icon: '🧊' },
-    { id: 5, title: 'OpenCV', description: 'Computer vision library documentation.', category: 'AI/ML', url: 'https://opencv.org/', icon: '👁️' },
-    { id: 6, title: 'Raspberry Pi', description: 'Projects and docs for the tiny computer.', category: 'Hardware', url: 'https://www.raspberrypi.org/', icon: '🥧' },
-    { id: 7, title: 'TensorFlow', description: 'End-to-end open source machine learning platform.', category: 'AI/ML', url: 'https://www.tensorflow.org/', icon: '🧠' },
-    { id: 8, title: 'GrabCAD', description: 'Community library of CAD models.', category: '3D Printing', url: 'https://grabcad.com/', icon: '⚙️' },
-    { id: 9, title: 'Stack Overflow', description: 'Community for developer Q&A.', category: 'Community', url: 'https://stackoverflow.com/', icon: '💻' },
-    { id: 10, title: 'MDN Web Docs', description: 'Resources for developers, by developers.', category: 'Documentation', url: 'https://developer.mozilla.org/', icon: '🌐' },
-    { id: 11, title: 'NVIDIA Isaac', description: 'Platform for simulation and robot training.', category: 'Robotics', url: 'https://developer.nvidia.com/isaac-sim', icon: '🎮' },
-    { id: 12, title: 'PyTorch', description: 'Deep learning framework.', category: 'AI/ML', url: 'https://pytorch.org/', icon: '🔥' },
-    { id: 13, title: 'Unity 3D', description: 'Real-time 3D development platform.', category: 'Software', url: 'https://unity.com/', icon: '🎮' },
-    { id: 14, title: 'Blender', description: 'Open source 3D creation suite.', category: '3D Printing', url: 'https://www.blender.org/', icon: '🟧' },
-    { id: 15, title: 'VS Code', description: 'Code editing. Redefined.', category: 'Tools', url: 'https://code.visualstudio.com/', icon: '📝' },
-    { id: 16, title: 'GitHub', description: 'Where the world builds software.', category: 'Community', url: 'https://github.com/', icon: '🐙' },
+    { id: 1, title: 'ESP32 Documentation', description: 'IoT + robotics microcontroller documentation.', category: 'Hardware', url: 'https://docs.espressif.com/projects/esp-idf/en/latest/esp32/', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" /><rect x="9" y="9" width="6" height="6" /><path d="M9 1v3" /><path d="M15 1v3" /><path d="M9 20v3" /><path d="M15 20v3" /><path d="M20 9h3" /><path d="M20 14h3" /><path d="M1 9h3" /><path d="M1 14h3" /></svg>' },
+    { id: 2, title: 'STM32 Documentation', description: 'Industrial-grade MCU documentation and references.', category: 'Hardware', url: 'https://www.st.com/en/microcontrollers-microprocessors/stm32-32-bit-arm-cortex-mcus.html', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" /><rect x="9" y="9" width="6" height="6" /><path d="M9 1v3" /><path d="M15 1v3" /><path d="M9 20v3" /><path d="M15 20v3" /><path d="M20 9h3" /><path d="M20 14h3" /><path d="M1 9h3" /><path d="M1 14h3" /></svg>' },
+    { id: 3, title: 'PlatformIO', description: 'Professional embedded development environment for robotics.', category: 'Software', url: 'https://platformio.org/', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>' },
+    { id: 4, title: 'FreeRTOS', description: 'Real-time operating system for microcontrollers and robotics.', category: 'Embedded', url: 'https://www.freertos.org/', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="11" width="18" height="10" rx="2" /><circle cx="12" cy="5" r="2" /><path d="M12 7v4" /></svg>' },
+    { id: 5, title: 'Adafruit Learning System', description: 'Practical electronics tutorials for builders.', category: 'Hardware', url: 'https://learn.adafruit.com/', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2c0 4-4 8-4 8H4c0-4 4-8 4-8s-2 6-4 6" /><path d="M12 2c0 4 4 8 4 8h4c0-4-4-8-4-8s2 6 4 6" /><rect x="8" y="12" width="8" height="10" rx="3" /></svg>' },
+    { id: 6, title: 'Gazebo Simulator', description: 'Robot physics simulation platform (ROS-native).', category: 'Simulation', url: 'https://gazebosim.org/home', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /></svg>' },
+    { id: 7, title: 'Webots', description: 'Open-source robot simulator for professional use.', category: 'Simulation', url: 'https://cyberbotics.com/', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /></svg>' },
+    { id: 8, title: 'CoppeliaSim', description: 'Advanced robot simulation with multiple physics engines.', category: 'Simulation', url: 'https://www.coppeliarobotics.com/', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /></svg>' },
+    { id: 9, title: 'MATLAB Simulink', description: 'Control systems modeling and simulation.', category: 'Simulation', url: 'https://www.mathworks.com/products/simulink.html', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18" /><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3" /></svg>' },
+    { id: 10, title: 'OpenCV', description: 'Computer vision library for image processing.', category: 'AI/ML', url: 'https://opencv.org/', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.1.2-2.2.6-3Z" /></svg>' },
+    { id: 11, title: 'MediaPipe', description: 'Real-time perception pipelines for vision tasks.', category: 'AI/ML', url: 'https://developers.google.com/mediapipe', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.1.2-2.2.6-3Z" /></svg>' },
+    { id: 12, title: 'DepthAI / Luxonis', description: 'Stereo and AI-powered vision hardware.', category: 'Hardware', url: 'https://docs.luxonis.com/software/depthai/', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="4" y="4" width="16" height="16" rx="2" /><path d="M9 1v3" /><path d="M15 1v3" /></svg>' },
+    { id: 13, title: 'PID Control', description: 'MIT/MathWorks docs on control system accuracy.', category: 'Control', url: 'https://controlitu.it.dtu.dk/index.php/Introduction_to_PID_Control', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M3 3v18h18" /><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3" /></svg>' },
+    { id: 14, title: 'ROS Navigation (Nav2)', description: 'Standards for autonomous navigation in ROS2.', category: 'Software', url: 'https://navigation.ros.org/', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>' },
+    { id: 15, title: 'SLAM (GMapping/Cartographer)', description: 'Simultaneous Localization and Mapping for robots.', category: 'Software', url: 'https://github.com/ros-perception/slam_gmapping', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><polyline points="16 18 22 12 16 6" /><polyline points="8 6 2 12 8 18" /></svg>' },
+    { id: 16, title: 'Fusion 360', description: 'Mechanical design and CAM workflows for robotics.', category: 'CAD', url: 'https://www.autodesk.com/products/fusion-360/overview', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z" /></svg>' },
+    { id: 17, title: 'Prusa Knowledge Base', description: '3D printing techniques for robot parts.', category: 'Manufacturing', url: 'https://help.prusa3d.com/', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 9h6v6H9z" /><path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z" /></svg>' },
+    { id: 18, title: 'CNC Cookbook', description: 'Guides for precision parts fabrication.', category: 'Manufacturing', url: 'https://www.cnccookbook.com/', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 9h6v6H9z" /><path d="M3 7v10a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V7a2 2 0 0 0-2-2H5a2 2 0 0 0-2 2z" /></svg>' },
+    { id: 19, title: 'ROS + AI (PyTorch)', description: 'Integrating deep learning with ROS2 systems.', category: 'AI/ML', url: 'https://pytorch.org/blog/ros-torch-integration/', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.1.2-2.2.6-3Z" /></svg>' },
+    { id: 20, title: 'NVIDIA Isaac ROS', description: 'Hardware acceleration for robotics AI.', category: 'AI/ML', url: 'https://developer.nvidia.com/isaac-ros', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.1.2-2.2.6-3Z" /></svg>' },
+    { id: 21, title: 'YOLO (Ultralytics)', description: 'Real-time object detection for autonomous bots.', category: 'AI/ML', url: 'https://docs.ultralytics.com/', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8.5 14.5A2.5 2.5 0 0 0 11 12c0-1.38-.5-2-1-3-1.072-2.143-.224-4.054 2-6 .5 2.5 2 4.9 4 6.5 2 1.6 3 3.5 3 5.5a7 7 0 1 1-14 0c0-1.1.2-2.2.6-3Z" /></svg>' },
+    { id: 22, title: 'MIT OpenCourseWare', description: 'Authoritative robotics learning resources.', category: 'Learning', url: 'https://ocw.mit.edu/courses/robotics-curriculum/', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></svg>' },
+    { id: 23, title: 'Stanford CS231n', description: 'Deep learning and vision learning materials.', category: 'Learning', url: 'http://cs231n.stanford.edu/', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></svg>' },
+    { id: 24, title: 'ROS Discourse', description: 'Community discussions and troubleshooting.', category: 'Community', url: 'https://discourse.ros.org/', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 1 1-7.6-14h.6A8.5 8.5 0 0 1 21 11.5z" /></svg>' },
+    { id: 25, title: 'IEEE RAS', description: 'Robotics research and automation publications.', category: 'Research', url: 'https://www.ieee-ras.org/', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z" /><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z" /></svg>' },
+    { id: 26, title: 'GitHub Robotics Repos', description: 'Essential tools and version control for teams.', category: 'Tools', url: 'https://github.com/topics/robotics', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>' },
+    { id: 27, title: 'Docker for Robotics', description: 'Containerization for consistent robot environments.', category: 'DevOps', url: 'https://www.docker.com/blog/how-to-use-the-official-ros-docker-images/', icon: '<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><rect x="2" y="3" width="20" height="14" rx="2" /><line x1="2" y1="20" x2="22" y2="20" /></svg>' },
 ];
+
 
 
 // ==============================================
@@ -220,7 +236,8 @@ const aboutItemsData = [
 const developersData = [
     { name: "Aman Choudhary", role: "Full Stack Developer", image: "https://ui-avatars.com/api/?name=Aman+Choudhary&background=0d8abc&color=fff", desc: "Passionate about building scalable web applications and exploring new tech stacks.", socials: { instagram: "#", linkedin: "#", github: "#" } },
     { name: "Anirban Das", role: "Frontend Developer", image: "https://ui-avatars.com/api/?name=Anirban+Das&background=0d8abc&color=fff", desc: "Crafting beautiful and intuitive user interfaces with a focus on user experience.", socials: { instagram: "#", linkedin: "#", github: "#" } },
-    { name: "Shashank Savarkar", role: "Backend Developer", image: "https://ui-avatars.com/api/?name=Shashank+Savarkar&background=0d8abc&color=fff", desc: "Architecting robust server-side solutions and optimizing database performance.", socials: { instagram: "#", linkedin: "#", github: "#" } }
+    { name: "Shashank Savarkar", role: "Backend Developer", image: "https://ui-avatars.com/api/?name=Shashank+Savarkar&background=0d8abc&color=fff", desc: "Architecting robust server-side solutions and optimizing database performance.", socials: { instagram: "#", linkedin: "#", github: "#" } },
+    { name: "Suyash Srivastav", role: "Backend Developer", image: "https://ui-avatars.com/api/?name=Suyash+Srivastav&background=0d8abc&color=fff", desc: "Architecting robust server-side solutions and optimizing database performance.", socials: { instagram: "#", linkedin: "#", github: "#" } }
 ];
 
 

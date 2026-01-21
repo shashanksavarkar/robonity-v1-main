@@ -139,19 +139,51 @@ export default function Home() {
           <h2>Built by the Community</h2>
           <p>See what our members have been working on lately.</p>
         </motion.div>
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
+        <div className="projects-grid-home">
           {featuredProjects.length > 0 ? (
             featuredProjects.map((item, i) => (
-              <motion.div key={item._id || i} className="project-preview" initial={{ opacity: 0, scale: 0.9 }} whileInView={{ opacity: 1, scale: 1 }} transition={{ delay: i * 0.2 }} viewport={{ once: true }}>
-                <div style={{ width: '100%', height: '100%', background: item.color }} />
-                <div className="project-overlay">
-                  <h3>{item.title}</h3>
-                  <p style={{ color: '#cbd5e1' }}>{item.desc}</p>
-                </div>
+              <motion.div
+                key={item._id || i}
+                className="project-node-wrapper"
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.2, duration: 0.8 }}
+                viewport={{ once: true }}
+              >
+                <SpotlightCard
+                  className="project-node"
+                  style={{ "--node-color": item.color.includes('gradient') ? '#00c6ff' : item.color }}
+                >
+                  <div className="node-scanline" />
+                  <div className="node-content">
+                    <div className="node-header">
+                      <span className="node-tag">{item.category || 'PROJECT'}</span>
+                      <div className="node-status-pulse" />
+                    </div>
+                    <div className="node-visual">
+                      {item.image ? (
+                        <img src={item.image} alt={item.title} className="node-image" />
+                      ) : (
+                        <div style={{ width: '100%', height: '100%', background: item.color }} />
+                      )}
+                      <div className="node-glitch-overlay" />
+                    </div>
+                    <div className="node-info">
+                      <h3>{item.title}</h3>
+                      <p>{item.desc}</p>
+                    </div>
+                    <div className="node-footer">
+                      <span className="node-author">BY {item.author?.toUpperCase() || 'ANONYMOUS'}</span>
+                      <Link to={`/projects`} className="node-link">
+                        VIEW <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M5 12h14m-7-7 7 7-7 7" /></svg>
+                      </Link>
+                    </div>
+                  </div>
+                </SpotlightCard>
               </motion.div>
             ))
           ) : (
-            <p style={{ textAlign: 'center', color: '#94a3b8' }}>Loading projects...</p>
+            <p style={{ textAlign: 'center', color: '#94a3b8', gridColumn: '1/-1' }}>Loading projects...</p>
           )}
         </div>
       </section>

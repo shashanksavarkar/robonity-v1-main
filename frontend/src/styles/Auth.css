@@ -54,10 +54,15 @@
     text-transform: uppercase;
     letter-spacing: -1px;
     /* Tighter letter spacing helps */
+    letter-spacing: -1px;
+    /* Tighter letter spacing helps */
     text-align: center;
     /* Center it as per previous context context imply */
     white-space: nowrap;
-    width: 100%;
+    width: fit-content;
+    margin: 0 auto 30px;
+    display: table;
+    position: relative;
     overflow: hidden;
     text-overflow: ellipsis;
     /* Fallback if it still overflows */

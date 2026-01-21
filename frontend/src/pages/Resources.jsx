@@ -4,7 +4,7 @@ import { getResources } from '../api/resourceApi';
 import SkeletonCard from '../components/SkeletonCard';
 import "../styles/Resources.css";
 
-const CATEGORIES = ["All", "Documentation", "Hardware", "Robotics", "AI/ML", "3D Printing", "Software", "Tools", "Community"];
+const CATEGORIES = ["All", "Hardware", "Software", "Embedded", "AI/ML", "Simulation", "Control", "Manufacturing", "CAD", "Learning", "Community", "Research", "DevOps", "Tools"];
 
 export default function Resources() {
   const [filter, setFilter] = useState("All");
@@ -68,10 +68,10 @@ export default function Resources() {
           RESOURCE ARCHIVE
         </motion.h1>
 
-        <div className="controls-bar">
-          <div className="category-filters">
+        <div className="resources-controls">
+          <div className="resources-filters">
             {CATEGORIES.map(cat => (
-              <button key={cat} className={`filter-btn ${filter === cat ? 'active' : ''}`} onClick={() => setFilter(cat)}>{cat}</button>
+              <button key={cat} className={`filter-chip ${filter === cat ? 'active' : ''}`} onClick={() => setFilter(cat)}>{cat}</button>
             ))}
           </div>
           <input type="text" placeholder="Search database..." className="search-input" value={search} onChange={(e) => setSearch(e.target.value)} />
@@ -105,7 +105,7 @@ export default function Resources() {
               >
                 <div className="scan-line" />
                 <div className="resource-card-inner">
-                  <div className="resource-icon-wrapper">{item.icon}</div>
+                  <div className="resource-icon-wrapper" dangerouslySetInnerHTML={{ __html: item.icon }} />
                   <div className="resource-info">
                     <h3>{item.title}</h3>
                     <p>{item.description}</p>

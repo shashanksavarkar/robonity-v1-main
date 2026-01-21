@@ -8,6 +8,7 @@ const projectSchema = new mongoose.Schema({
     status: { type: String, required: true },
     author: { type: String, required: true },
     color: { type: String, required: true },
+    image: { type: String },
     featured: { type: Boolean, default: false }
 });
 
