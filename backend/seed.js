@@ -188,23 +188,22 @@ const resourcesData = [
 // ==============================================
 
 const galleryData = [
-    { id: 1, title: 'Autonomous Rover', description: 'A student-built rover navigating an obstacle course.', category: 'Robotics', color: 'linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%)' },
-    { id: 2, title: 'RoboSoccer 2025', description: 'Our team competing in the finals.', category: 'AI', color: 'linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%)' },
-    { id: 3, title: '3D Printed Arm', description: 'A 6-axis robotic arm prototype.', category: 'Mechanical', color: 'linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)' },
-    { id: 4, title: 'Workshop Day', description: 'Members learning soldering and circuitry.', category: 'Robotics', color: 'linear-gradient(120deg, #f093fb 0%, #f5576c 100%)' },
-    { id: 5, title: 'Autonomous Drone', description: 'Quad-copter with obstacle avoidance.', category: 'Robotics', color: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' },
-    { id: 6, title: 'AI Chess Bot', description: 'Computer vision based chess engine.', category: 'AI', color: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)' },
-    { id: 7, title: 'Line Follower', description: 'High speed line following robot.', category: 'Robotics', color: 'linear-gradient(to top, #30cfd0 0%, #330867 100%)' },
-    { id: 8, title: 'Guest Lecture', description: 'Industry expert talk on Future of AI.', category: 'Events', color: 'linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%)' },
-    { id: 9, title: 'Smart Wearable', description: 'Health monitoring wristband prototype.', category: 'IoT', color: 'linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%)' },
-    { id: 10, title: 'Home Automation', description: 'Voice controlled lights and fans.', category: 'IoT', color: 'linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%)' },
-    { id: 11, title: 'Solar Tracker', description: 'Dual-axis solar panel tracking system.', category: 'Mechanical', color: 'linear-gradient(to right, #fa709a 0%, #fee140 100%)' },
-    { id: 12, title: 'Maze Solver', description: 'Micromouse robot solving a maze.', category: 'Robotics', color: 'linear-gradient(to top, #5ee7df 0%, #b490ca 100%)' },
-    { id: 13, title: 'Face Recognition', description: 'Attendance system using OpenCV.', category: 'AI', color: 'linear-gradient(to top, #accbee 0%, #e7f0fd 100%)' },
-    { id: 14, title: 'Hexapod', description: 'Six-legged spider robot.', category: 'Robotics', color: 'linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%)' },
-    { id: 15, title: 'Tech Expo', description: 'Annual showcase of student projects.', category: 'Events', color: 'linear-gradient(to right, #4facfe 0%, #00f2fe 100%)' },
+    { id: 1, title: 'On Shape Workshop', description: 'TechnoCrats Organised a Workshop on On Shape.', category: 'WORKSHOP', color: 'linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%)', image: '/gallery/IMG-20250906-WA0007.jpg' },
+    { id: 2, title: 'RoboSoccer 2025', description: 'Our team competing in the finals.', category: 'INDUCTION', color: 'linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%)', image: '/gallery/IMG_20251117_183445 (1).jpg' },
+    { id: 3, title: '3D Printed Arm', description: 'A 6-axis robotic arm prototype.', category: 'INDUCTION', color: 'linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)', image: '/gallery/IMG_20251117_183445.jpg' },
+    { id: 4, title: 'Workshop Day', description: 'Members learning soldering and circuitry.', category: 'ROBOSOCCER', color: 'linear-gradient(120deg, #f093fb 0%, #f5576c 100%)', image: '/gallery/IMG_6943.JPG' },
+    { id: 5, title: 'Autonomous Drone', description: 'Quad-copter with obstacle avoidance.', category: 'ROBOSOCCER', color: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', image: '/gallery/IMG_6954.JPG' },
+    { id: 6, title: 'AI Chess Bot', description: 'Computer vision based chess engine.', category: 'ROBOSOCCER', color: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)', image: '/gallery/IMG_6990.JPG' },
+    { id: 7, title: 'Line Follower', description: 'High speed line following robot.', category: 'ROBOSOCCER', color: 'linear-gradient(to top, #30cfd0 0%, #330867 100%)', image: '/gallery/IMG_7033.JPG' },
+    { id: 8, title: 'Guest Lecture', description: 'Industry expert talk on Future of AI.', category: 'ROBOSOCCER', color: 'linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%)', image: '/gallery/IMG_7046.JPG' },
+    { id: 9, title: 'Smart Wearable', description: 'Health monitoring wristband prototype.', category: 'ROBOSOCCER', color: 'linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%)', image: '/gallery/IMG_7070.JPG' },
+    { id: 10, title: 'Home Automation', description: 'Voice controlled lights and fans.', category: 'ROBOSOCCER', color: 'linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%)', image: '/gallery/IMG_7093.JPG' },
+    { id: 11, title: 'Solar Tracker', description: 'Dual-axis solar panel tracking system.', category: 'ROBOSOCCER', color: 'linear-gradient(to right, #fa709a 0%, #fee140 100%)', image: '/gallery/IMG_7100.JPG' },
+    { id: 12, title: 'Maze Solver', description: 'Micromouse robot solving a maze.', category: 'ROBOSOCCER', color: 'linear-gradient(to top, #5ee7df 0%, #b490ca 100%)', image: '/gallery/IMG_7106.JPG' },
+    { id: 13, title: 'Face Recognition', description: 'Attendance system using OpenCV.', category: 'ROBOSOCCER', color: 'linear-gradient(to top, #accbee 0%, #e7f0fd 100%)', image: '/gallery/IMG_7033.JPG' },
+    { id: 14, title: 'Hexapod', description: 'Six-legged spider robot.', category: 'ROBOSOCCER', color: 'linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%)', image: '/gallery/IMG_7106.JPG' },
+    { id: 15, title: 'Tech Expo', description: 'Annual showcase of student projects.', category: 'ROBOSOCCER', color: 'linear-gradient(to right, #4facfe 0%, #00f2fe 100%)', image: '/gallery/IMG_7046.JPG' },
 ];
-
 
 // ==============================================
 //                ABOUT PAGE DATA

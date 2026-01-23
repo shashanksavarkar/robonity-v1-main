@@ -4,7 +4,7 @@ import { getGallery } from '../api/galleryApi';
 import SkeletonCard from '../components/SkeletonCard';
 import "../styles/Gallery.css";
 
-const CATEGORIES = ["All", "Robotics", "AI", "Mechanical", "Events", "IoT"];
+const CATEGORIES = ["All", "WORKSHOP", "INDUCTION", "ROBOSOCCER"];
 
 export default function Gallery() {
     const [filter, setFilter] = useState("All");
@@ -100,7 +100,9 @@ export default function Gallery() {
                                 onClick={() => setActiveItem(item)}
                                 whileHover={{ z: 50, scale: 1.1, rotateX: 5, rotateY: -5, zIndex: 100 }}
                             >
-                                <div className="holo-visual" style={{ background: item.color }}>
+                                <div className="holo-visual" style={{
+                                    background: item.image ? `url("${item.image}") center/cover no-repeat` : item.color
+                                }}>
                                     <div className="scan-line"></div>
                                 </div>
                                 <div className="holo-info">
@@ -129,7 +131,9 @@ export default function Gallery() {
                             animate={{ scale: 1, rotateX: 0 }}
                             exit={{ scale: 0.5, rotateX: -45 }}
                         >
-                            <div className="lightbox-image" style={{ background: activeItem.color }} />
+                            <div className="lightbox-image" style={{
+                                background: activeItem.image ? `url("${activeItem.image}") center/cover no-repeat` : activeItem.color
+                            }} />
                             <div className="lightbox-details">
                                 <span className="lightbox-category">{activeItem.category}</span>
                                 <h3>{activeItem.title}</h3>

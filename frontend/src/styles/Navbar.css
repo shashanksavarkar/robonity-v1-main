@@ -88,9 +88,9 @@
     color: #94a3b8;
     text-decoration: none;
     font-weight: 600;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     /* Slightly smaller font */
-    padding: 8px 12px;
+    padding: 8px 8px;
     /* Reduced padding */
     border-radius: 12px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -134,19 +134,23 @@
     display: flex;
     align-items: center;
     flex-shrink: 0;
+    margin-left: 12px;
     /* Prevent button shrinking */
 }
 
 /* Join Community Button - Primary Action */
 .btn-join {
-    padding: 10px 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 16px;
     /* Reduced horizontal padding */
     border-radius: 99px;
     background: linear-gradient(135deg, rgba(0, 198, 255, 0.2), rgba(0, 114, 255, 0.2));
     border: 1px solid rgba(0, 198, 255, 0.5);
     color: #fff !important;
     font-weight: 700;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     /* Match links size */
     text-transform: uppercase;
     letter-spacing: 0.5px;

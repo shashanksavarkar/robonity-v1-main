@@ -117,7 +117,9 @@ export default function Projects() {
                                 whileHover={{ scale: 1.05, z: 60, rotateX: 2, rotateY: -2 }}
                                 transition={{ type: "spring", stiffness: 200, damping: 20 }}
                             >
-                                <div className="card-image" style={{ background: project.color }} />
+                                <div className="card-image" style={{
+                                    background: project.image ? `url("${project.image}") center/cover no-repeat` : project.color
+                                }} />
                                 <div className="card-content">
                                     <span className={`status-badge ${project.status.toLowerCase().replace(" ", "-")}`}>{project.status}</span>
                                     <h3>{project.title}</h3>
