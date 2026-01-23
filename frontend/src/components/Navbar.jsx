@@ -3,31 +3,9 @@ import { NavLink, Link, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { useAuth } from "./AuthContext";
 import "../styles/Navbar.css";
+import MechanicalEyeLogo from "./MechanicalEyeLogo";
 
-const Logo = () => (
-  <div style={{ position: 'relative', width: '40px', height: '40px', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-    <motion.svg
-      width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary-color)" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"
-      style={{ position: 'absolute' }}
-      animate={{ rotate: 360 }}
-      transition={{ repeat: Infinity, duration: 8, ease: "linear" }}
-    >
-      <path d="M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10z" opacity="0.1" />
-      <path d="M12 1v3m0 16v3m7.78-18.78l-2.12 2.12m-11.32 11.32l-2.12 2.12m0-13.44l2.12 2.12m11.32 11.32l2.12 2.12M1 12h3m16 0h3M3.5 12a8.5 8.5 0 1 1 17 0 8.5 8.5 0 0 1-17 0z" strokeWidth="2" />
-      <path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" strokeWidth="1.5" />
-    </motion.svg>
 
-    <motion.svg
-      width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"
-      style={{ position: 'absolute', zIndex: 1 }}
-      animate={{ scale: [1, 1.1, 1] }}
-      transition={{ repeat: Infinity, duration: 3, ease: "easeInOut" }}
-    >
-      <path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z" />
-      <circle cx="12" cy="12" r="3" fill="#fff" />
-    </motion.svg>
-  </div>
-);
 
 export default function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -67,7 +45,7 @@ export default function Navbar() {
   return (
     <nav className="navbar">
       <Link to="/" className="logo-link" onClick={handleLinkClick}>
-        <Logo />
+        <MechanicalEyeLogo />
         <motion.span
           className="logo-text"
           initial={{ opacity: 0, x: -10 }}

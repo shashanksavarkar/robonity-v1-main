@@ -19,6 +19,7 @@ import Resources from "./pages/Resources";
 import Auth from "./pages/Auth";
 import SingleThreadPage from "./pages/SingleThreadPage";
 import OAuthsuccess from "./pages/OAuthsuccess";
+import CustomCursor from "./components/CustomCursor";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -107,6 +108,7 @@ export default function App() {
 
   return (
     <AnimatePresence mode="wait">
+      <CustomCursor />
       <Routes location={location} key={location.pathname}>
         {routes.map(({ path, Comp }) => (
           <Route key={path} path={path} element={<PageLayout><Comp /></PageLayout>} />
