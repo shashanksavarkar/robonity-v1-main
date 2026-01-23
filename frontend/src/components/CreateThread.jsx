@@ -15,7 +15,8 @@ export default function CreateThread() {
 
     setSubmitting(true);
     try {
-      const res = await fetch("http://localhost:5000/api/threads", {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+      const res = await fetch(`${apiUrl}/api/threads`, {
         method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include", body: JSON.stringify({ title: title.trim() })
       });
       const data = await res.json();
