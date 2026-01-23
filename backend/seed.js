@@ -233,10 +233,10 @@ const aboutItemsData = [
 ];
 
 const developersData = [
-    { name: "Aman Choudhary", role: "Full Stack Developer", image: "https://ui-avatars.com/api/?name=Aman+Choudhary&background=0d8abc&color=fff", desc: "Passionate about building scalable web applications and exploring new tech stacks.", socials: { instagram: "#", linkedin: "#", github: "#" } },
-    { name: "Anirban Das", role: "Frontend Developer", image: "https://ui-avatars.com/api/?name=Anirban+Das&background=0d8abc&color=fff", desc: "Crafting beautiful and intuitive user interfaces with a focus on user experience.", socials: { instagram: "#", linkedin: "#", github: "#" } },
-    { name: "Shashank Savarkar", role: "Backend Developer", image: "https://ui-avatars.com/api/?name=Shashank+Savarkar&background=0d8abc&color=fff", desc: "Architecting robust server-side solutions and optimizing database performance.", socials: { instagram: "#", linkedin: "#", github: "#" } },
-    { name: "Suyash Srivastav", role: "Backend Developer", image: "https://ui-avatars.com/api/?name=Suyash+Srivastav&background=0d8abc&color=fff", desc: "Architecting robust server-side solutions and optimizing database performance.", socials: { instagram: "#", linkedin: "#", github: "#" } }
+    { name: "Aman Choudhary", role: "TechnoCrats GSV's RED Domain Head", image: "/devs_avatars/aman.jpg", desc: "Passionate about building scalable web applications and exploring new tech stacks.", socials: { instagram: "https://www.instagram.com/mbat_x/", linkedin: "https://www.linkedin.com/in/aman-choudhary-5512372a7/", github: "https://github.com/mbatwc113114" } },
+    { name: "Anirban Das", role: "TechnoCrats GSV's RED Domain Member", image: "/devs_avatars/anirban.jpg", desc: "Crafting beautiful and intuitive user interfaces with a focus on user experience.", socials: { instagram: "#", linkedin: "https://www.linkedin.com/in/anirban-das-1783492b6/", github: "https://github.com/dasux" } },
+    { name: "Shashank Savarkar", role: "TechnoCrats GSV's RED Domain Member", image: "/devs_avatars/shashank.jpg", desc: "Architecting robust server-side solutions and optimizing database performance.", socials: { instagram: "https://www.instagram.com/shashanksavarkar/", linkedin: "https://www.linkedin.com/in/shashank-savarkar-a001a5328/", github: "https://github.com/shashanksavarkar" } },
+    { name: "Suyash Srivastav", role: "TechnoCrats GSV's RED Domain Member", image: "/devs_avatars/suyash.jpg", desc: "Architecting robust server-side solutions and optimizing database performance.", socials: { instagram: "https://www.instagram.com/su.yash_srivastav/", linkedin: "https://www.linkedin.com/in/suyash-srivastav-124391285/", github: "https://github.com/Suyashusesgit" } }
 ];
 
 
