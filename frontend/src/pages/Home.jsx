@@ -275,8 +275,8 @@ export default function Home() {
             {flagshipEvents.map((event, i) => (
               <motion.div key={i} initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.15 }} viewport={{ once: true }} style={{ display: 'flex' }}>
                 <SpotlightCard className="event-card" style={{ width: '100%', height: '100%', minHeight: '320px', display: 'flex', flexDirection: 'column' }}>
-                  <div style={{ height: '140px', borderRadius: '12px', background: `linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))`, marginBottom: '1.5rem', position: 'relative', overflow: 'hidden' }}>
-                    <div style={{ position: 'absolute', top: '-50%', left: '-50%', width: '200%', height: '200%', background: `radial-gradient(circle, ${i === 0 ? '#3b82f6' : i === 1 ? '#a855f7' : '#f97316'} 0%, transparent 60%)`, opacity: 0.2 }} />
+                  <div style={{ height: '140px', borderRadius: '12px', background: event.image ? `url("${event.image}") center/cover no-repeat` : `linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05))`, marginBottom: '1.5rem', position: 'relative', overflow: 'hidden' }}>
+                    {!event.image && <div style={{ position: 'absolute', top: '-50%', left: '-50%', width: '200%', height: '200%', background: `radial-gradient(circle, ${i === 0 ? '#3b82f6' : i === 1 ? '#a855f7' : '#f97316'} 0%, transparent 60%)`, opacity: 0.2 }} />}
                   </div>
                   <h3 style={{ fontSize: '1.5rem', marginBottom: '1rem' }}>{event.title}</h3>
                   <p style={{ color: '#cbd5e1', lineHeight: '1.6', flex: 1 }}>{event.description}</p>
