@@ -137,6 +137,7 @@ const eventsData = [
         location: "Main Arena",
         description: "A high-energy competition where autonomous and manual bots battle it out on the pitch.",
         fullDetails: "Build your own soccer-playing robot and compete for the championship trophy.",
+        image: "/events/robowars.png",
         registrationLink: "/register/robosoccer",
         flagship: true
     },
@@ -166,6 +167,7 @@ const eventsData = [
         location: "Open Ground",
         description: "Robonity's flagship combat robotics tournament featuring heavy-metal destruction.",
         fullDetails: "Sparks flew and metal crunched in our first-ever heavy combat event.",
+        image: "/events/robowars.png",
         registrationLink: "",
         flagship: true
     },

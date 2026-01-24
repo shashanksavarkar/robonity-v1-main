@@ -33,7 +33,7 @@ export default function Footer() {
           <h3>Robonity</h3>
           <p>A community-driven platform for robotics enthusiasts, engineers, and innovators.</p>
 
-          <div className="social-links" style={{ flexWrap: "wrap", maxWidth: "300px" }}>
+          <div className="social-links">
             <SocialIcon
               title="GitHub"
               href="https://github.com/technocratsgsv"
