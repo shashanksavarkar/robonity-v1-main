@@ -1,4 +1,4 @@
-import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
+import { motion, useMotionTemplate, useMotionValue, AnimatePresence } from 'framer-motion';
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
@@ -57,22 +57,57 @@ export default function Home() {
   const [testimonials, setTestimonials] = useState([]);
   const [flagshipEvents, setFlagshipEvents] = useState([]);
 
+  const [error, setError] = useState(null);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const [projectsRes, statsRes, testimonialsRes, eventsRes] = await Promise.all([
-          getProjects(),
-          getStats(),
-          getTestimonials(),
-          getEvents()
-        ]);
+        setError(null);
+        console.log("Fetching home data...");
 
-        setFeaturedProjects(projectsRes.data.filter(p => p.featured).slice(0, 3));
-        setStats(statsRes.data);
-        setTestimonials(testimonialsRes.data);
-        setFlagshipEvents(eventsRes.data.filter(e => e.flagship).slice(0, 3));
-      } catch (error) {
-        console.error("Error fetching home data:", error);
+        // Fetch projects
+        try {
+          const projectsRes = await getProjects();
+          console.log("Projects fetched:", projectsRes.data.length);
+          setFeaturedProjects(projectsRes.data.filter(p => p.featured).slice(0, 3));
+        } catch (err) {
+          console.error("Failed to fetch projects:", err);
+          setError(prev => (prev ? prev + " | " : "") + "Projects: " + err.message);
+        }
+
+        // Fetch stats
+        try {
+          const statsRes = await getStats();
+          console.log("Stats fetched:", statsRes.data.length);
+          setStats(statsRes.data);
+        } catch (err) {
+          console.error("Failed to fetch stats:", err);
+          setError(prev => (prev ? prev + " | " : "") + "Stats: " + err.message);
+        }
+
+        // Fetch testimonials
+        try {
+          const testimonialsRes = await getTestimonials();
+          console.log("Testimonials fetched:", testimonialsRes.data.length);
+          setTestimonials(testimonialsRes.data);
+        } catch (err) {
+          console.error("Failed to fetch testimonials:", err);
+          setError(prev => (prev ? prev + " | " : "") + "Testimonials: " + err.message);
+        }
+
+        // Fetch events
+        try {
+          const eventsRes = await getEvents();
+          console.log("Events fetched:", eventsRes.data.length);
+          setFlagshipEvents(eventsRes.data.filter(e => e.flagship).slice(0, 3));
+        } catch (err) {
+          console.error("Failed to fetch events:", err);
+          setError(prev => (prev ? prev + " | " : "") + "Events: " + err.message);
+        }
+
+      } catch (err) {
+        console.error("Unexpected error in fetchData:", err);
+        setError("Unexpected error: " + err.message);
       }
     };
     fetchData();
@@ -138,6 +173,12 @@ export default function Home() {
         <motion.div className="section-header" initial="hidden" whileInView="visible" viewport={{ once: true }} variants={fadeInUp}>
           <h2>Built by the Community</h2>
           <p>See what our members have been working on lately.</p>
+          {error && (
+            <div style={{ color: '#ff6b6b', background: 'rgba(50,0,0,0.8)', padding: '15px', borderRadius: '8px', border: '1px solid #ff6b6b', marginTop: '20px' }}>
+              <strong>Debug Error:</strong> {error}
+            </div>
+          )}
+
         </motion.div>
         <div className="projects-grid-home">
           {featuredProjects.length > 0 ? (
@@ -265,6 +306,8 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+
     </div >
   );
 }
