@@ -20,6 +20,7 @@ import Auth from "./pages/Auth";
 import SingleThreadPage from "./pages/SingleThreadPage";
 import OAuthsuccess from "./pages/OAuthsuccess";
 import CustomCursor from "./components/CustomCursor";
+import NeuroGrid from "./components/NeuroGrid";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -108,19 +109,18 @@ export default function App() {
 
   return (
     <AnimatePresence mode="wait">
+      <NeuroGrid />
       <CustomCursor />
       <Routes location={location} key={location.pathname}>
         {routes.map(({ path, Comp }) => (
           <Route key={path} path={path} element={<PageLayout><Comp /></PageLayout>} />
         ))}
 
-        {[
-          { path: "/forum", Comp: Forum },
-          { path: "/forum/thread/:threadId", Comp: SingleThreadPage },
-        ].map(({ path, Comp }) => (
-          <Route key={path} path={path} element={<ProtectedRoute><PageLayout><Comp /></PageLayout></ProtectedRoute>} />
-        ))}
+        {/* Protected Forum Routes */}
+        <Route path="/forum" element={<ProtectedRoute><PageLayout><Forum /></PageLayout></ProtectedRoute>} />
+        <Route path="/forum/thread/:threadId" element={<ProtectedRoute><PageLayout><SingleThreadPage /></PageLayout></ProtectedRoute>} />
 
+        {/* Other Routes */}
         <Route path="/roboshare" element={<PageLayout><RoboShare /></PageLayout>} />
       </Routes>
     </AnimatePresence>

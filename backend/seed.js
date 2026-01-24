@@ -9,7 +9,7 @@ import Stat from './src/models/Stat.js';
 import AboutItem from './src/models/AboutItem.js';
 import Developer from './src/models/Developer.js';
 import connectDB from './src/config/db.js';
-import { image } from 'framer-motion/client';
+
 
 dotenv.config();
 

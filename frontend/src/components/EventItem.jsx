@@ -1,8 +1,28 @@
 import React, { useState } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useMotionValue, useTransform } from "framer-motion";
 
 export default function EventItem({ date, title, location, description, fullDetails, registrationLink }) {
   const [expanded, setExpanded] = useState(false);
+
+  // 3D Tilt Logic
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+
+  const rotateX = useTransform(y, [-100, 100], [5, -5]);
+  const rotateY = useTransform(x, [-100, 100], [-5, 5]);
+
+  const handleMouseMove = (e) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    const centerY = rect.top + rect.height / 2;
+    x.set(e.clientX - centerX);
+    y.set(e.clientY - centerY);
+  };
+
+  const handleMouseLeave = () => {
+    x.set(0);
+    y.set(0);
+  };
 
   const eventDate = new Date(date);
   const day = eventDate.getDate();
@@ -10,7 +30,18 @@ export default function EventItem({ date, title, location, description, fullDeta
   const year = eventDate.getFullYear();
 
   return (
-    <motion.div className="event-card" whileHover={{ y: -5 }}>
+    <motion.div
+      className="event-card"
+      style={{
+        perspective: 1000,
+        rotateX,
+        rotateY,
+        cursor: "pointer"
+      }}
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+      whileHover={{ scale: 1.02 }}
+    >
       {/* Date Panel - Holographic Stamp */}
       <div className="event-date-panel">
         <span className="event-day">{day}</span>
@@ -39,7 +70,10 @@ export default function EventItem({ date, title, location, description, fullDeta
           )}
           <button
             className="btn-details"
-            onClick={() => setExpanded(!expanded)}
+            onClick={(e) => {
+              e.stopPropagation(); // Prevent tilt reset/jitter if clicking button
+              setExpanded(!expanded);
+            }}
           >
             {expanded ? "Close Data" : "View Intel"}
           </button>
