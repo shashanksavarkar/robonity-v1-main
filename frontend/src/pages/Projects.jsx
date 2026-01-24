@@ -10,6 +10,7 @@ export default function Projects() {
     const [filter, setFilter] = useState("All");
     const [search, setSearch] = useState("");
     const [projects, setProjects] = useState([]);
+    const [activeProject, setActiveProject] = useState(null);
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -116,6 +117,8 @@ export default function Projects() {
                                 exit={{ opacity: 0, z: 50 }}
                                 whileHover={{ scale: 1.05, z: 60, rotateX: 2, rotateY: -2 }}
                                 transition={{ type: "spring", stiffness: 200, damping: 20 }}
+                                onClick={() => setActiveProject(project)}
+                                style={{ cursor: 'pointer' }}
                             >
                                 <div className="card-image" style={{
                                     background: project.image ? `url("${project.image}") center/cover no-repeat` : project.color
@@ -149,6 +152,66 @@ export default function Projects() {
                     </motion.div>
                 </motion.div>
             </div>
+
+            <AnimatePresence>
+                {activeProject && (
+                    <motion.div
+                        className="lightbox"
+                        onClick={() => setActiveProject(null)}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        style={{
+                            position: 'fixed', inset: 0, zIndex: 1000,
+                            background: 'rgba(0,0,0,0.8)', backdropFilter: 'blur(10px)',
+                            display: 'flex', alignItems: 'center', justifyContent: 'center'
+                        }}
+                    >
+                        <motion.div
+                            className="lightbox-content"
+                            onClick={e => e.stopPropagation()}
+                            initial={{ scale: 0.5, y: 50 }}
+                            animate={{ scale: 1, y: 0 }}
+                            exit={{ scale: 0.5, y: 50 }}
+                            style={{
+                                background: '#1e293b', border: '1px solid rgba(255,255,255,0.1)',
+                                borderRadius: '20px', overflow: 'hidden', maxWidth: '800px', width: '90%',
+                                display: 'grid', gridTemplateColumns: 'minmax(300px, 1fr) 1.5fr'
+                            }}
+                        >
+                            <div className="lightbox-image" style={{
+                                background: activeProject.image ? `url("${activeProject.image}") center/cover no-repeat` : activeProject.color,
+                                minHeight: '300px',
+                                height: '100%'
+                            }} />
+                            <div className="lightbox-details" style={{ padding: '2rem', display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                                <span className="lightbox-category" style={{ color: '#00c6ff', fontWeight: 'bold', letterSpacing: '2px', fontSize: '0.8rem' }}>
+                                    {activeProject.category || 'PROJECT'}
+                                </span>
+                                <h3 style={{ fontSize: '2rem', color: 'white', lineHeight: 1.2 }}>{activeProject.title}</h3>
+                                <div style={{ display: 'flex', gap: '1rem', fontSize: '0.9rem', color: '#94a3b8' }}>
+                                    <span>BY {activeProject.author || 'ANONYMOUS'}</span>
+                                    <span>•</span>
+                                    <span>{activeProject.status || 'COMPLETED'}</span>
+                                </div>
+                                <p style={{ color: '#cbd5e1', lineHeight: 1.6, marginTop: '1rem' }}>{activeProject.desc}</p>
+                                <div style={{ marginTop: 'auto', paddingTop: '2rem', display: 'flex', gap: '1rem' }}>
+                                    <button
+                                        className="close-btn"
+                                        onClick={() => setActiveProject(null)}
+                                        style={{
+                                            padding: '10px 24px', background: 'transparent', border: '1px solid rgba(255,255,255,0.2)',
+                                            color: 'white', borderRadius: '8px', cursor: 'pointer', fontWeight: '600'
+                                        }}
+                                    >
+                                        CLOSE
+                                    </button>
+                                </div>
+                            </div>
+                        </motion.div>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 }

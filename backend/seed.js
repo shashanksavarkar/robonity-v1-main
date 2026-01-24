@@ -9,6 +9,7 @@ import Stat from './src/models/Stat.js';
 import AboutItem from './src/models/AboutItem.js';
 import Developer from './src/models/Developer.js';
 import connectDB from './src/config/db.js';
+import { image } from 'framer-motion/client';
 
 dotenv.config();
 
@@ -38,65 +39,69 @@ const testimonialsData = [
 const projectsData = [
     {
         id: 1,
-        title: "A-Bot",
-        desc: "An autonomous raspberry-pi rover capable of mapping its environment.",
-        category: "Robotics",
-        status: "Completed",
-        author: "DevTeam Alpha",
+        title: "AUTO-BOT: Hybrid-Powered Autonomous Unmanned Ground Vehicle (UGV)",
+        desc: "AUTO-BOT is a hybrid diesel-electric autonomous Unmanned Ground Vehicle designed to efficiently transport medium payloads up to 50 kg.",
+        category: "Robotics / Autonomous Systems / Hybrid Electric Vehicles (UGV)",
+        status: "Ongoing",
+        author: "Aman Choudhary & Team",
         color: "linear-gradient(135deg, #FF6B6B 0%, #556270 100%)",
+        image: "/projects/auto-bot.png",
+        featured: true,
+    },
+    {
+        id: 2,
+        title: "SWARM-X: Intelligent Multi-Agent Swarm Control System",
+        desc: "SWARM-X is an AI-driven multi-agent swarm control system designed for coordinated search and rescue operations with autonomous navigation and real-time collaboration.",
+        category: "Artificial Intelligence / Robotics / Multi-Agent Systems",
+        status: "Ongoing",
+        author: "Aman Choudhary & Team",
+        color: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
+        image: "/projects/swarm.png",
+        featured: true,
+    },
+    {
+        id: 3,
+        title: "ARES-ROVER: Autonomous Exploration Rover",
+        desc: "ARES-ROVER is an autonomous planetary exploration rover designed for Mars terrain analysis, obstacle navigation, and remote scientific data collection in extreme environments.",
+        category: "Robotics / Space Exploration / Autonomous Systems",
+        status: "Concept",
+        author: "Anirban Das, Aman Choudhary & Team",
+        color: "linear-gradient(135deg, #f7971e 0%, #ffd200 100%)",
         image: "/projects/rover.png",
         featured: true
     },
     {
-        id: 2,
-        title: "Swarm Control",
-        desc: "Coordinated multi-agent system for search and rescue operations.",
-        category: "AI",
-        status: "In Progress",
-        author: "Sarah J.",
-        color: "linear-gradient(135deg, #4facfe 0%, #00f2fe 100%)",
-        image: "/projects/swarm.png",
-        featured: true
-    },
-    {
-        id: 3,
-        title: "Smart Arm",
-        desc: "Voice-controlled robotic arm assistance for home automation.",
-        category: "IoT",
-        status: "Beta",
-        author: "TechWiz",
-        color: "linear-gradient(135deg, #43e97b 0%, #38f9d7 100%)",
-        image: "/projects/arm.png",
-        featured: true
-    },
-    {
         id: 4,
-        title: "Neural Vision",
-        desc: "Computer vision pipeline for object detection in low light.",
-        category: "Software",
+        title: "Project Black Tiger – Autonomous Spy Bot",
+        desc: "Project Black Tiger is an autonomous reconnaissance robot featuring a computer vision pipeline optimized for object detection, tracking, and situational awareness in low-light and covert environments.",
+        category: "Computer Vision / Robotics / Autonomous Surveillance",
         status: "Completed",
-        author: "Visionary",
+        author: "Pranjal Chaturvedi, Arunodaya Sharma & Lehar Gupta",
         color: "linear-gradient(135deg, #fa709a 0%, #fee140 100%)",
-        featured: false
+        image: "/projects/spy-bot.png",
+        featured: false,
+
     },
     {
         id: 5,
-        title: "Underwater Drone",
-        desc: "Submersible exploration vehicle for pipeline inspection.",
-        category: "Robotics",
+        title: "Automatic Plant Watering Hydropaunic System",
+        desc: "An autonomous plant watering system designed to monitor soil moisture levels and water plants based on real-time data.",
+        category: "Robotics / IoT / Agricultural Automation",
         status: "Planning",
-        author: "DeepDive",
+        author: "Manish Meena",
         color: "linear-gradient(135deg, #30cfd0 0%, #330867 100%)",
+        image: "/projects/auto-watering.png",
         featured: false
     },
     {
         id: 6,
-        title: "Home Brain",
-        desc: "Centralized home automation server with local LLM integration.",
-        category: "IoT",
+        title: "Obstacle Detecting Bot",
+        desc: "An autonomous obstacle detecting robot designed to navigate through challenging terrains using advanced computer vision and machine learning.",
+        category: "Robotics / Computer Vision / Autonomous Navigation",
         status: "In Progress",
-        author: "NetRunner",
+        author: "Archit Singh Chauhan, Aditya Raj & Divyansh Soni",
         color: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+        image: "/projects/auto-obstacle.png",
         featured: false
     },
 ];
@@ -113,6 +118,7 @@ const eventsData = [
         location: "GSV",
         description: "High-intensity robotics combat competition where custom-built machines battle head-to-head to test engineering, strategy, and control.",
         fullDetails: "Join us for the biggest robotics hackathon of the year! Categories include Autonomous Systems, AI Integration, and Sustainable Robotics. Prizes worth $50k.",
+        image: "/events/robowars.png",
         registrationLink: "https://robowars-gsv.vercel.app/",
         flagship: true
     },
@@ -120,29 +126,31 @@ const eventsData = [
         date: "March 2026",
         title: "RoboBlocks",
         location: "GSV",
-        description: "Master the art of autonomous drone navigation using ROS2 and PX4.",
+        description: "Master the art of autonomous bots navigation using ROS2 and PX4.",
         fullDetails: "This hands-on workshop covers sensor fusion, path planning, and obstacle avoidance. Prerequisites: Basic Python and Linux knowledge.",
+        image: "/events/roboblocks.png",
         registrationLink: "https://roboblocks-gsv.vercel.app/",
-        flagship: false
+        flagship: true
     },
     {
         date: "January 2026",
         title: "Choke with Coke",
         location: "GSV",
-        description: "A fun-filled event where participants can showcase their skills in robotics and automation.",
+        description: "A fun-filled event where participants can showcase their skills in logical reasoning, problem-solving, code debugging, and robotics and automation.",
         fullDetails: "Keynote speakers from Boston Dynamics, Tesla, and NASA. Networking sessions included.",
+        image: "/events/cwc.png",
         registrationLink: "/register/choke-with-coke",
         flagship: true
     },
-    {
-        date: "2026-06-18",
-        title: "Bot Wars Championship",
-        location: "Tokyo, Japan",
-        description: "The ultimate combat robotics tournament. Build, fight, and win glory.",
-        fullDetails: "Witness 250lb combat robots clash in the arena. Team registration open now.",
-        registrationLink: "/register/bot-wars",
-        flagship: true
-    }
+    // {
+    //     date: "2026-06-18",
+    //     title: "Bot Wars Championship",
+    //     location: "Tokyo, Japan",
+    //     description: "The ultimate combat robotics tournament. Build, fight, and win glory.",
+    //     fullDetails: "Witness 250lb combat robots clash in the arena. Team registration open now.",
+    //     registrationLink: "/register/bot-wars",
+    //     flagship: false
+    // }
 ];
 
 
