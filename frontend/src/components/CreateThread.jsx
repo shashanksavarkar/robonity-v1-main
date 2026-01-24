@@ -15,17 +15,11 @@ export default function CreateThread() {
 
     setSubmitting(true);
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001';
-      const res = await fetch(`${apiUrl}/api/threads`, {
-        method: "POST", headers: { "Content-Type": "application/json" }, credentials: "include", body: JSON.stringify({ title: title.trim() })
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.message || "Failed to create thread.");
+      // Delegate to parent prop which handles the API call
+      await onCreateThread(title.trim());
       setTitle("");
-      // Ideally trigger a refresh in parent, but for now just clear title
-      window.location.reload(); // Simple way to refresh list for now
     } catch (err) {
-      setError(err.message || "Failed to create thread. Please try again.");
+      setError("Failed to create thread. Please try again.");
     } finally {
       setSubmitting(false);
     }

@@ -14,6 +14,7 @@ import galleryRoutes from './routes/galleryRoutes.js';
 import testimonialRoutes from './routes/testimonialRoutes.js';
 import statRoutes from './routes/statRoutes.js';
 import aboutRoutes from './routes/aboutRoutes.js';
+import forumRoutes from './routes/forumRoutes.js';
 import { errorHandler } from "./middlewares/errorMiddleware.js";
 
 dotenv.config();
@@ -34,6 +35,7 @@ app.use('/api/gallery', galleryRoutes);
 app.use('/api/testimonials', testimonialRoutes);
 app.use('/api/stats', statRoutes);
 app.use('/api/about', aboutRoutes);
+app.use('/api/forum', forumRoutes);
 
 app.use(errorHandler);
 

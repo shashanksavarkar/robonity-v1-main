@@ -1,30 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import ThreadItem from "../components/ThreadItem";
 import CreateThread from "../components/CreateThread";
+import { fetchThreads, createThread } from "../api/forumApi";
 import "../styles/Forum.css";
 
 export default function Forum() {
-  const mockThreads = [
-    { _id: '1', title: 'Welcome to the new Holographic Forum', author: { name: 'Admin_Core' }, createdAt: new Date().toISOString(), replies: 42, views: 1024 },
-    { _id: '2', title: 'System Update: v2.4 Released', author: { name: 'Dev_Ops' }, createdAt: new Date(Date.now() - 86400000).toISOString(), replies: 12, views: 340 },
-    { _id: '3', title: 'Robotics Workshop: Neural Networks', author: { name: 'Sarah J.' }, createdAt: new Date(Date.now() - 172800000).toISOString(), replies: 8, views: 156 },
-  ];
+  const [threads, setThreads] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  const [threads, setThreads] = useState(mockThreads);
-  const loading = false;
-  const error = null;
+  useEffect(() => {
+    loadThreads();
+  }, []);
 
-  const handleCreateThread = (newThreadTitle) => {
-    const newThread = {
-      _id: Date.now().toString(),
-      title: newThreadTitle,
-      author: { name: "Guest_User" },
-      createdAt: new Date().toISOString(),
-      replies: 0,
-      views: 0
-    };
-    setThreads([newThread, ...threads]);
+  const loadThreads = async () => {
+    try {
+      const { data } = await fetchThreads();
+      // Ensure replies is treated as a count if it's an array
+      const processedData = data.map(t => ({
+        ...t,
+        replies: Array.isArray(t.replies) ? t.replies.length : (t.replies || 0)
+      }));
+      setThreads(processedData);
+    } catch (err) {
+      setError("Failed to load transmission logs.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleCreateThread = async (newThreadData) => {
+    // newThreadData can be an object { title, content } or just title string depending on CreateThread component
+    // We will assume CreateThread passes an object or check it
+    const payload = typeof newThreadData === 'string' ? { title: newThreadData, content: "No content provided." } : newThreadData;
+
+    try {
+      await createThread(payload);
+      loadThreads(); // Reload to show new thread
+    } catch (err) {
+      console.error("Failed to create thread:", err);
+      alert("Failed to create thread. Ensure you are logged in.");
+    }
   };
 
   return (
@@ -41,7 +58,7 @@ export default function Forum() {
         <CreateThread onCreateThread={handleCreateThread} />
       </motion.div>
 
-      {loading && <p>Loading threads...</p>}
+      {loading && <p style={{ textAlign: "center", color: "#00c6ff", marginTop: "2rem" }}>LOADING DATA STREAM...</p>}
       {error && <div className="auth-error"><p><strong>Error:</strong> {error}</p></div>}
 
       {!loading && !error && (
@@ -51,18 +68,22 @@ export default function Forum() {
           animate="visible"
           variants={{ hidden: { opacity: 0 }, visible: { opacity: 1, transition: { staggerChildren: 0.1 } } }}
         >
-          {threads.map(thread => (
-            <motion.div key={thread._id} variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}>
-              <ThreadItem
-                id={thread._id}
-                title={thread.title}
-                authorName={thread.author?.name}
-                date={thread.createdAt}
-                replies={thread.replies}
-                views={thread.views}
-              />
-            </motion.div>
-          ))}
+          {threads.length === 0 ? (
+            <p style={{ textAlign: "center", color: "var(--text-muted)", marginTop: "2rem" }}>No active threads. Be the first to transmit.</p>
+          ) : (
+            threads.map(thread => (
+              <motion.div key={thread._id} variants={{ hidden: { opacity: 0, y: 10 }, visible: { opacity: 1, y: 0 } }}>
+                <ThreadItem
+                  id={thread._id}
+                  title={thread.title}
+                  authorName={thread.author?.name}
+                  date={thread.createdAt}
+                  replies={thread.replies} // Now a number
+                  views={thread.views}
+                />
+              </motion.div>
+            ))
+          )}
         </motion.div>
       )}
     </div>

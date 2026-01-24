@@ -252,8 +252,16 @@ export default function Home() {
       <section className="marquee-section">
         <div className="marquee-wrapper">
           <div className="marquee-track scroll-left">
-            <div className="marquee-content">{Array(5).fill("ROBONITY 2026").map((t, i) => <span key={i}>{t}</span>)}</div>
-            <div className="marquee-content" aria-hidden="true">{Array(5).fill("ROBONITY 2026").map((t, i) => <span key={i}>{t}</span>)}</div>
+            <div className="marquee-content">
+              {["ROBOBLOCKS", "ROBONITY", "ROBOWARS", "ROBOWARS 2.0", "ROBOSOCCER"].map((t, i) => (
+                <span key={i}>{t}</span>
+              ))}
+            </div>
+            <div className="marquee-content" aria-hidden="true">
+              {["ROBOBLOCKS", "ROBONITY", "ROBOWARS", "ROBOWARS 2.0", "ROBOSOCCER"].map((t, i) => (
+                <span key={i}>{t}</span>
+              ))}
+            </div>
           </div>
         </div>
       </section>

@@ -280,4 +280,99 @@
   display: inline-block;
 }
 
-/* ... (optional: preserve glitch animation keyframes if desired, omitted for brevity but standard glitch css works) */
+/* Tabs Navigation - creative creative */
+.tabs-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  background: rgba(15, 23, 42, 0.4);
+  padding: 10px;
+  border-radius: 50px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  margin-bottom: 50px;
+  position: relative;
+  z-index: 10;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.tab-button {
+  position: relative;
+  background: transparent;
+  border: none;
+  padding: 10px 25px;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: #94a3b8;
+  cursor: pointer;
+  z-index: 1;
+  transition: color 0.3s ease;
+  letter-spacing: 1px;
+}
+
+.tab-button:hover {
+  color: #cbd5e1;
+}
+
+.tab-button.active {
+  color: #0f172a;
+}
+
+.tab-highlight {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: #00c6ff;
+  border-radius: 25px;
+  z-index: -1;
+  box-shadow: 0 0 15px rgba(0, 198, 255, 0.5);
+}
+
+/* Event Section Wrapper */
+.event-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+@media (max-width: 768px) {
+  .tabs-container {
+    gap: 10px;
+    padding: 8px;
+    width: 90%;
+    margin-bottom: 30px;
+  }
+
+  .tab-button {
+    padding: 8px 16px;
+    font-size: 0.8rem;
+  }
+}
+
+/* Academic Year Group Header */
+.academic-year-header {
+  font-family: 'Orbitron', sans-serif;
+  font-size: 1.5rem;
+  color: #00c6ff;
+  margin-top: 40px;
+  margin-bottom: 20px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid rgba(0, 198, 255, 0.2);
+  width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  text-shadow: 0 0 10px rgba(0, 198, 255, 0.3);
+  position: relative;
+}
+
+.academic-year-header::before {
+  content: '►';
+  margin-right: 15px;
+  color: #fff;
+  font-size: 1rem;
+  vertical-align: middle;
+}

@@ -2,8 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useAuth } from "../components/AuthContext";
-import PostReply from "../components/PostReply";
-import ReplyItem from "../components/ReplyItem";
+import { fetchThreadById, postReply } from "../api/forumApi";
 
 export default function SingleThreadPage() {
   const { threadId } = useParams();
@@ -12,36 +11,44 @@ export default function SingleThreadPage() {
   const [replies, setReplies] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
-
-
+  const [replyText, setReplyText] = useState("");
+  const [submittingReply, setSubmittingReply] = useState(false);
 
   useEffect(() => {
-
-    const mockDelay = setTimeout(() => {
-      const mockThread = {
-        _id: threadId,
-        title: threadId === '1' ? 'Welcome to the new Holographic Forum' :
-          threadId === '2' ? 'System Update: v2.4 Released' :
-            'Mock Thread Title',
-        authorName: 'Admin_Core',
-        createdAt: new Date().toISOString(),
-        content: "Welcome to the new system. This interface is designed for maximum efficiency and aesthetic pleasure. Enjoy the holographic data streams."
-      };
-
-      const mockReplies = [
-        { _id: 'r1', text: 'This looks amazing!', author: { name: 'User_01' }, createdAt: new Date().toISOString() },
-        { _id: 'r2', text: 'Love the new design.', author: { name: 'User_02' }, createdAt: new Date().toISOString() }
-      ];
-
-      setThread(mockThread);
-      setReplies(mockReplies);
-      setLoading(false);
-    }, 500);
-
-    return () => clearTimeout(mockDelay);
+    loadThread();
   }, [threadId]);
 
+  const loadThread = async () => {
+    try {
+      const { data } = await fetchThreadById(threadId);
+      setThread(data);
+      setReplies(data.replies || []);
+    } catch (err) {
+      setError("Failed to retrieve transmission log.");
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  const handleReplySubmit = async () => {
+    if (!replyText.trim()) return;
+    if (!currentUser) {
+      alert("Authentication required for transmission.");
+      return;
+    }
+
+    setSubmittingReply(true);
+    try {
+      await postReply(threadId, { text: replyText });
+      setReplyText("");
+      // Refresh to show new reply
+      await loadThread();
+    } catch (err) {
+      alert("Transmission failed. Please retry.");
+    } finally {
+      setSubmittingReply(false);
+    }
+  };
 
   if (loading) return (
     <div className="forum-page" style={{ justifyContent: 'center' }}>
@@ -56,7 +63,7 @@ export default function SingleThreadPage() {
       <Link to="/forum" className="back-link" style={{ marginTop: "1rem", color: "#fff" }}>Back to Forum</Link>
     </div>
   );
-  if (!thread) return <p>Thread not found.</p>;
+  if (!thread) return <p style={{ color: "#fff", textAlign: "center", marginTop: "2rem" }}>Thread not found.</p>;
 
   return (
     <motion.div
@@ -80,7 +87,7 @@ export default function SingleThreadPage() {
         <h1 className="thread-title-large glitch-effect" data-text={thread.title}>{thread.title}</h1>
 
         <div className="thread-meta-info">
-          <span><span className="meta-label">INITIATED BY:</span> <span className="meta-value">{thread.authorName || "Anonymous"}</span></span>
+          <span><span className="meta-label">INITIATED BY:</span> <span className="meta-value">{thread.author?.name || "Anonymous"}</span></span>
           <span><span className="meta-label">DATE:</span> <span className="meta-value">{new Date(thread.createdAt).toLocaleDateString()}</span></span>
         </div>
 
@@ -96,7 +103,7 @@ export default function SingleThreadPage() {
 
         {replies.map((reply, i) => (
           <motion.div
-            key={reply._id}
+            key={reply._id || i}
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.1 * i }}
@@ -117,8 +124,17 @@ export default function SingleThreadPage() {
           <textarea
             className="reply-textarea"
             placeholder="Enter transmission..."
+            value={replyText}
+            onChange={(e) => setReplyText(e.target.value)}
+            disabled={submittingReply}
           />
-          <button className="btn-send-reply">TRANSMIT</button>
+          <button
+            className="btn-send-reply"
+            onClick={handleReplySubmit}
+            disabled={submittingReply || !replyText.trim()}
+          >
+            {submittingReply ? "TRANSMITTING..." : "TRANSMIT"}
+          </button>
         </div>
       </div>
     </motion.div>
