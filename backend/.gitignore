@@ -23,3 +23,7 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+#packages and dependencies
+package-lock.json
+package.json
