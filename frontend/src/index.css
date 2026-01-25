@@ -14,6 +14,17 @@
   --text-muted: #9ca3af;
   /* Muted Text */
   --font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+
+  /* Responsive Spacing */
+  --spacing-layout-x: 2rem;
+  --spacing-layout-y: 100px;
+}
+
+@media (max-width: 768px) {
+  :root {
+    --spacing-layout-x: 1rem;
+    --spacing-layout-y: 80px;
+  }
 }
 
 * {
