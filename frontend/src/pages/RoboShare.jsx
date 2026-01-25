@@ -8,7 +8,7 @@ export default function RoboShare() {
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({ email: "", rollNo: "", mobile: "", password: "", otp: "" });
-  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5001';
+  const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 
   const handleChange = (e) => setFormData({ ...formData, [e.target.name]: e.target.value });
 

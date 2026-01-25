@@ -16,7 +16,7 @@ export default function OAuthSuccess() {
             const user = { token, name, avatar };
             localStorage.setItem("user", JSON.stringify(user));
             setCurrentUser(user);
-            navigate("/forum");
+            navigate("/roboshare");
         }
     }, [navigate, setCurrentUser]);
 

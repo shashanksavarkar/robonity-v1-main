@@ -25,6 +25,9 @@ connectDB();
 
 const app = express();
 
+// Trust the proxy (Render/Vercel) to enable HTTPS in callbacks
+app.set("trust proxy", 1);
+
 // Default Route
 app.get("/", (req, res) => {
     res.send("API is running...");

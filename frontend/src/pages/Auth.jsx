@@ -28,7 +28,7 @@ export default function Auth() {
       setCurrentUser(data);
 
       toast.success("Welcome back! Redirecting...");
-      setTimeout(() => navigate("/forum"), 1200);
+      setTimeout(() => navigate("/roboshare"), 1200);
     } catch (err) {
       toast.error(err.message || "Authentication failed");
     } finally {
