@@ -57,8 +57,8 @@ export default function RoboShare() {
     try {
       const res = await axios.post(`${apiUrl}/api/roboshare/verify-otp`, {
         email: formData.email,
-        emailOtp: formData.emailOtp,
-        mobileOtp: formData.mobileOtp
+        emailOtp: formData.emailOtp.trim(),
+        mobileOtp: formData.mobileOtp.trim()
       });
 
       if (res.status === 200) {
@@ -113,7 +113,7 @@ export default function RoboShare() {
       >
         <div className="mb-8 text-center">
           <h1 className="text-3xl font-black mb-2 bg-gradient-to-br from-white to-slate-400 bg-clip-text text-transparent uppercase tracking-tight">
-            {step === 1 ? "RoboShare Login" : "Dual Verification"}
+            {step === 1 ? "RoboShare Login" : "OTP Verification"}
           </h1>
           <p className="text-slate-400 text-sm">
             {step === 1
@@ -207,7 +207,7 @@ export default function RoboShare() {
             disabled={loading}
             className="w-full p-4 bg-gradient-to-r from-cyan-600 to-blue-600 rounded-xl text-white font-bold uppercase tracking-wider hover:shadow-[0_0_20px_rgba(0,198,255,0.4)] transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-2"
           >
-            {loading ? "Verifying..." : step === 1 ? "Verify Identity" : "Unlock RoboShare"}
+            {loading ? "Verifying..." : step === 1 ? "Verify Identity" : "Continue to RoboShare"}
           </button>
         </form>
 
