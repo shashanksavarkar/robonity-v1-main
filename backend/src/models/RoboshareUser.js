@@ -5,7 +5,8 @@ const roboshareSchema = new mongoose.Schema({
     rollNo: { type: String, required: true },
     mobile: { type: String, required: true },
     password: { type: String, required: true },
-    otp: { type: String },
+    emailOtp: { type: String },
+    mobileOtp: { type: String },
     isVerified: { type: Boolean, default: false },
     registeredAt: { type: Date, default: Date.now }
 });
