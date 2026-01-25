@@ -25,5 +25,5 @@ dist-ssr
 *.sw?
 
 #packages and dependencies
-package-lock.json
-package.json
+# package-lock.json
+# package.json

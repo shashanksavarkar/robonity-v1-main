@@ -23,14 +23,22 @@ const authCallback = async (accessToken, refreshToken, profile, done, provider) 
     }
 };
 
-passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "/api/auth/google/callback",
-}, (accessToken, refreshToken, profile, done) => authCallback(accessToken, refreshToken, profile, done, "google")));
+if (process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET) {
+    passport.use(new GoogleStrategy({
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: "/api/auth/google/callback",
+    }, (accessToken, refreshToken, profile, done) => authCallback(accessToken, refreshToken, profile, done, "google")));
+} else {
+    console.warn("Google OAuth credentials missing. Skipping Google Strategy.");
+}
 
-passport.use(new GitHubStrategy({
-    clientID: process.env.GITHUB_CLIENT_ID,
-    clientSecret: process.env.GITHUB_CLIENT_SECRET,
-    callbackURL: "/api/auth/github/callback",
-}, (accessToken, refreshToken, profile, done) => authCallback(accessToken, refreshToken, profile, done, "github")));
+if (process.env.GITHUB_CLIENT_ID && process.env.GITHUB_CLIENT_SECRET) {
+    passport.use(new GitHubStrategy({
+        clientID: process.env.GITHUB_CLIENT_ID,
+        clientSecret: process.env.GITHUB_CLIENT_SECRET,
+        callbackURL: "/api/auth/github/callback",
+    }, (accessToken, refreshToken, profile, done) => authCallback(accessToken, refreshToken, profile, done, "github")));
+} else {
+    console.warn("GitHub OAuth credentials missing. Skipping GitHub Strategy.");
+}
