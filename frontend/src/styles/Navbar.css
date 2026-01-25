@@ -250,6 +250,9 @@
 /* =========================
    TABLET & MOBILE (≤900px)
    ========================= */
+/* =========================
+   TABLET & MOBILE (≤900px)
+   ========================= */
 @media (max-width: 900px) {
     .navbar {
         width: calc(100% - 32px);
@@ -262,59 +265,122 @@
         display: flex;
     }
 
-    .nav-links {
+    /* Mobile Drawer Styles */
+    .mobile-drawer {
         position: fixed;
-        /* Changed to fixed for full screen overlay effect */
-        top: 80px;
-        /* Below navbar */
-        left: 16px;
-        right: 16px;
-        width: auto;
-
-        flex-direction: column;
-        align-items: stretch;
-        gap: 8px;
-
-        background: rgba(15, 23, 42, 0.95);
+        top: 0;
+        right: 0;
+        bottom: 0;
+        width: 100%;
+        max-width: 320px;
+        background: rgba(15, 23, 42, 0.98);
         backdrop-filter: blur(20px);
-        -webkit-backdrop-filter: blur(20px);
-
-        padding: 24px;
-        border-radius: 20px;
-        border: 1px solid rgba(0, 198, 255, 0.3);
-        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.8);
-
-        opacity: 0;
-        pointer-events: none;
-        transform: translateY(-20px);
-        transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    .nav-links.open {
-        opacity: 1;
-        pointer-events: auto;
-        transform: translateY(0);
-    }
-
-    .nav-links li a {
-        padding: 12px 16px;
-        border-radius: 12px;
-        background: rgba(255, 255, 255, 0.03);
-        text-align: center;
-    }
-
-    .nav-links li a:active {
-        background: rgba(0, 198, 255, 0.1);
-    }
-
-    .auth-links {
+        z-index: 2000;
+        border-left: 1px solid rgba(0, 198, 255, 0.2);
+        display: flex;
         flex-direction: column;
-        width: 100%;
+        padding: 24px;
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
     }
 
-    .btn-join {
+    .drawer-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 2rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .drawer-title {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #fff;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+    }
+
+    .close-btn {
+        background: transparent;
+        color: #fff;
+        font-size: 2rem;
+        border: none;
+        cursor: pointer;
+    }
+
+    .drawer-links {
+        list-style: none;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        overflow-y: auto;
+    }
+
+    .drawer-links a {
+        font-size: 1.2rem;
+        color: #94a3b8;
+        padding: 12px;
+        display: block;
+        text-decoration: none;
+        font-weight: 600;
+        transition: all 0.2s;
+        border-radius: 8px;
+    }
+
+    .drawer-links a.active,
+    .drawer-links a:hover {
+        color: #00c6ff;
+        background: rgba(0, 198, 255, 0.1);
+        padding-left: 20px;
+    }
+
+    .drawer-footer {
+        margin-top: auto;
+        padding-top: 2rem;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .btn-join-mobile {
+        display: block;
         width: 100%;
+        padding: 14px;
         text-align: center;
-        margin-top: 12px;
+        background: #00c6ff;
+        color: #0f172a;
+        font-weight: 800;
+        border-radius: 8px;
+        text-decoration: none;
+        text-transform: uppercase;
+    }
+
+    .drawer-profile {
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .profile-info {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        color: #fff;
+        font-weight: 600;
+    }
+
+    .profile-info img {
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+    }
+
+    .btn-logout-mobile {
+        width: 100%;
+        padding: 12px;
+        background: rgba(255, 59, 59, 0.2);
+        color: #ff6b6b;
+        border: 1px solid rgba(255, 59, 59, 0.4);
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
     }
 }

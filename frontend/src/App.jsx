@@ -22,6 +22,8 @@ import OAuthsuccess from "./pages/OAuthsuccess";
 import NotFound from "./pages/NotFound";
 import CustomCursor from "./components/CustomCursor";
 import NeuroGrid from "./components/NeuroGrid";
+import LayoutWrapper from "./components/LayoutWrapper";
+import { useDevice } from "./hooks/useDevice";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -50,18 +52,25 @@ const PageLayout = ({ children }) => {
   const excludeGrid = ["/"];
   const showGrid = !excludeGrid.includes(location.pathname);
 
+  // Home page handles its own layout, other pages use LayoutWrapper
+  if (isHome) {
+    return (
+      <div className={`app-container ${showGrid ? 'bg-grid-pattern' : ''}`} style={{ overflowX: "hidden" }}>
+        <Navbar />
+        <main className="main-content home-layout" style={{ padding: 0, maxWidth: '100%', width: '100%', marginTop: 0 }}>
+          <AnimatedPage>{children}</AnimatedPage>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className={`app-container ${showGrid ? 'bg-grid-pattern' : ''}`} style={{ overflowX: "hidden" }}>
       <Navbar />
-      <main
-        className={`main-content ${isHome ? 'home-layout' : ''}`}
-        style={{
-          minHeight: "calc(100vh - 200px)",
-          ...(isHome ? { padding: 0, maxWidth: '100%', width: '100%', marginTop: 0 } : {})
-        }}
-      >
+      <LayoutWrapper>
         <AnimatedPage>{children}</AnimatedPage>
-      </main>
+      </LayoutWrapper>
       <Footer />
     </div>
   );
@@ -69,6 +78,8 @@ const PageLayout = ({ children }) => {
 
 export default function App() {
   const location = useLocation();
+  const { isMobile } = useDevice();
+
   const routes = [
     { path: "/", Comp: Home },
     { path: "/about", Comp: About },
@@ -110,7 +121,7 @@ export default function App() {
 
   return (
     <div className="app-root">
-      <NeuroGrid />
+      {!isMobile && <NeuroGrid />}
       <CustomCursor />
       <AnimatePresence mode="wait">
         <Routes location={location} key={location.pathname}>
