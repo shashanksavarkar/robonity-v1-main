@@ -1,0 +1,88 @@
+
+> robonity-v1.0.1@0.0.0 lint
+> eslint .
+
+
+/Users/home/Desktop/ROBONITY/lala/robonity-v1-main/frontend/src/App.jsx
+    3:27  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  116:30  error  'Comp' is defined but never used                                               no-unused-vars
+
+/Users/home/Desktop/ROBONITY/lala/robonity-v1-main/frontend/src/components/AuthContext.jsx
+  4:14  error  Fast refresh only works when a file only exports components. Use a new file to share constants or functions between components  react-refresh/only-export-components
+
+/Users/home/Desktop/ROBONITY/lala/robonity-v1-main/frontend/src/components/CreateThread.jsx
+  19:13  error  'onCreateThread' is not defined  no-undef
+  21:14  error  'err' is defined but never used  no-unused-vars
+
+/Users/home/Desktop/ROBONITY/lala/robonity-v1-main/frontend/src/components/CustomCursor.jsx
+   2:10  error    'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u                                                             no-unused-vars
+  66:8   warning  React Hook useEffect has missing dependencies: 'cursorX', 'cursorY', and 'isVisible'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/home/Desktop/ROBONITY/lala/robonity-v1-main/frontend/src/components/EventItem.jsx
+  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/home/Desktop/ROBONITY/lala/robonity-v1-main/frontend/src/components/Footer.jsx
+  3:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/home/Desktop/ROBONITY/lala/robonity-v1-main/frontend/src/components/Loader.jsx
+  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/home/Desktop/ROBONITY/lala/robonity-v1-main/frontend/src/components/MechanicalEyeLogo.jsx
+  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/home/Desktop/ROBONITY/lala/robonity-v1-main/frontend/src/components/Navbar.jsx
+  3:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/home/Desktop/ROBONITY/lala/robonity-v1-main/frontend/src/hooks/useDecipher.js
+  16:29  error  'prev' is defined but never used  no-unused-vars
+
+/Users/home/Desktop/ROBONITY/lala/robonity-v1-main/frontend/src/hooks/useScrollReveal.js
+  17:8  warning  React Hook useEffect has a missing dependency: 'options'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/home/Desktop/ROBONITY/lala/robonity-v1-main/frontend/src/pages/About.jsx
+  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/home/Desktop/ROBONITY/lala/robonity-v1-main/frontend/src/pages/Auth.jsx
+  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/home/Desktop/ROBONITY/lala/robonity-v1-main/frontend/src/pages/Events.jsx
+  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u                 no-unused-vars
+  9:10  error  'activeTab' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u     no-unused-vars
+  9:21  error  'setActiveTab' is assigned a value but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/home/Desktop/ROBONITY/lala/robonity-v1-main/frontend/src/pages/Forum.jsx
+   2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+  26:14  error  'err' is defined but never used                                                no-unused-vars
+
+/Users/home/Desktop/ROBONITY/lala/robonity-v1-main/frontend/src/pages/Gallery.jsx
+  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/home/Desktop/ROBONITY/lala/robonity-v1-main/frontend/src/pages/Home.jsx
+  1:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/home/Desktop/ROBONITY/lala/robonity-v1-main/frontend/src/pages/Newsletter.jsx
+  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/home/Desktop/ROBONITY/lala/robonity-v1-main/frontend/src/pages/NotFound.jsx
+  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/home/Desktop/ROBONITY/lala/robonity-v1-main/frontend/src/pages/OAuthsuccess.jsx
+  21:8  warning  React Hook useEffect has missing dependencies: 'navigate' and 'setCurrentUser'. Either include them or remove the dependency array  react-hooks/exhaustive-deps
+
+/Users/home/Desktop/ROBONITY/lala/robonity-v1-main/frontend/src/pages/Projects.jsx
+  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/home/Desktop/ROBONITY/lala/robonity-v1-main/frontend/src/pages/Resources.jsx
+  2:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/home/Desktop/ROBONITY/lala/robonity-v1-main/frontend/src/pages/RoboShare.jsx
+  3:10  error  'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u  no-unused-vars
+
+/Users/home/Desktop/ROBONITY/lala/robonity-v1-main/frontend/src/pages/SingleThreadPage.jsx
+   3:10  error    'motion' is defined but never used. Allowed unused vars must match /^[A-Z_]/u                                  no-unused-vars
+  19:6   warning  React Hook useEffect has a missing dependency: 'loadThread'. Either include it or remove the dependency array  react-hooks/exhaustive-deps
+  26:14  error    'err' is defined but never used                                                                                no-unused-vars
+  46:14  error    'err' is defined but never used                                                                                no-unused-vars
+
+✖ 33 problems (29 errors, 4 warnings)
+

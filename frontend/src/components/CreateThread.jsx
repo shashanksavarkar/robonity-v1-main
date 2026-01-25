@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAuth } from "./AuthContext";
 
-export default function CreateThread() {
+export default function CreateThread({ onCreateThread }) {
   const [title, setTitle] = useState("");
   const [error, setError] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -18,7 +18,7 @@ export default function CreateThread() {
       // Delegate to parent prop which handles the API call
       await onCreateThread(title.trim());
       setTitle("");
-    } catch (err) {
+    } catch (error) {
       setError("Failed to create thread. Please try again.");
     } finally {
       setSubmitting(false);

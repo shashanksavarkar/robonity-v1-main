@@ -63,7 +63,7 @@ const CustomCursor = () => {
             });
             observer.disconnect();
         };
-    }, []);
+    }, [cursorX, cursorY, isVisible]);
 
     // Update body class for CSS-based hover states
     useEffect(() => {

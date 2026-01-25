@@ -18,7 +18,7 @@ export default function OAuthSuccess() {
             setCurrentUser(user);
             navigate("/forum");
         }
-    }, []);
+    }, [navigate, setCurrentUser]);
 
     return null;
 }

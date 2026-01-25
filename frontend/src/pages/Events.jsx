@@ -6,7 +6,6 @@ import { useDecipher } from "../hooks/useDecipher";
 import "../styles/Events.css";
 
 export default function Events() {
-  const [activeTab, setActiveTab] = useState("all");
   const titleText = useDecipher("EVENTS");
 
   // Group events by academic year

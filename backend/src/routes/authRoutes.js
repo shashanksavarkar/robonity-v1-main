@@ -3,10 +3,12 @@ import passport from "passport";
 import "../config/passport.js";
 import { oauthSuccess, registerUser, loginUser } from "../controllers/authController.js";
 
+import { validateRegister, validateLogin } from "../middlewares/validate.js";
+
 const router = express.Router();
 
-router.post("/register", registerUser);
-router.post("/login", loginUser);
+router.post("/register", validateRegister, registerUser);
+router.post("/login", validateLogin, loginUser);
 
 router.get("/google", passport.authenticate("google", { scope: ["profile", "email"] }));
 router.get("/google/callback", passport.authenticate("google", { session: false }), oauthSuccess);

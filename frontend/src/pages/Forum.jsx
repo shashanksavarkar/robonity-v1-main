@@ -23,7 +23,7 @@ export default function Forum() {
         replies: Array.isArray(t.replies) ? t.replies.length : (t.replies || 0)
       }));
       setThreads(processedData);
-    } catch (err) {
+    } catch (error) {
       setError("Failed to load transmission logs.");
     } finally {
       setLoading(false);

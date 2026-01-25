@@ -2,8 +2,10 @@ import express from "express";
 import dotenv from "dotenv";
 import cors from "cors";
 import passport from "passport";
+import morgan from "morgan";
 import connectDB from "./config/db.js";
 import "./config/passport.js";
+import { securityMiddleware } from "./middlewares/security.js";
 import authRoutes from "./routes/authRoutes.js";
 import eventRoutes from "./routes/eventRoutes.js";
 import registrationRoutes from "./routes/registrationRoutes.js";
@@ -16,11 +18,21 @@ import statRoutes from './routes/statRoutes.js';
 import aboutRoutes from './routes/aboutRoutes.js';
 import forumRoutes from './routes/forumRoutes.js';
 import { errorHandler } from "./middlewares/errorMiddleware.js";
+import logger from "./config/logger.js";
 
 dotenv.config();
 connectDB();
 
 const app = express();
+
+// Security Middleware (Helmet + Rate Limit)
+app.use(securityMiddleware);
+
+// Logging
+if (process.env.NODE_ENV === 'development') {
+    app.use(morgan('dev'));
+}
+
 app.use(cors({
     origin: ["http://localhost:5173", "http://127.0.0.1:5173"],
     credentials: true
@@ -43,12 +55,12 @@ app.use('/api/forum', forumRoutes);
 app.use(errorHandler);
 
 const PORT = process.env.PORT || 5000;
-const server = app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+const server = app.listen(PORT, () => logger.info(`Server running on port ${PORT}`));
 
 server.on('error', (error) => {
     if (error.code === 'EADDRINUSE') {
-        console.error(`\nError: Port ${PORT} is already in use.`);
-        console.error(`To fix, run: kill -9 $(lsof -t -i:${PORT})\n`);
+        logger.error(`\nError: Port ${PORT} is already in use.`);
+        logger.error(`To fix, run: kill -9 $(lsof -t -i:${PORT})\n`);
         process.exit(1);
     } else {
         throw error;

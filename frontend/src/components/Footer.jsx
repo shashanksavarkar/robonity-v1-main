@@ -82,7 +82,7 @@ export default function Footer() {
       </div>
       <div className="footer-bottom">
         <p>&copy; {new Date().getFullYear()} Robonity. All rights reserved.</p>
-        <p>Author: Aman Choudhary, Anirban Das, Shashank Savarkar</p>
+        <p>Author: Aman Choudhary, Anirban Das, Shashank Savarkar, Suyash Srivastav</p>
       </div>
     </footer>
   );

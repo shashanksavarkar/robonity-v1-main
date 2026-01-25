@@ -13,7 +13,7 @@ export function useDecipher(text, options = {}) {
         if (!text) return;
 
         const interval = setInterval(() => {
-            setDisplayText((prev) =>
+            setDisplayText(() =>
                 text
                     .split("")
                     .map((char, index) => {

@@ -14,21 +14,22 @@ export default function SingleThreadPage() {
   const [replyText, setReplyText] = useState("");
   const [submittingReply, setSubmittingReply] = useState(false);
 
-  useEffect(() => {
-    loadThread();
-  }, [threadId]);
-
-  const loadThread = async () => {
+  /* eslint-disable-next-line react-hooks/exhaustive-deps */
+  const loadThread = React.useCallback(async () => {
     try {
       const { data } = await fetchThreadById(threadId);
       setThread(data);
       setReplies(data.replies || []);
-    } catch (err) {
+    } catch {
       setError("Failed to retrieve transmission log.");
     } finally {
       setLoading(false);
     }
-  };
+  }, [threadId]);
+
+  useEffect(() => {
+    loadThread();
+  }, [loadThread]);
 
   const handleReplySubmit = async () => {
     if (!replyText.trim()) return;
@@ -43,7 +44,7 @@ export default function SingleThreadPage() {
       setReplyText("");
       // Refresh to show new reply
       await loadThread();
-    } catch (err) {
+    } catch {
       alert("Transmission failed. Please retry.");
     } finally {
       setSubmittingReply(false);

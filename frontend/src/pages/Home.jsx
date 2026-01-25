@@ -1,4 +1,4 @@
-import { motion, useMotionTemplate, useMotionValue, AnimatePresence } from 'framer-motion';
+import { motion, useMotionTemplate, useMotionValue } from 'framer-motion';
 import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import gsap from 'gsap';
@@ -7,10 +7,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import "../styles/Home.css";
 import heroBgVid from '../assets/Home_BG_Vid.mp4';
 import heroBgVidOth from '../assets/Home_BG_Oth_Sec.mp4';
-import { getProjects } from '../api/projectApi';
-import { getStats } from '../api/statApi';
-import { getTestimonials } from '../api/testimonialApi';
-import { getEvents } from '../api/eventApi';
+import { useHomeData } from '../hooks/useHomeData';
+import Loader from '../components/Loader';
 
 gsap.registerPlugin(ScrollTrigger, useGSAP);
 
@@ -52,66 +50,7 @@ const fadeInUp = {
 
 export default function Home() {
   const container = useRef();
-  const [featuredProjects, setFeaturedProjects] = useState([]);
-  const [stats, setStats] = useState([]);
-  const [testimonials, setTestimonials] = useState([]);
-  const [flagshipEvents, setFlagshipEvents] = useState([]);
-
-  const [error, setError] = useState(null);
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setError(null);
-        console.log("Fetching home data...");
-
-        // Fetch projects
-        try {
-          const projectsRes = await getProjects();
-          console.log("Projects fetched:", projectsRes.data.length);
-          setFeaturedProjects(projectsRes.data.filter(p => p.featured).slice(0, 3));
-        } catch (err) {
-          console.error("Failed to fetch projects:", err);
-          setError(prev => (prev ? prev + " | " : "") + "Projects: " + err.message);
-        }
-
-        // Fetch stats
-        try {
-          const statsRes = await getStats();
-          console.log("Stats fetched:", statsRes.data.length);
-          setStats(statsRes.data);
-        } catch (err) {
-          console.error("Failed to fetch stats:", err);
-          setError(prev => (prev ? prev + " | " : "") + "Stats: " + err.message);
-        }
-
-        // Fetch testimonials
-        try {
-          const testimonialsRes = await getTestimonials();
-          console.log("Testimonials fetched:", testimonialsRes.data.length);
-          setTestimonials(testimonialsRes.data);
-        } catch (err) {
-          console.error("Failed to fetch testimonials:", err);
-          setError(prev => (prev ? prev + " | " : "") + "Testimonials: " + err.message);
-        }
-
-        // Fetch events
-        try {
-          const eventsRes = await getEvents();
-          console.log("Events fetched:", eventsRes.data.length);
-          setFlagshipEvents(eventsRes.data.filter(e => e.flagship).slice(0, 3));
-        } catch (err) {
-          console.error("Failed to fetch events:", err);
-          setError(prev => (prev ? prev + " | " : "") + "Events: " + err.message);
-        }
-
-      } catch (err) {
-        console.error("Unexpected error in fetchData:", err);
-        setError("Unexpected error: " + err.message);
-      }
-    };
-    fetchData();
-  }, []);
+  const { featuredProjects, stats, testimonials, flagshipEvents, error } = useHomeData();
 
   useGSAP(() => {
     gsap.to(".hero-content", {
@@ -181,6 +120,7 @@ export default function Home() {
 
         </motion.div>
         <div className="projects-grid-home">
+
           {featuredProjects.length > 0 ? (
             featuredProjects.map((item, i) => (
               <motion.div
@@ -193,7 +133,7 @@ export default function Home() {
               >
                 <SpotlightCard
                   className="project-node"
-                  style={{ "--node-color": item.color.includes('gradient') ? '#00c6ff' : item.color }}
+                  style={{ "--node-color": item.color && item.color.includes('gradient') ? '#00c6ff' : item.color }}
                 >
                   <div className="node-scanline" />
                   <div className="node-content">
@@ -224,7 +164,9 @@ export default function Home() {
               </motion.div>
             ))
           ) : (
-            <p style={{ textAlign: 'center', color: '#94a3b8', gridColumn: '1/-1' }}>Loading projects...</p>
+            <div className="col-span-full flex justify-center py-10">
+              <Loader />
+            </div>
           )}
         </div>
       </section>

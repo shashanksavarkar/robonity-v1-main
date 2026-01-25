@@ -19,6 +19,7 @@ import Resources from "./pages/Resources";
 import Auth from "./pages/Auth";
 import SingleThreadPage from "./pages/SingleThreadPage";
 import OAuthsuccess from "./pages/OAuthsuccess";
+import NotFound from "./pages/NotFound";
 import CustomCursor from "./components/CustomCursor";
 import NeuroGrid from "./components/NeuroGrid";
 
@@ -122,6 +123,9 @@ export default function App() {
 
         {/* Other Routes */}
         <Route path="/roboshare" element={<PageLayout><RoboShare /></PageLayout>} />
+
+        {/* 404 Route */}
+        <Route path="*" element={<PageLayout><NotFound /></PageLayout>} />
       </Routes>
     </AnimatePresence>
   );
