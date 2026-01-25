@@ -35,7 +35,8 @@
 .about-grid {
     margin-top: 2rem;
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    grid-template-columns: repeat(4, 1fr);
+    /* Force 4 columns */
     gap: 30px;
 }
 
@@ -291,9 +292,9 @@
 
 .dev-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-    /* Flexible grid to allow wider cards */
-    gap: 30px;
+    grid-template-columns: repeat(4, 1fr);
+    /* Fixed 4 columns to keep all devs in one line */
+    gap: 20px;
     padding: 0;
     max-width: 1400px;
     margin: 0 auto;
