@@ -21,7 +21,7 @@ import { errorHandler } from "./middlewares/errorMiddleware.js";
 import logger from "./config/logger.js";
 
 
-import { seedData } from "../../seed.js";
+import { seedData } from "../seed.js";
 import Project from "./models/Project.js";
 
 dotenv.config();
