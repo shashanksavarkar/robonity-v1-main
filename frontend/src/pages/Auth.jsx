@@ -20,17 +20,20 @@ export default function Auth() {
     setLoading(true);
 
     try {
-      const data = mode === "login"
+      const response = mode === "login"
         ? await loginUser({ email, password })
         : await registerUser({ name: displayName, email, password });
 
-      localStorage.setItem("user", JSON.stringify(data));
-      setCurrentUser(data);
+      const userData = response.data;
+
+      localStorage.setItem("user", JSON.stringify(userData));
+      setCurrentUser(userData);
 
       toast.success("Welcome back! Redirecting...");
       setTimeout(() => navigate("/roboshare"), 1200);
     } catch (err) {
-      toast.error(err.message || "Authentication failed");
+      const errorMessage = err.response?.data?.message || err.message || "Authentication failed";
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }

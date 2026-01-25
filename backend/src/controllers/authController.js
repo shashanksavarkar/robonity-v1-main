@@ -1,14 +1,11 @@
 import generateToken from "../utils/generateToken.js";
+import bcrypt from "bcryptjs";
+import User from "../models/User.js";
 
 export const oauthSuccess = (req, res) => {
   const { _id, name, avatar } = req.user;
   res.redirect(`${process.env.FRONTEND_URL}/oauth-success?token=${generateToken(_id)}&name=${encodeURIComponent(name)}&avatar=${encodeURIComponent(avatar)}`);
 };
-
-import bcrypt from "bcryptjs";
-import User from "../models/User.js";
-
-// ... oauthSuccess ...
 
 export const registerUser = async (req, res) => {
   try {
