@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence, useMotionValue, useSpring, useTransform } from 'framer-motion';
 import { getGallery } from '../api/galleryApi';
 import SkeletonCard from '../components/SkeletonCard';
+import HoloCard from '../components/HoloCard';
 import "../styles/Gallery.css";
 
 const CATEGORIES = ["All", "WORKSHOP", "INDUCTION", "ROBOSOCCER"];
@@ -39,6 +40,9 @@ export default function Gallery() {
     const bgY = useTransform(mouseY, [-0.5, 0.5], [-20, 20]);
 
     const handleMouseMove = (e) => {
+        // Optimization: Only run on desktop
+        if (window.innerWidth < 768) return;
+
         const { clientX, clientY } = e;
         const { innerWidth, innerHeight } = window;
         x.set((clientX / innerWidth) - 0.5);
@@ -86,30 +90,23 @@ export default function Gallery() {
                 >
                     <AnimatePresence mode="popLayout">
                         {loading && (
-                            <><SkeletonCard /><SkeletonCard /><SkeletonCard /></>
+                            <motion.div
+                                key="skeletons"
+                                initial={{ opacity: 0 }}
+                                animate={{ opacity: 1 }}
+                                exit={{ opacity: 0 }}
+                                className="gallery-skeletons"
+                                style={{ display: 'contents' }}
+                            >
+                                <SkeletonCard /><SkeletonCard /><SkeletonCard />
+                            </motion.div>
                         )}
                         {!loading && filteredData.map(item => (
-                            <motion.div
+                            <HoloCard
                                 key={item.id}
-                                layout
-                                className="holo-card"
-                                initial={{ opacity: 0, z: -100 }}
-                                animate={{ opacity: 1, z: 0 }}
-                                exit={{ opacity: 0, z: -100 }}
-                                transition={{ type: "spring", stiffness: 200, damping: 25 }}
-                                onClick={() => setActiveItem(item)}
-                                whileHover={{ z: 50, scale: 1.1, rotateX: 5, rotateY: -5, zIndex: 100 }}
-                            >
-                                <div className="holo-visual" style={{
-                                    background: item.image ? `url("${item.image}") center/cover no-repeat` : item.color
-                                }}>
-                                    <div className="scan-line"></div>
-                                </div>
-                                <div className="holo-info">
-                                    <span className="holo-cat">{item.category}</span>
-                                    <h3>{item.title}</h3>
-                                </div>
-                            </motion.div>
+                                item={item}
+                                onClick={setActiveItem}
+                            />
                         ))}
                     </AnimatePresence>
                 </motion.div>
@@ -131,9 +128,13 @@ export default function Gallery() {
                             animate={{ scale: 1, rotateX: 0 }}
                             exit={{ scale: 0.5, rotateX: -45 }}
                         >
-                            <div className="lightbox-image" style={{
-                                background: activeItem.image ? `url("${activeItem.image}") center/cover no-repeat` : activeItem.color
-                            }} />
+                            <div className="lightbox-image-container">
+                                {activeItem.image ? (
+                                    <img src={activeItem.image} alt={activeItem.title} className="lightbox-img" />
+                                ) : (
+                                    <div style={{ width: '100%', height: '100%', background: activeItem.color }} />
+                                )}
+                            </div>
                             <div className="lightbox-details">
                                 <span className="lightbox-category">{activeItem.category}</span>
                                 <h3>{activeItem.title}</h3>

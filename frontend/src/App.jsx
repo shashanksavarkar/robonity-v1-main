@@ -109,24 +109,26 @@ export default function App() {
   }, []);
 
   return (
-    <AnimatePresence mode="wait">
+    <div className="app-root">
       <NeuroGrid />
       <CustomCursor />
-      <Routes location={location} key={location.pathname}>
-        {routes.map(({ path, Comp }) => (
-          <Route key={path} path={path} element={<PageLayout><Comp /></PageLayout>} />
-        ))}
+      <AnimatePresence mode="wait">
+        <Routes location={location} key={location.pathname}>
+          {routes.map(({ path, Comp }) => (
+            <Route key={path} path={path} element={<PageLayout><Comp /></PageLayout>} />
+          ))}
 
-        {/* Protected Forum Routes */}
-        <Route path="/forum" element={<ProtectedRoute><PageLayout><Forum /></PageLayout></ProtectedRoute>} />
-        <Route path="/forum/thread/:threadId" element={<ProtectedRoute><PageLayout><SingleThreadPage /></PageLayout></ProtectedRoute>} />
+          {/* Protected Forum Routes */}
+          <Route path="/forum" element={<ProtectedRoute><PageLayout><Forum /></PageLayout></ProtectedRoute>} />
+          <Route path="/forum/thread/:threadId" element={<ProtectedRoute><PageLayout><SingleThreadPage /></PageLayout></ProtectedRoute>} />
 
-        {/* Other Routes */}
-        <Route path="/roboshare" element={<PageLayout><RoboShare /></PageLayout>} />
+          {/* Other Routes */}
+          <Route path="/roboshare" element={<PageLayout><RoboShare /></PageLayout>} />
 
-        {/* 404 Route */}
-        <Route path="*" element={<PageLayout><NotFound /></PageLayout>} />
-      </Routes>
-    </AnimatePresence>
+          {/* 404 Route */}
+          <Route path="*" element={<PageLayout><NotFound /></PageLayout>} />
+        </Routes>
+      </AnimatePresence>
+    </div>
   );
 }

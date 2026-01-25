@@ -50,22 +50,33 @@ const fadeInUp = {
 
 export default function Home() {
   const container = useRef();
-  const { featuredProjects, stats, testimonials, flagshipEvents, error } = useHomeData();
+  const { featuredProjects, stats, testimonials, flagshipEvents, error, loading } = useHomeData();
 
   useGSAP(() => {
+    if (loading) return;
+
     gsap.to(".hero-content", {
       y: -50, opacity: 0.8, scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true }
     });
+    // Only animate features if they exist (static content so always true, but good practice)
     gsap.from(".feature-card", {
       y: 50, opacity: 0, duration: 0.8, stagger: 0.1, scrollTrigger: { trigger: ".features-grid", start: "top 80%", toggleActions: "play none none reverse" }
     });
-    gsap.from(".stat-entry", {
-      opacity: 0, duration: 0.6, stagger: 0.2, ease: "power2.out", scrollTrigger: { trigger: ".stats-container", start: "top 85%", toggleActions: "play none none reverse" }
-    });
+
+    // Animate stats only if present
+    if (stats.length > 0) {
+      gsap.from(".stat-entry", {
+        opacity: 0, duration: 0.6, stagger: 0.2, ease: "power2.out", scrollTrigger: { trigger: ".stats-container", start: "top 85%", toggleActions: "play none none reverse" }
+      });
+    }
+
     gsap.to(".bg-video-2", {
       opacity: 1, duration: 1, scrollTrigger: { trigger: ".features-section", start: "top center", toggleActions: "play none none reverse" }
     });
-  }, { scope: container });
+
+    // Refresh ScrollTrigger after DOM updates
+    ScrollTrigger.refresh();
+  }, { scope: container, dependencies: [loading, stats] });
 
   return (
     <div className="home-container" ref={container}>
