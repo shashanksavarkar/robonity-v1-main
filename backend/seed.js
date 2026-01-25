@@ -313,9 +313,23 @@ const developersData = [
 //               SEEDING FUNCTION
 // ==============================================
 
-const seedData = async () => {
+
+export const seedData = async (shouldExit = true) => {
     try {
-        await connectDB();
+        if (mongoose.connection.readyState === 0) {
+            await connectDB();
+        }
+
+        console.log('Checking database state...');
+
+        // If not exiting (called from server), we might want to check if data exists first
+        // But the calling function usually does that. 
+        // For now, let's keep the clearing logic but maybe we only want to seed if empty?
+        // The user requirement is "if empty, seed". 
+        // But this function forces clear. 
+        // Let's separate the "clear and seed" logic from "check and seed".
+        // Actually, for simplicity and safety, let's keep this function as "Force Seed"
+        // And the caller will decide WHEN to call it.
 
         console.log('Clearing existing data...');
         await Promise.all([
@@ -356,11 +370,22 @@ const seedData = async () => {
         console.log('==============================================');
         console.log('       ALL DATA SEEDED SUCCESSFULLY');
         console.log('==============================================');
-        process.exit();
+
+        if (shouldExit) {
+            process.exit();
+        }
     } catch (error) {
         console.error('Error seeding data:', error);
-        process.exit(1);
+        if (shouldExit) {
+            process.exit(1);
+        } else {
+            throw error; // Re-throw so server knows it failed
+        }
     }
 };
 
-seedData();
+// Check if file is run directly using ES modules approach
+import { fileURLToPath } from 'url';
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+    seedData(true);
+}

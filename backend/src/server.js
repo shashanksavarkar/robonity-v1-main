@@ -20,8 +20,25 @@ import forumRoutes from './routes/forumRoutes.js';
 import { errorHandler } from "./middlewares/errorMiddleware.js";
 import logger from "./config/logger.js";
 
+
+import { seedData } from "../../seed.js";
+import Project from "./models/Project.js";
+
 dotenv.config();
-connectDB();
+connectDB().then(async () => {
+    try {
+        const count = await Project.countDocuments();
+        if (count === 0) {
+            logger.info("Database appears empty. Seeding initial data...");
+            await seedData(false); // false = do not exit process
+            logger.info("Auto-seeding completed.");
+        } else {
+            logger.info("Database already has data. Skipping auto-seed.");
+        }
+    } catch (err) {
+        logger.error("Auto-seeding failed: " + err.message);
+    }
+});
 
 const app = express();
 
