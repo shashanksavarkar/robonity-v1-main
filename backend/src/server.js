@@ -25,6 +25,11 @@ connectDB();
 
 const app = express();
 
+// Default Route
+app.get("/", (req, res) => {
+    res.send("API is running...");
+});
+
 // Security Middleware (Helmet + Rate Limit)
 app.use(securityMiddleware);
 
