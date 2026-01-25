@@ -22,7 +22,9 @@ export const registerUser = async (req, res) => {
     const user = await User.create({
       name,
       email,
-      password // Hashed by User model pre-save hook
+      password, // Hashed by User model pre-save hook
+      rollNo: req.body.rollNo || "",
+      mobile: req.body.mobile || ""
     });
 
     if (user) {

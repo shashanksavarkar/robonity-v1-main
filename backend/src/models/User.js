@@ -24,6 +24,10 @@ const userSchema = mongoose.Schema({
     },
     avatar: { type: String, default: "/default-avatar.png" },
     provider: { type: String, default: "local" },
+    // RoboShare specific fields
+    rollNo: { type: String },
+    mobile: { type: String },
+    isGsvVerified: { type: Boolean, default: false },
 }, { timestamps: true });
 
 userSchema.pre('save', async function (next) {
