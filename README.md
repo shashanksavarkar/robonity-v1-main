@@ -1,4 +1,4 @@
-# Robonity 🤖
+# Robonity 
 
 > **The Premier Community for Robotics Creators, Engineers, and Hobbyists.**
 
