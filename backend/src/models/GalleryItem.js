@@ -6,7 +6,7 @@ const galleryItemSchema = new mongoose.Schema({
     description: { type: String, required: true },
     category: { type: String, required: true },
     color: { type: String, required: true },
-    image: { type: String, required: true }
+    image: { type: String }
 });
 
 export default mongoose.model('GalleryItem', galleryItemSchema);

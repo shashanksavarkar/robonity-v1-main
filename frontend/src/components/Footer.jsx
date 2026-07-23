@@ -1,5 +1,7 @@
+'use client';
+
 import React from "react";
-import { Link } from "react-router-dom";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import "../styles/Footer.css";
 
@@ -73,11 +75,11 @@ export default function Footer() {
         </div>
         <div className="footer-links">
           <h4>Explore</h4>
-          <Link to="/projects">Projects</Link><Link to="/gallery">Gallery</Link><Link to="/forum">Forum</Link><Link to="/events">Events</Link>
+          <Link href="/projects">Projects</Link><Link href="/gallery">Gallery</Link><Link href="/forum">Forum</Link><Link href="/events">Events</Link>
         </div>
         <div className="footer-links">
           <h4>Resources</h4>
-          <Link to="/roboshare">RoboShare</Link><Link to="/resources">Learning</Link><Link to="/newsletter">Newsletter</Link><Link to="/about">About</Link>
+          <Link href="/roboshare">RoboShare</Link><Link href="/resources">Learning</Link><Link href="/newsletter">Newsletter</Link><Link href="/about">About</Link>
         </div>
       </div>
       <div className="footer-bottom">

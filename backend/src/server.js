@@ -59,7 +59,7 @@ if (process.env.NODE_ENV === 'development') {
 }
 
 app.use(cors({
-    origin: ["http://localhost:5173", "http://127.0.0.1:5173", "https://robonity-v1-main.vercel.app", "https://robonity-v1-main.vercel.app/"],
+    origin: ["http://localhost:5173", "http://127.0.0.1:5173", "http://localhost:3000", "http://127.0.0.1:3000", "https://robonity-v1-main.vercel.app", "https://robonity-v1-main.vercel.app/"],
     credentials: true
 }));
 app.use(express.json());

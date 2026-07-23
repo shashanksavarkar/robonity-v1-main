@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
 
 export const useDevice = () => {
-    const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
-    const [isTablet, setIsTablet] = useState(window.innerWidth > 768 && window.innerWidth <= 1024);
-    const [isDesktop, setIsDesktop] = useState(window.innerWidth > 1024);
+    const [isMobile, setIsMobile] = useState(false);
+    const [isTablet, setIsTablet] = useState(false);
+    const [isDesktop, setIsDesktop] = useState(false);
 
     useEffect(() => {
         const handleResize = () => {
@@ -13,6 +13,7 @@ export const useDevice = () => {
             setIsDesktop(width > 1024);
         };
 
+        handleResize();
         window.addEventListener('resize', handleResize);
         return () => window.removeEventListener('resize', handleResize);
     }, []);

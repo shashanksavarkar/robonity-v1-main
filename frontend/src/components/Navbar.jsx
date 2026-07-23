@@ -1,143 +1,150 @@
+'use client';
+
 import React, { useState, useEffect } from "react";
-import { NavLink, Link, useNavigate, useLocation } from "react-router-dom";
+import Link from "next/link";
+import { usePathname, useRouter } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
 import { useAuth } from "./AuthContext";
 import "../styles/Navbar.css";
 import MechanicalEyeLogo from "./MechanicalEyeLogo";
-import { useDevice } from "../hooks/useDevice";
+
+function NavItem({ href, end, children, onClick }) {
+  const pathname = usePathname();
+  const isActive = end ? pathname === href : pathname.startsWith(href);
+  return (
+    <Link href={href} className={isActive ? "active" : ""} onClick={onClick}>
+      {children}
+    </Link>
+  );
+}
 
 export default function Navbar() {
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [hidden, setHidden] = useState(false);
   const { currentUser, logout } = useAuth();
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { isMobile } = useDevice();
+  const router = useRouter();
+  const pathname = usePathname();
 
-  // Close menu on route change
+  // Hide the pill on scroll-down, reveal it again on scroll-up or near the top.
   useEffect(() => {
-    setIsMobileMenuOpen(false);
-    setIsProfileOpen(false);
-  }, [location.pathname]);
+    let lastY = window.scrollY;
+    const handleScroll = () => {
+      const currentY = window.scrollY;
+      if (currentY < 80) {
+        setHidden(false);
+      } else if (currentY > lastY + 5) {
+        setHidden(true);
+      } else if (currentY < lastY - 5) {
+        setHidden(false);
+      }
+      lastY = currentY;
+    };
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
-  // Disable scroll when mobile menu is open
+  // Close menu on route change (derived during render instead of an effect,
+  // per https://react.dev/learn/you-might-not-need-an-effect#adjusting-some-state-when-a-prop-changes)
+  const [prevPathname, setPrevPathname] = useState(pathname);
+  if (pathname !== prevPathname) {
+    setPrevPathname(pathname);
+    setIsMenuOpen(false);
+  }
+
+  // Lock scroll + allow Escape to close while the menu is open
   useEffect(() => {
-    if (isMobileMenuOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-    return () => { document.body.style.overflow = 'unset'; };
-  }, [isMobileMenuOpen]);
+    if (!isMenuOpen) return;
 
-  const handleLogout = () => { logout(); setIsProfileOpen(false); navigate("/"); };
+    document.body.style.overflow = "hidden";
+    const handleKeyDown = (e) => {
+      if (e.key === "Escape") setIsMenuOpen(false);
+    };
+    document.addEventListener("keydown", handleKeyDown);
+
+    return () => {
+      document.body.style.overflow = "unset";
+      document.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [isMenuOpen]);
+
+  const handleLogout = () => { logout(); setIsMenuOpen(false); router.push("/"); };
+  const closeMenu = () => setIsMenuOpen(false);
 
   const links = ["Home", "Projects", "Gallery", "Forum", "Events", "RoboShare", "Resources", "Newsletter", "About"];
 
   return (
     <>
-      <nav className="navbar">
-        <Link to="/" className="logo-link">
+      <nav className={`navbar-pill${hidden && !isMenuOpen ? " nav-hidden" : ""}`}>
+        <Link href="/" className="pill-logo" aria-label="Robonity home">
           <MechanicalEyeLogo />
-          <motion.span
-            className="logo-text"
-            initial={{ opacity: 0, x: -10 }}
-            animate={{ opacity: 1, x: 0 }}
-          >
-            Robonity
-          </motion.span>
         </Link>
-
-        {/* Desktop Navigation */}
-        {!isMobile && (
-          <ul className="nav-links">
-            {links.map(item => (
-              <li key={item}>
-                <NavLink to={item === "Home" ? "/" : `/${item.toLowerCase()}`} end={item === "Home"}>{item}</NavLink>
-              </li>
-            ))}
-            {!currentUser ? (
-              <li className="auth-links">
-                <Link to="/auth" className="btn-join">Join Community</Link>
-              </li>
-            ) : (
-              <li className="auth-links profile-wrapper">
-                <motion.img
-                  src={currentUser.avatar || "/default-avatar.png"}
-                  alt="avatar"
-                  className="profile-avatar"
-                  onClick={() => setIsProfileOpen(!isProfileOpen)}
-                  whileHover={{ scale: 1.1 }}
-                />
-                <AnimatePresence>
-                  {isProfileOpen && (
-                    <motion.div
-                      className="profile-dropdown"
-                      initial={{ opacity: 0, y: -10 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -10 }}
-                    >
-                      <p className="profile-name">{currentUser.name || "Member"}</p>
-                      <button onClick={handleLogout} className="btn-logout">Logout</button>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </li>
-            )}
-          </ul>
-        )}
-
-        {/* Mobile Hamburger */
-          isMobile && (
-            <div className="menu-icon" onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}>
-              <motion.div animate={isMobileMenuOpen ? { rotate: 45, y: 8 } : { rotate: 0, y: 0 }} className="bar"></motion.div>
-              <motion.div animate={isMobileMenuOpen ? { opacity: 0 } : { opacity: 1 }} className="bar"></motion.div>
-              <motion.div animate={isMobileMenuOpen ? { rotate: -45, y: -8 } : { rotate: 0, y: 0 }} className="bar"></motion.div>
-            </div>
-          )}
+        <span className="pill-wordmark">Robonity</span>
+        <button
+          type="button"
+          className="pill-menu-btn"
+          onClick={() => setIsMenuOpen(true)}
+          aria-label="Open menu"
+          aria-expanded={isMenuOpen}
+        >
+          <Menu size={18} strokeWidth={2} />
+        </button>
       </nav>
 
-      {/* Mobile Drawer Overlay */}
       <AnimatePresence>
-        {isMobile && isMobileMenuOpen && (
+        {isMenuOpen && (
           <motion.div
-            className="mobile-drawer"
-            initial={{ opacity: 0, x: "100%" }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: "100%" }}
-            transition={{ type: "spring", damping: 25, stiffness: 200 }}
+            className="nav-overlay-backdrop"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+            onClick={closeMenu}
           >
-            <div className="drawer-header">
-              <span className="drawer-title">Menu</span>
-              <button className="close-btn" onClick={() => setIsMobileMenuOpen(false)}>×</button>
-            </div>
+            <motion.div
+              className="nav-overlay-card"
+              initial={{ opacity: 0, y: 20, scale: 0.97 }}
+              animate={{ opacity: 1, y: 0, scale: 1 }}
+              exit={{ opacity: 0, y: 20, scale: 0.97 }}
+              transition={{ duration: 0.25, ease: "easeOut" }}
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="overlay-header">
+                <Link href="/" className="pill-logo" onClick={closeMenu} aria-label="Robonity home">
+                  <MechanicalEyeLogo />
+                </Link>
+                <span className="overlay-wordmark">Robonity</span>
+                <button type="button" className="overlay-close" onClick={closeMenu} aria-label="Close menu">
+                  <X size={20} strokeWidth={2} />
+                </button>
+              </div>
 
-            <ul className="drawer-links">
-              {links.map((item, i) => (
-                <motion.li
-                  key={item}
-                  initial={{ opacity: 0, x: 20 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ delay: i * 0.05 }}
-                >
-                  <NavLink to={item === "Home" ? "/" : `/${item.toLowerCase()}`} end={item === "Home"}>{item}</NavLink>
-                </motion.li>
-              ))}
-            </ul>
+              <div className="overlay-body">
+                <ul className="overlay-links">
+                  {links.map(item => (
+                    <li key={item}>
+                      <NavItem href={item === "Home" ? "/" : `/${item.toLowerCase()}`} end={item === "Home"} onClick={closeMenu}>
+                        {item}
+                      </NavItem>
+                    </li>
+                  ))}
+                </ul>
+              </div>
 
-            <div className="drawer-footer">
-              {!currentUser ? (
-                <Link to="/auth" className="btn-join-mobile">Join Community</Link>
-              ) : (
-                <div className="drawer-profile">
-                  <div className="profile-info">
-                    <img src={currentUser.avatar || "/default-avatar.png"} alt="avatar" />
-                    <span>{currentUser.name}</span>
+              <div className="overlay-footer">
+                <span className="overlay-tagline">The premier robotics community</span>
+                <span className="overlay-meta">Est. 2023</span>
+                {!currentUser ? (
+                  <Link href="/auth" className="btn-join" onClick={closeMenu}>Join Community</Link>
+                ) : (
+                  <div className="overlay-profile">
+                    <img src={currentUser.avatar || "/default-avatar.png"} alt="avatar" className="profile-avatar" />
+                    <span className="overlay-profile-name">{currentUser.name || "Member"}</span>
+                    <button type="button" onClick={handleLogout} className="btn-logout">Logout</button>
                   </div>
-                  <button onClick={handleLogout} className="btn-logout-mobile">Logout</button>
-                </div>
-              )}
-            </div>
+                )}
+              </div>
+            </motion.div>
           </motion.div>
         )}
       </AnimatePresence>
