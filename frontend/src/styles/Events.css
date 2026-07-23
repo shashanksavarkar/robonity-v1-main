@@ -1,32 +1,31 @@
-/* Events Page - "Mission Log" Timeline Theme */
+/* Events Page */
 
 .events-page {
   padding: 90px 20px 100px;
   min-height: 100vh;
   width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
   color: #e2e8f0;
   font-family: 'Inter', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
   position: relative;
-  overflow-x: hidden;
 }
 
 /* Page Header */
 .page-title {
   font-family: 'Orbitron', sans-serif;
-  /* Tech font if available, fallback sane */
-  font-size: 4rem;
+  font-size: 3.5rem;
   font-weight: 900;
   margin-bottom: 10px;
   text-transform: uppercase;
-  letter-spacing: 4px;
+  letter-spacing: 2px;
   background: linear-gradient(180deg, #fff 0%, #94a3b8 100%);
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
-  text-shadow: 0 0 30px rgba(0, 198, 255, 0.3);
   position: relative;
   z-index: 2;
 }
@@ -35,169 +34,135 @@
   font-family: 'JetBrains Mono', monospace;
   font-size: 1rem;
   color: #00c6ff;
-  margin-bottom: 80px;
+  margin-bottom: 60px;
   text-align: center;
   max-width: 600px;
   opacity: 0.8;
   letter-spacing: 1px;
 }
 
-/* Timeline Container */
 .event-list {
   width: 100%;
-  max-width: 1000px;
   display: flex;
   flex-direction: column;
   gap: 40px;
-  position: relative;
-  padding-left: 40px;
-  /* Space for the timeline line */
 }
 
-/* The Glowing Timeline Line */
-.event-list::before {
-  content: '';
-  position: absolute;
-  left: 10px;
-  /* Position line */
-  top: 20px;
-  bottom: 20px;
-  width: 2px;
-  background: linear-gradient(180deg,
-      rgba(0, 198, 255, 0.1),
-      #00c6ff,
-      rgba(0, 198, 255, 0.1));
-  box-shadow: 0 0 15px rgba(0, 198, 255, 0.4);
-  border-radius: 2px;
+.year-events-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  width: 100%;
 }
 
-/* Event Card - Transparent Glass styling */
+/* Event Card */
 .event-card {
   position: relative;
   background: rgba(15, 23, 42, 0.6);
-  /* Slightly darker/more opaque base */
   border: 1px solid rgba(255, 255, 255, 0.08);
-  border-left: 2px solid transparent;
-  /* Prepare for hover accent */
-  border-radius: 12px;
-  overflow: visible;
-  /* Needed for the dot to show outside if absolute */
+  border-radius: 14px;
+  overflow: hidden;
   backdrop-filter: blur(10px);
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  display: grid;
-  grid-template-columns: 140px 1fr;
-  /* Compacter date column */
-}
-
-/* Timeline Dot Removed */
-
-/* Hover Effects */
-.event-card:hover {
-  transform: translateX(10px);
-  /* Move card slightly right */
-  background: rgba(30, 41, 59, 0.8);
-  border-color: rgba(0, 198, 255, 0.3);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
-}
-
-
-
-/* Date Panel - Minimalist */
-.event-date-panel {
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
   display: flex;
   flex-direction: column;
+}
+
+.event-card:hover {
+  border-color: rgba(0, 198, 255, 0.35);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.event-card-top {
+  display: flex;
   align-items: center;
-  justify-content: flex-start;
-  padding: 30px 20px;
-  border-right: 1px solid rgba(255, 255, 255, 0.05);
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 20px 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.event-date-badge {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
   font-family: 'JetBrains Mono', monospace;
 }
 
 .event-day {
-  font-size: 2.5rem;
+  font-size: 1.6rem;
   font-weight: 800;
   color: #fff;
   line-height: 1;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
 }
 
 .event-month {
-  font-size: 1rem;
+  font-size: 0.85rem;
   color: #00c6ff;
   text-transform: uppercase;
   font-weight: 700;
-  margin-top: 5px;
 }
 
 .event-year {
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #64748b;
-  margin-top: 5px;
 }
 
-/* Content Area */
-.event-content {
-  padding: 25px 30px;
-  display: flex;
-  flex-direction: column;
-}
-
-.event-meta {
-  display: flex;
-  gap: 15px;
-  margin-bottom: 10px;
+.event-location {
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.8rem;
+  font-size: 0.75rem;
   color: #94a3b8;
   text-transform: uppercase;
-  letter-spacing: 1px;
+  letter-spacing: 0.5px;
+  text-align: right;
 }
 
 .event-location-icon {
   color: #00c6ff;
-  margin-right: 5px;
+  margin-right: 4px;
+}
+
+/* Content Area */
+.event-content {
+  padding: 22px 24px 26px;
+  display: flex;
+  flex-direction: column;
+  flex: 1;
 }
 
 .event-title {
   font-family: 'Inter', sans-serif;
-  font-size: 1.8rem;
+  font-size: 1.3rem;
   font-weight: 700;
   color: #fff;
-  margin-bottom: 15px;
-  transition: color 0.3s ease;
-}
-
-.event-card:hover .event-title {
-  color: #00c6ff;
-  /* Title lights up on hover */
+  margin-bottom: 10px;
 }
 
 .event-description {
   color: #cbd5e1;
-  font-size: 1rem;
+  font-size: 0.95rem;
   line-height: 1.6;
-  margin-bottom: 25px;
+  margin-bottom: 20px;
+  flex: 1;
 }
 
 /* Actions */
 .event-actions {
   display: flex;
-  gap: 15px;
-  margin-top: auto;
+  gap: 12px;
 }
 
 .btn-register,
 .btn-details {
-  padding: 10px 20px;
+  padding: 8px 18px;
   font-family: 'JetBrains Mono', monospace;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   font-weight: 700;
   text-transform: uppercase;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
-  transition: all 0.3s ease;
-  position: relative;
-  overflow: hidden;
+  transition: all 0.2s ease;
 }
 
 .btn-register {
@@ -209,13 +174,12 @@
 .btn-register:hover {
   background: #00c6ff;
   color: #000;
-  box-shadow: 0 0 20px rgba(0, 198, 255, 0.4);
 }
 
 .btn-details {
   color: #94a3b8;
   background: transparent;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.12);
 }
 
 .btn-details:hover {
@@ -223,150 +187,26 @@
   color: #fff;
 }
 
-/* Responsive Mobile */
-@media (max-width: 768px) {
-  .events-page {
-    padding: 100px 15px 50px;
-  }
-
-  .event-list {
-    padding-left: 25px;
-    /* Less indentation */
-  }
-
-  /* Adjust Timeline Line */
-  .event-list::before {
-    left: 4px;
-  }
-
-  .event-card {
-    grid-template-columns: 1fr;
-    /* Stacked */
-    margin-left: 0;
-  }
-
-
-
-  .event-date-panel {
-    flex-direction: row;
-    gap: 15px;
-    padding: 15px 20px;
-    border-right: none;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    background: rgba(0, 0, 0, 0.2);
-  }
-
-  .event-month {
-    font-size: 0.9rem;
-    margin-top: 0;
-  }
-
-  .event-content {
-    padding: 20px;
-  }
-
-  .event-title {
-    font-size: 1.5rem;
-  }
-
-  .event-day {
-    font-size: 2rem;
-  }
-}
-
-/* Glitch effects (preserved from original) */
-.glitch-effect {
-  position: relative;
-  display: inline-block;
-}
-
-/* Tabs Navigation - creative creative */
-.tabs-container {
-  display: flex;
-  justify-content: center;
-  gap: 20px;
-  /* background: rgba(15, 23, 42, 0.4); */
-  padding: 10px;
-  border-radius: 50px;
-  /* border: 1px solid rgba(255, 255, 255, 0.05); */
-  margin-bottom: 50px;
-  position: relative;
-  z-index: 10;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-.tab-button {
-  position: relative;
-  background: transparent;
-  border: none;
-  padding: 10px 25px;
-  font-family: 'JetBrains Mono', monospace;
-  font-size: 0.9rem;
-  font-weight: 700;
-  color: #94a3b8;
-  cursor: pointer;
-  z-index: 1;
-  transition: color 0.3s ease;
-  letter-spacing: 1px;
-}
-
-.tab-button:hover {
+.event-details-expanded {
+  margin-top: 16px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
   color: #cbd5e1;
-}
-
-.tab-button.active {
-  color: #0f172a;
-}
-
-.tab-highlight {
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: #00c6ff;
-  border-radius: 25px;
-  z-index: -1;
-  box-shadow: 0 0 15px rgba(0, 198, 255, 0.5);
-}
-
-/* Event Section Wrapper */
-.event-section {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 40px;
-}
-
-@media (max-width: 768px) {
-  .tabs-container {
-    gap: 10px;
-    padding: 8px;
-    width: 90%;
-    margin-bottom: 30px;
-  }
-
-  .tab-button {
-    padding: 8px 16px;
-    font-size: 0.8rem;
-  }
+  font-size: 0.9rem;
+  line-height: 1.6;
 }
 
 /* Academic Year Group Header */
 .academic-year-header {
   font-family: 'Orbitron', sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   color: #00c6ff;
-  margin-top: 40px;
   margin-bottom: 20px;
   padding-bottom: 10px;
   border-bottom: 1px solid rgba(0, 198, 255, 0.2);
   width: 100%;
   text-transform: uppercase;
   letter-spacing: 2px;
-  text-shadow: 0 0 10px rgba(0, 198, 255, 0.3);
-  position: relative;
 }
 
 .academic-year-header::before {
@@ -375,4 +215,19 @@
   color: #fff;
   font-size: 1rem;
   vertical-align: middle;
+}
+
+/* Responsive Mobile */
+@media (max-width: 768px) {
+  .events-page {
+    padding: 100px 15px 50px;
+  }
+
+  .page-title {
+    font-size: 2.2rem;
+  }
+
+  .year-events-grid {
+    grid-template-columns: 1fr;
+  }
 }

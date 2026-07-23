@@ -104,6 +104,47 @@ const projectsData = [
         image: "/projects/auto-obstacle.png",
         featured: false
     },
+    // --- Dummy placeholders (no image asset yet; render from color gradient) ---
+    {
+        id: 7,
+        title: "NEXUS-VISION: Real-Time Object Tracking Suite",
+        desc: "A computer vision pipeline for multi-object tracking and re-identification across camera feeds, built for autonomous surveillance bots.",
+        category: "Computer Vision / AI / Robotics",
+        status: "In Progress",
+        author: "Robonity Labs",
+        color: "linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)",
+        featured: false
+    },
+    {
+        id: 8,
+        title: "GRID-BOT: Modular IoT Sensor Mesh",
+        desc: "A low-power mesh network of environmental sensor nodes reporting to a central dashboard, designed for smart-lab monitoring.",
+        category: "IoT / Embedded Systems / Sensor Networks",
+        status: "Planning",
+        author: "Robonity Labs",
+        color: "linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%)",
+        featured: false
+    },
+    {
+        id: 9,
+        title: "ECHO-ARM: Voice-Controlled Robotic Arm",
+        desc: "A 4-DOF robotic arm that responds to natural-language voice commands for pick-and-place tasks.",
+        category: "Robotics / Embedded Systems / Human-Machine Interface",
+        status: "Concept",
+        author: "Robonity Labs",
+        color: "linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)",
+        featured: false
+    },
+    {
+        id: 10,
+        title: "PATHFINDER: SLAM-Based Indoor Navigation",
+        desc: "Simultaneous localization and mapping stack for indoor mobile robots navigating dynamic, GPS-denied environments.",
+        category: "Software / Robotics / Autonomous Navigation",
+        status: "Ongoing",
+        author: "Robonity Labs",
+        color: "linear-gradient(to right, #fa709a 0%, #fee140 100%)",
+        featured: false
+    },
 ];
 
 
@@ -272,6 +313,28 @@ const galleryData = [
     { id: 13, title: 'Face Recognition', description: 'Attendance system using OpenCV.', category: 'ROBOSOCCER', color: 'linear-gradient(to top, #accbee 0%, #e7f0fd 100%)', image: '/gallery/IMG_7033.JPG' },
     { id: 14, title: 'Hexapod', description: 'Six-legged spider robot.', category: 'ROBOSOCCER', color: 'linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%)', image: '/gallery/IMG_7106.JPG' },
     { id: 15, title: 'Tech Expo', description: 'Annual showcase of student projects.', category: 'ROBOSOCCER', color: 'linear-gradient(to right, #4facfe 0%, #00f2fe 100%)', image: '/gallery/IMG_7046.JPG' },
+    // --- Dummy placeholders (no image asset yet; render from color gradient) ---
+    { id: 16, title: 'Robotics Bootcamp', description: 'A weekend-long intensive on building your first bot.', category: 'WORKSHOP', color: 'linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%)' },
+    { id: 17, title: 'PCB Design Session', description: 'Hands-on session on schematic capture and routing.', category: 'WORKSHOP', color: 'linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)' },
+    { id: 18, title: 'New Member Meetup', description: 'Welcoming this year\'s incoming members.', category: 'INDUCTION', color: 'linear-gradient(120deg, #f093fb 0%, #f5576c 100%)' },
+    { id: 19, title: 'Orientation Day', description: 'Club tour and an intro to ongoing projects.', category: 'INDUCTION', color: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)' },
+    { id: 20, title: 'RoboSoccer Finals', description: 'The championship match of this year\'s tournament.', category: 'ROBOSOCCER', color: 'linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)' },
+    { id: 21, title: 'Championship Trophy', description: 'The winning team lifting the trophy.', category: 'ROBOSOCCER', color: 'linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%)' },
+    { id: 22, title: 'Soldering Basics', description: 'Teaching new members how to solder safely.', category: 'WORKSHOP', color: 'linear-gradient(to right, #fa709a 0%, #fee140 100%)', image: '/gallery/IMG_6943.JPG' },
+    { id: 23, title: 'Sensor Fundamentals', description: 'Intro to ultrasonic, IR, and IMU sensors.', category: 'WORKSHOP', color: 'linear-gradient(to top, #30cfd0 0%, #330867 100%)', image: '/gallery/IMG_6954.JPG' },
+    { id: 24, title: 'Arduino Crash Course', description: 'From blinking an LED to reading sensor data.', category: 'WORKSHOP', color: 'linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%)', image: '/gallery/IMG_6990.JPG' },
+    { id: 25, title: 'Team Photo', description: 'The core team after a long build weekend.', category: 'INDUCTION', color: 'linear-gradient(135deg, #667eea 0%, #764ba2 100%)', image: '/gallery/IMG_7093.JPG' },
+    { id: 26, title: 'Icebreaker Session', description: 'Getting new inductees comfortable with the club.', category: 'INDUCTION', color: 'linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)', image: '/gallery/IMG_7100.JPG' },
+    { id: 27, title: 'Lab Tour', description: 'Showing new members around the robotics lab.', category: 'INDUCTION', color: 'linear-gradient(120deg, #f093fb 0%, #f5576c 100%)', image: '/gallery/IMG_7070.JPG' },
+    { id: 28, title: 'Mentor Meetup', description: 'Seniors pairing up with new inductees.', category: 'INDUCTION', color: 'linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%)', image: '/gallery/IMG_7106.JPG' },
+    { id: 29, title: 'RoboSoccer Semifinal', description: 'A close match that went into extra time.', category: 'ROBOSOCCER', color: 'linear-gradient(to right, #4facfe 0%, #00f2fe 100%)', image: '/gallery/IMG_7033.JPG' },
+    { id: 30, title: 'Crowd at the Arena', description: 'Members cheering on their favorite team.', category: 'ROBOSOCCER', color: 'linear-gradient(135deg, #FF9A9E 0%, #FECFEF 100%)', image: '/gallery/IMG_6943.JPG' },
+    { id: 31, title: 'Bot Repairs Pit-Stop', description: 'Last-minute fixes between matches.', category: 'ROBOSOCCER', color: 'linear-gradient(120deg, #84fab0 0%, #8fd3f4 100%)', image: '/gallery/IMG_6954.JPG' },
+    { id: 32, title: 'Referee Briefing', description: 'Going over the rules before kickoff.', category: 'ROBOSOCCER', color: 'linear-gradient(120deg, #a1c4fd 0%, #c2e9fb 100%)', image: '/gallery/IMG_6990.JPG' },
+    { id: 33, title: '3D Printing Workshop', description: 'Designing and printing custom robot chassis parts.', category: 'WORKSHOP', color: 'linear-gradient(120deg, #d4fc79 0%, #96e6a1 100%)', image: '/gallery/IMG_7046.JPG' },
+    { id: 34, title: 'Wiring Diagrams', description: 'Reading and building a wiring harness.', category: 'WORKSHOP', color: 'linear-gradient(to right, #fa709a 0%, #fee140 100%)', image: '/gallery/IMG_7070.JPG' },
+    { id: 35, title: 'Welcome Address', description: 'The club president kicking off induction week.', category: 'INDUCTION', color: 'linear-gradient(to top, #accbee 0%, #e7f0fd 100%)', image: '/gallery/IMG_7100.JPG' },
+    { id: 36, title: 'Group Photo', description: 'This year\'s inducted batch, all together.', category: 'INDUCTION', color: 'linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%)', image: '/gallery/IMG_7106.JPG' },
 ];
 
 // ==============================================

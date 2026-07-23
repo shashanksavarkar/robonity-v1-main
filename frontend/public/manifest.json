@@ -8,14 +8,9 @@
   "description": "The premier community for robotics creators, engineers, and hobbyists.",
   "icons": [
     {
-      "src": "/src/assets/Logo GSV-removebg (1).png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "/src/assets/Logo GSV-removebg (1).png",
-      "sizes": "512x512",
-      "type": "image/png"
+      "src": "/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
     }
   ]
 }

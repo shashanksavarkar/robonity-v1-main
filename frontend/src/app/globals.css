@@ -1,0 +1,31 @@
+@import "../index.css";
+@import "../styles/animations.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* shadcn/ui design tokens, hardcoded to Robonity's existing dark palette
+   (no light/dark toggle exists in the app, so there's no .dark variant here) */
+:root {
+  --background: 215 28% 17%;
+  --foreground: 210 20% 98%;
+  --card: 217 19% 27%;
+  --card-foreground: 210 20% 98%;
+  --popover: 217 19% 27%;
+  --popover-foreground: 210 20% 98%;
+  --primary: 195 100% 50%;
+  --primary-foreground: 222.2 47.4% 11.2%;
+  --secondary: 217 19% 27%;
+  --secondary-foreground: 210 20% 98%;
+  --muted: 217 19% 27%;
+  --muted-foreground: 218 11% 65%;
+  --accent: 217 19% 27%;
+  --accent-foreground: 210 20% 98%;
+  --destructive: 0 62.8% 30.6%;
+  --destructive-foreground: 210 20% 98%;
+  --border: 215 14% 34%;
+  --input: 215 14% 34%;
+  --ring: 195 100% 50%;
+  --radius: 0.5rem;
+}

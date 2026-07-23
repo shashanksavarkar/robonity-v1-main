@@ -27,10 +27,11 @@ Our mission is to foster innovation and learning in the field of robotics throug
 ## 🛠 Tech Stack
 
 ### Frontend
-*   **Framework:** [React](https://react.dev/) (via [Vite](https://vitejs.dev/))
+*   **Framework:** [Next.js](https://nextjs.org/) (App Router) + [React](https://react.dev/)
+*   **UI Components:** [shadcn/ui](https://ui.shadcn.com/)
 *   **Styling:** [Tailwind CSS](https://tailwindcss.com/)
+*   **Data Fetching:** [TanStack Query](https://tanstack.com/query)
 *   **Animations:** [GSAP](https://greensock.com/gsap/), [Framer Motion](https://www.framer.com/motion/)
-*   **3D Graphics:** [Three.js](https://threejs.org/) (@react-three/fiber, @react-three/drei)
 *   **Smooth Scroll:** [Lenis](https://github.com/studio-freight/lenis)
 
 ### Backend
@@ -95,7 +96,7 @@ Follow these instructions to get a copy of the project up and running on your lo
     cd frontend
     npm run dev
     ```
-    *Client will run on http://localhost:5173*
+    *Client will run on http://localhost:3000*
 
 ## 🤝 Contributing
 

@@ -1,3 +1,5 @@
+'use client';
+
 import React, { useState } from "react";
 import { useAuth } from "./AuthContext";
 
@@ -18,7 +20,7 @@ export default function CreateThread({ onCreateThread }) {
       // Delegate to parent prop which handles the API call
       await onCreateThread(title.trim());
       setTitle("");
-    } catch (error) {
+    } catch {
       setError("Failed to create thread. Please try again.");
     } finally {
       setSubmitting(false);

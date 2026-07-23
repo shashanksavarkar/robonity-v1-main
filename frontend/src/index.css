@@ -36,13 +36,8 @@
 body {
   font-family: var(--font-family);
   line-height: 1.6;
-  background-color: var(--bg-color);
+  background-color: var(--dark-color);
   color: var(--text-light);
-
-  /* Animated Background */
-  background: radial-gradient(circle at 50% 50%, #1f2937, #111827);
-  background-size: 200% 200%;
-  animation: bgPulse 15s ease infinite alternate;
   overflow-x: hidden;
 }
 
@@ -62,20 +57,6 @@ body {
 /* Optional: Hide scrollbar for Firefox */
 html {
   scrollbar-width: none;
-}
-
-@keyframes bgPulse {
-  0% {
-    background-position: 0% 50%;
-  }
-
-  50% {
-    background-position: 100% 50%;
-  }
-
-  100% {
-    background-position: 0% 50%;
-  }
 }
 
 a {
