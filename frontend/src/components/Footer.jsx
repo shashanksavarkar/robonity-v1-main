@@ -3,7 +3,6 @@
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import "../styles/Footer.css";
 
 const socialVariants = {
   hover: { scale: 1.2, rotate: 10, transition: { duration: 0.2 } },
@@ -15,7 +14,7 @@ const SocialIcon = ({ href, path, viewBox = "0 0 24 24", title }) => (
     href={href}
     target="_blank"
     rel="noreferrer"
-    className="social-icon"
+    className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/5 text-slate-300 border border-white/10 transition-all duration-200 hover:bg-sky-400/15 hover:text-sky-400 hover:border-sky-400/30 hover:shadow-[0_0_10px_rgba(56,189,248,0.25)]"
     variants={socialVariants}
     whileHover="hover"
     whileTap="tap"
@@ -27,15 +26,19 @@ const SocialIcon = ({ href, path, viewBox = "0 0 24 24", title }) => (
   </motion.a>
 );
 
+const footerLink = "block text-sm text-slate-400 no-underline mb-2 transition-colors hover:text-sky-400";
+
 export default function Footer() {
   return (
-    <footer className="footer">
-      <div className="footer-container">
-        <div className="footer-brand">
-          <h3>Robonity</h3>
-          <p>A community-driven platform for robotics enthusiasts, engineers, and innovators.</p>
+    <footer className="bg-gradient-to-t from-slate-950/95 to-slate-900/90 text-slate-300 px-6 sm:px-8 pt-12 pb-6 mt-20 border-t border-white/[0.06]">
+      <div className="max-w-[1100px] mx-auto grid grid-cols-1 md:grid-cols-[2fr_1fr_1fr] gap-8 md:gap-12 text-center md:text-left">
+        <div className="flex flex-col items-center md:items-start">
+          <h3 className="text-[1.4rem] text-sky-400 mb-[0.6rem]">Robonity</h3>
+          <p className="text-sm text-slate-400 leading-relaxed">
+            A community-driven platform for robotics enthusiasts, engineers, and innovators.
+          </p>
 
-          <div className="social-links">
+          <div className="flex gap-4 mt-[1.2rem] justify-center md:justify-start md:pl-[10px]">
             <SocialIcon
               title="GitHub"
               href="https://github.com/technocratsgsv"
@@ -73,16 +76,22 @@ export default function Footer() {
             />
           </div>
         </div>
-        <div className="footer-links">
-          <h4>Explore</h4>
-          <Link href="/projects">Projects</Link><Link href="/gallery">Gallery</Link><Link href="/forum">Forum</Link><Link href="/events">Events</Link>
+        <div className="flex flex-col items-center md:items-start">
+          <h4 className="text-sm mb-3 text-gray-200">Explore</h4>
+          <Link href="/projects" className={footerLink}>Projects</Link>
+          <Link href="/gallery" className={footerLink}>Gallery</Link>
+          <Link href="/forum" className={footerLink}>Forum</Link>
+          <Link href="/events" className={footerLink}>Events</Link>
         </div>
-        <div className="footer-links">
-          <h4>Resources</h4>
-          <Link href="/roboshare">RoboShare</Link><Link href="/resources">Learning</Link><Link href="/newsletter">Newsletter</Link><Link href="/about">About</Link>
+        <div className="flex flex-col items-center md:items-start">
+          <h4 className="text-sm mb-3 text-gray-200">Resources</h4>
+          <Link href="/roboshare" className={footerLink}>RoboShare</Link>
+          <Link href="/resources" className={footerLink}>Learning</Link>
+          <Link href="/newsletter" className={footerLink}>Newsletter</Link>
+          <Link href="/about" className={footerLink}>About</Link>
         </div>
       </div>
-      <div className="footer-bottom">
+      <div className="flex flex-col md:flex-row justify-between items-center text-center gap-[0.6rem] md:gap-0 mt-10 pt-[1.2rem] border-t border-white/[0.06] text-[0.85rem] text-slate-500 max-w-[1100px] mx-auto">
         <p>&copy; {new Date().getFullYear()} Robonity. All rights reserved.</p>
         <p>Author: Aman Choudhary, Anirban Das, Shashank Savarkar, Suyash Srivastav</p>
       </div>
