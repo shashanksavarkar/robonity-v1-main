@@ -1,6 +1,12 @@
 @import "../index.css";
-@import "../styles/animations.css";
 @import "tailwindcss";
+
+@layer base {
+  * {
+    transition: background-color 0.25s ease, color 0.25s ease,
+      border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  }
+}
 
 /* shadcn/ui design tokens, hardcoded to Robonity's existing dark palette
    (no light/dark toggle exists in the app, so there's no .dark variant here) */
