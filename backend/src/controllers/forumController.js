@@ -7,6 +7,7 @@ export const getThreads = async (req, res) => {
     try {
         const threads = await Thread.find()
             .populate("author", "name avatar")
+            .populate("replies.author", "name avatar")
             .sort({ createdAt: -1 });
         res.json(threads);
     } catch (error) {

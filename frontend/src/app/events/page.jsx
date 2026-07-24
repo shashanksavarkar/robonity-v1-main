@@ -1,4 +1,5 @@
 import EventsClient from "./EventsClient";
+import { eventsData } from "../../data/events";
 
 export const metadata = {
   title: "Events",
@@ -11,20 +12,6 @@ export const metadata = {
   },
 };
 
-const API_URL = process.env.NEXT_PUBLIC_API_URL || "http://127.0.0.1:5000";
-
-async function getEvents() {
-  try {
-    const res = await fetch(`${API_URL}/api/events`, { cache: "no-store" });
-    if (!res.ok) throw new Error("Request failed");
-    return await res.json();
-  } catch (error) {
-    console.error("Failed to fetch events:", error);
-    return [];
-  }
-}
-
-export default async function EventsPage() {
-  const events = await getEvents();
-  return <EventsClient events={events} />;
+export default function EventsPage() {
+  return <EventsClient events={eventsData} />;
 }

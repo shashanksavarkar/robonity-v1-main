@@ -3,10 +3,7 @@ import mongoose from 'mongoose';
 const roboshareSchema = new mongoose.Schema({
     email: { type: String, required: true, unique: true },
     rollNo: { type: String, required: true },
-    mobile: { type: String, required: true },
-    password: { type: String, required: true },
     emailOtp: { type: String },
-    mobileOtp: { type: String },
     isVerified: { type: Boolean, default: false },
     registeredAt: { type: Date, default: Date.now }
 });

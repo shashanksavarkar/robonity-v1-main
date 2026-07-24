@@ -5,7 +5,7 @@ export default function robots() {
     rules: {
       userAgent: "*",
       allow: "/",
-      disallow: ["/forum", "/roboshare", "/oauth-success"],
+      disallow: ["/forum", "/roboshare"],
     },
     sitemap: `${baseUrl}/sitemap.xml`,
   };

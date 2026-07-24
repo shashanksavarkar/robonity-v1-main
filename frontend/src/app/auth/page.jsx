@@ -41,10 +41,6 @@ function AuthPage() {
     }
   };
 
-  const handleSocial = (provider) => {
-    window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/api/auth/${provider}`;
-  };
-
   return (
     <div className="min-h-screen flex items-center justify-center p-5 pt-[90px] relative overflow-hidden">
       {/* Background Grid */}
@@ -59,7 +55,7 @@ function AuthPage() {
         <AnimatePresence mode="wait">
           <motion.h1
             key={mode}
-            className="text-4xl md:text-5xl font-black mb-8 bg-gradient-to-br from-white to-slate-400 bg-clip-text text-transparent uppercase tracking-tighter text-center w-fit mx-auto relative"
+            className="text-3xl md:text-4xl font-black mb-6 bg-gradient-to-br from-white to-slate-400 bg-clip-text text-transparent uppercase tracking-tight text-center w-fit mx-auto relative"
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 10 }}
@@ -67,26 +63,6 @@ function AuthPage() {
             {mode === "login" ? "Log In" : "Create Account"}
           </motion.h1>
         </AnimatePresence>
-
-        <div className="flex flex-col gap-3 mb-6">
-          <button
-            onClick={() => handleSocial("google")}
-            className="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 text-slate-200 hover:bg-white/10 hover:border-white/20 hover:text-white transition-all flex items-center justify-center gap-2 font-medium"
-          >
-            Continue with Google
-          </button>
-          <button
-            onClick={() => handleSocial("github")}
-            className="w-full p-3.5 rounded-xl bg-white/5 border border-white/10 text-slate-200 hover:bg-white/10 hover:border-white/20 hover:text-white transition-all flex items-center justify-center gap-2 font-medium"
-          >
-            Continue with GitHub
-          </button>
-        </div>
-
-        <div className="relative text-center my-6 text-slate-500 text-sm">
-          <span className="bg-transparent px-2 z-10 relative">OR</span>
-          <div className="absolute top-1/2 left-0 w-full h-px bg-white/10 -z-0"></div>
-        </div>
 
         <form onSubmit={handleEmailAuth} className="flex flex-col gap-5">
           <AnimatePresence>
@@ -100,7 +76,7 @@ function AuthPage() {
                   required
                   className="peer w-full p-4 bg-slate-800/50 border border-white/10 rounded-xl text-white outline-none focus:bg-slate-800/80 focus:border-cyan-500 focus:shadow-[0_0_15px_rgba(0,198,255,0.2)] transition-all placeholder-transparent"
                 />
-                <label className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none transition-all peer-focus:top-0 peer-focus:text-xs peer-focus:text-cyan-500 peer-focus:bg-slate-900 peer-focus:px-1 peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-cyan-500 peer-not-placeholder-shown:bg-slate-900 peer-not-placeholder-shown:px-1">Display Name</label>
+                <label className={`absolute left-5 text-slate-400 text-sm pointer-events-none transition-all peer-focus:top-0 peer-focus:text-xs peer-focus:text-cyan-500 peer-focus:bg-slate-900 peer-focus:px-1 ${displayName ? "top-0 text-xs text-cyan-500 bg-slate-900 px-1" : "top-1/2 -translate-y-1/2"}`}>Display Name</label>
               </div>
             )}
           </AnimatePresence>
@@ -114,7 +90,7 @@ function AuthPage() {
               required
               className="peer w-full p-4 bg-slate-800/50 border border-white/10 rounded-xl text-white outline-none focus:bg-slate-800/80 focus:border-cyan-500 focus:shadow-[0_0_15px_rgba(0,198,255,0.2)] transition-all placeholder-transparent"
             />
-            <label className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none transition-all peer-focus:top-0 peer-focus:text-xs peer-focus:text-cyan-500 peer-focus:bg-slate-900 peer-focus:px-1 peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-cyan-500 peer-not-placeholder-shown:bg-slate-900 peer-not-placeholder-shown:px-1">Email Address</label>
+            <label className={`absolute left-5 text-slate-400 text-sm pointer-events-none transition-all peer-focus:top-0 peer-focus:text-xs peer-focus:text-cyan-500 peer-focus:bg-slate-900 peer-focus:px-1 ${email ? "top-0 text-xs text-cyan-500 bg-slate-900 px-1" : "top-1/2 -translate-y-1/2"}`}>Email Address</label>
           </div>
 
           <div className="relative w-full">
@@ -127,7 +103,7 @@ function AuthPage() {
               minLength={6}
               className="peer w-full p-4 bg-slate-800/50 border border-white/10 rounded-xl text-white outline-none focus:bg-slate-800/80 focus:border-cyan-500 focus:shadow-[0_0_15px_rgba(0,198,255,0.2)] transition-all placeholder-transparent"
             />
-            <label className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none transition-all peer-focus:top-0 peer-focus:text-xs peer-focus:text-cyan-500 peer-focus:bg-slate-900 peer-focus:px-1 peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-cyan-500 peer-not-placeholder-shown:bg-slate-900 peer-not-placeholder-shown:px-1">Password</label>
+            <label className={`absolute left-5 text-slate-400 text-sm pointer-events-none transition-all peer-focus:top-0 peer-focus:text-xs peer-focus:text-cyan-500 peer-focus:bg-slate-900 peer-focus:px-1 ${password ? "top-0 text-xs text-cyan-500 bg-slate-900 px-1" : "top-1/2 -translate-y-1/2"}`}>Password</label>
           </div>
 
           <motion.button

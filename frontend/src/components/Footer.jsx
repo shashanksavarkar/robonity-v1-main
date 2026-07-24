@@ -3,7 +3,6 @@
 import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import "../styles/Footer.css";
 
 const socialVariants = {
   hover: { scale: 1.2, rotate: 10, transition: { duration: 0.2 } },
@@ -15,7 +14,7 @@ const SocialIcon = ({ href, path, viewBox = "0 0 24 24", title }) => (
     href={href}
     target="_blank"
     rel="noreferrer"
-    className="social-icon"
+    className="inline-flex items-center justify-center w-9 h-9 rounded-full bg-white/5 text-slate-300 border border-white/10 hover:bg-sky-400/15 hover:text-sky-400 hover:border-sky-400/30 hover:shadow-[0_0_10px_rgba(56,189,248,0.25)]"
     variants={socialVariants}
     whileHover="hover"
     whileTap="tap"
@@ -29,13 +28,15 @@ const SocialIcon = ({ href, path, viewBox = "0 0 24 24", title }) => (
 
 export default function Footer() {
   return (
-    <footer className="footer">
-      <div className="footer-container">
-        <div className="footer-brand">
-          <h3>Robonity</h3>
-          <p>A community-driven platform for robotics enthusiasts, engineers, and innovators.</p>
+    <footer className="bg-gradient-to-t from-[rgba(2,6,23,0.95)] to-[rgba(15,23,42,0.9)] text-slate-300 px-8 pt-12 pb-6 mt-20 border-t border-white/[0.06] max-[768px]:px-6 max-[768px]:pt-10 max-[768px]:pb-5 max-[400px]:px-5 max-[400px]:pt-8 max-[400px]:pb-4">
+      <div className="max-w-[1100px] mx-auto grid grid-cols-[2fr_1fr_1fr] gap-12 max-[768px]:grid-cols-1 max-[768px]:gap-8 max-[768px]:text-center">
+        <div className="max-[768px]:flex max-[768px]:flex-col max-[768px]:items-center">
+          <h3 className="text-[1.4rem] text-sky-400 mb-2.5 max-[400px]:text-[1.25rem]">Robonity</h3>
+          <p className="text-sm text-slate-400 leading-relaxed max-[400px]:text-[0.85rem]">
+            A community-driven platform for robotics enthusiasts, engineers, and innovators.
+          </p>
 
-          <div className="social-links">
+          <div className="flex gap-4 mt-5 pl-2.5 max-[768px]:justify-center">
             <SocialIcon
               title="GitHub"
               href="https://github.com/technocratsgsv"
@@ -73,16 +74,26 @@ export default function Footer() {
             />
           </div>
         </div>
-        <div className="footer-links">
-          <h4>Explore</h4>
-          <Link href="/projects">Projects</Link><Link href="/gallery">Gallery</Link><Link href="/forum">Forum</Link><Link href="/events">Events</Link>
+        <div className="max-[768px]:flex max-[768px]:flex-col max-[768px]:items-center">
+          <h4 className="text-[0.95rem] mb-3 text-slate-200">Explore</h4>
+          <div className="flex flex-col [&>a]:block [&>a]:text-sm [&>a]:text-slate-400 [&>a]:no-underline [&>a]:mb-2 [&>a]:hover:text-sky-400 max-[768px]:[&>a]:mb-1.5">
+            <Link href="/projects">Projects</Link>
+            <Link href="/gallery">Gallery</Link>
+            <Link href="/forum">Forum</Link>
+            <Link href="/events">Events</Link>
+          </div>
         </div>
-        <div className="footer-links">
-          <h4>Resources</h4>
-          <Link href="/roboshare">RoboShare</Link><Link href="/resources">Learning</Link><Link href="/newsletter">Newsletter</Link><Link href="/about">About</Link>
+        <div className="max-[768px]:flex max-[768px]:flex-col max-[768px]:items-center">
+          <h4 className="text-[0.95rem] mb-3 text-slate-200">Resources</h4>
+          <div className="flex flex-col [&>a]:block [&>a]:text-sm [&>a]:text-slate-400 [&>a]:no-underline [&>a]:mb-2 [&>a]:hover:text-sky-400 max-[768px]:[&>a]:mb-1.5">
+            <Link href="/roboshare">RoboShare</Link>
+            <Link href="/resources">Learning</Link>
+            <Link href="/newsletter">Newsletter</Link>
+            <Link href="/about">About</Link>
+          </div>
         </div>
       </div>
-      <div className="footer-bottom">
+      <div className="flex justify-between items-center text-center mt-10 pt-5 border-t border-white/[0.06] text-[0.85rem] text-slate-500 max-[768px]:flex-col max-[768px]:gap-2.5 max-[400px]:text-[0.8rem]">
         <p>&copy; {new Date().getFullYear()} Robonity. All rights reserved.</p>
         <p>Author: Aman Choudhary, Anirban Das, Shashank Savarkar, Suyash Srivastav</p>
       </div>

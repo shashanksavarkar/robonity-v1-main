@@ -1,5 +1,4 @@
 @import "../index.css";
-@import "../styles/animations.css";
 @import "tailwindcss";
 
 /* shadcn/ui design tokens, hardcoded to Robonity's existing dark palette
@@ -63,4 +62,21 @@
   --color-text-muted: #9ca3af;
 
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+
+  /* Home page's featured-project node card: scanline sweep + status-dot pulse.
+     Defined here (not a component-level utility) since Tailwind can't express
+     a novel @keyframes purely through utility classes. */
+  --animate-node-scan: node-scan 4s linear infinite;
+  --animate-pulse-ring: pulse-ring 2s infinite;
+}
+
+@keyframes node-scan {
+  0% { top: -10%; }
+  100% { top: 110%; }
+}
+
+@keyframes pulse-ring {
+  0% { transform: scale(0.8); opacity: 0.5; }
+  50% { transform: scale(1.2); opacity: 1; }
+  100% { transform: scale(0.8); opacity: 0.5; }
 }
