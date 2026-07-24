@@ -5,13 +5,13 @@ import { useRouter } from "next/navigation";
 import { useAuth } from "./AuthContext";
 
 export default function ProtectedRoute({ children }) {
-    const { currentUser } = useAuth();
+    const { currentUser, isInitialized } = useAuth();
     const router = useRouter();
 
     useEffect(() => {
-        if (!currentUser) router.replace("/auth");
-    }, [currentUser, router]);
+        if (isInitialized && !currentUser) router.replace("/auth");
+    }, [isInitialized, currentUser, router]);
 
-    if (!currentUser) return null;
+    if (!isInitialized || !currentUser) return null;
     return children;
 }

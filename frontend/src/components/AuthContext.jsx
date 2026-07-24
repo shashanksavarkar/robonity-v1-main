@@ -7,6 +7,10 @@ export const useAuth = () => useContext(AuthContext);
 
 export function AuthProvider({ children }) {
   const [currentUser, setCurrentUser] = useState(null);
+  // Distinguishes "haven't checked localStorage yet" from "checked, no user" —
+  // without it, consumers (e.g. ProtectedRoute) can't tell the difference and
+  // will treat every fresh page load as logged-out before this effect runs.
+  const [isInitialized, setIsInitialized] = useState(false);
 
   useEffect(() => {
     // One-time sync from an external store (localStorage) that doesn't exist during SSR,
@@ -14,6 +18,7 @@ export function AuthProvider({ children }) {
     const storedUser = localStorage.getItem("user");
     // eslint-disable-next-line react-hooks/set-state-in-effect
     if (storedUser) setCurrentUser(JSON.parse(storedUser));
+    setIsInitialized(true);
   }, []);
 
   const logout = () => {
@@ -21,5 +26,5 @@ export function AuthProvider({ children }) {
     setCurrentUser(null);
   };
 
-  return <AuthContext.Provider value={{ currentUser, isAuthenticated: !!currentUser, setCurrentUser, logout }}>{children}</AuthContext.Provider>;
+  return <AuthContext.Provider value={{ currentUser, isAuthenticated: !!currentUser, setCurrentUser, logout, isInitialized }}>{children}</AuthContext.Provider>;
 }

@@ -91,6 +91,7 @@
 .collection-field label {
     position: absolute;
     left: 20px;
+    right: 150px;
     top: 50%;
     transform: translateY(-50%);
     color: #64748b;
@@ -98,6 +99,9 @@
     pointer-events: none;
     transition: all 0.3s ease;
     padding: 0 4px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .collection-field input:focus+label,
