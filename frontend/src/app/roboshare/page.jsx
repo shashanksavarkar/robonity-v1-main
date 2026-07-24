@@ -106,7 +106,7 @@ export default function RoboShare() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-5 pt-[90px] relative overflow-hidden">
+    <div className="min-h-screen flex justify-center p-5 pt-24 md:pt-32 relative overflow-hidden">
       <div className="absolute inset-0 z-0 bg-grid-pattern opacity-30 pointer-events-none"></div>
 
       <motion.div
