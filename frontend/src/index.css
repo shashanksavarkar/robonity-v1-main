@@ -27,10 +27,19 @@
   }
 }
 
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+/* Layered — see the note on the `a` rule below. Left unlayered, this silently
+   zeroed out every Tailwind padding/margin utility site-wide (border/color
+   utilities were unaffected since nothing here competes with them). */
+@layer base {
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    /* Ambient smoothing for hover states that don't declare their own
+       transition — matches the old styles/animations.css behavior. */
+    transition: background-color 0.25s ease, color 0.25s ease,
+      border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+  }
 }
 
 body {
@@ -59,9 +68,15 @@ html {
   scrollbar-width: none;
 }
 
-a {
-  color: var(--primary-color);
-  text-decoration: none;
+/* Layered (not left as a plain unlayered rule) so Tailwind utility classes
+   (e.g. text-white on a <Link>) can actually override it — CSS cascade layers
+   make ANY unlayered rule win over ANY layered rule regardless of specificity,
+   which silently broke text-color utilities on anchors/Links site-wide. */
+@layer base {
+  a {
+    color: var(--primary-color);
+    text-decoration: none;
+  }
 }
 
 ul {

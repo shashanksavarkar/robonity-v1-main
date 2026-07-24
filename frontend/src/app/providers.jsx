@@ -36,9 +36,13 @@ function AnimatedPage({ children }) {
   );
 }
 
+// Routes that are static per an explicit request — no page-enter/exit transition.
+const STATIC_ROUTES = ["/forum", "/projects", "/gallery"];
+
 function PageShell({ children }) {
   const pathname = usePathname();
   const isHome = pathname === "/";
+  const isStaticRoute = STATIC_ROUTES.some((route) => pathname.startsWith(route));
   const showGrid = !isHome;
 
   if (isHome) {
@@ -48,6 +52,16 @@ function PageShell({ children }) {
         <main className="main-content home-layout" style={{ padding: 0, maxWidth: "100%", width: "100%", marginTop: 0 }}>
           {children}
         </main>
+        <Footer />
+      </div>
+    );
+  }
+
+  if (isStaticRoute) {
+    return (
+      <div className={`app-container ${showGrid ? "bg-grid-pattern" : ""}`} style={{ overflowX: "hidden" }}>
+        <Navbar />
+        <LayoutWrapper>{children}</LayoutWrapper>
         <Footer />
       </div>
     );
