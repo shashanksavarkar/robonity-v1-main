@@ -102,7 +102,7 @@ export default function AuthClient() {
                   required
                   className="peer w-full p-4 bg-slate-800/50 border border-white/10 rounded-xl text-white outline-none focus:bg-slate-800/80 focus:border-cyan-500 focus:shadow-[0_0_15px_rgba(0,198,255,0.2)] transition-all placeholder-transparent"
                 />
-                <label className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none transition-all peer-focus:top-0 peer-focus:text-xs peer-focus:text-cyan-500 peer-focus:bg-slate-900 peer-focus:px-1 peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-cyan-500 peer-not-placeholder-shown:bg-slate-900 peer-not-placeholder-shown:px-1">Display Name</label>
+                <label className={`absolute left-5 text-slate-400 text-sm pointer-events-none transition-all peer-focus:top-0 peer-focus:text-xs peer-focus:text-cyan-500 peer-focus:bg-slate-900 peer-focus:px-1 ${displayName ? "top-0 text-xs text-cyan-500 bg-slate-900 px-1" : "top-1/2 -translate-y-1/2"}`}>Display Name</label>
               </div>
             )}
           </AnimatePresence>
@@ -116,7 +116,7 @@ export default function AuthClient() {
               required
               className="peer w-full p-4 bg-slate-800/50 border border-white/10 rounded-xl text-white outline-none focus:bg-slate-800/80 focus:border-cyan-500 focus:shadow-[0_0_15px_rgba(0,198,255,0.2)] transition-all placeholder-transparent"
             />
-            <label className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none transition-all peer-focus:top-0 peer-focus:text-xs peer-focus:text-cyan-500 peer-focus:bg-slate-900 peer-focus:px-1 peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-cyan-500 peer-not-placeholder-shown:bg-slate-900 peer-not-placeholder-shown:px-1">Email Address</label>
+            <label className={`absolute left-5 text-slate-400 text-sm pointer-events-none transition-all peer-focus:top-0 peer-focus:text-xs peer-focus:text-cyan-500 peer-focus:bg-slate-900 peer-focus:px-1 ${email ? "top-0 text-xs text-cyan-500 bg-slate-900 px-1" : "top-1/2 -translate-y-1/2"}`}>Email Address</label>
           </div>
 
           <div className="relative w-full">
@@ -129,7 +129,7 @@ export default function AuthClient() {
               minLength={6}
               className="peer w-full p-4 bg-slate-800/50 border border-white/10 rounded-xl text-white outline-none focus:bg-slate-800/80 focus:border-cyan-500 focus:shadow-[0_0_15px_rgba(0,198,255,0.2)] transition-all placeholder-transparent"
             />
-            <label className="absolute left-5 top-1/2 -translate-y-1/2 text-slate-400 text-sm pointer-events-none transition-all peer-focus:top-0 peer-focus:text-xs peer-focus:text-cyan-500 peer-focus:bg-slate-900 peer-focus:px-1 peer-not-placeholder-shown:top-0 peer-not-placeholder-shown:text-xs peer-not-placeholder-shown:text-cyan-500 peer-not-placeholder-shown:bg-slate-900 peer-not-placeholder-shown:px-1">Password</label>
+            <label className={`absolute left-5 text-slate-400 text-sm pointer-events-none transition-all peer-focus:top-0 peer-focus:text-xs peer-focus:text-cyan-500 peer-focus:bg-slate-900 peer-focus:px-1 ${password ? "top-0 text-xs text-cyan-500 bg-slate-900 px-1" : "top-1/2 -translate-y-1/2"}`}>Password</label>
           </div>
 
           <motion.button
