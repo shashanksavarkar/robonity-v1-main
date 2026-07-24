@@ -12,9 +12,9 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     environment: production
-    defaults:
-      run:
-        working-directory: frontend
+    # Run at the repo root, not inside frontend/ — the Vercel project's own
+    # Root Directory setting is already "frontend", so cd-ing there first
+    # doubles the path (frontend/frontend/package.json).
     steps:
       - name: Checkout
         uses: actions/checkout@v4
