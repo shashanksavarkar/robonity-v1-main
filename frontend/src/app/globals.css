@@ -64,3 +64,24 @@
 
   --font-sans: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
 }
+
+/* Two small keyframe animations that aren't practical as one-off utility
+   classes (used by the Home page's project "node" cards). */
+@layer utilities {
+  @keyframes node-scan {
+    0% { top: -10%; }
+    100% { top: 110%; }
+  }
+  .animate-node-scan {
+    animation: node-scan 4s linear infinite;
+  }
+
+  @keyframes pulse-ring {
+    0% { transform: scale(0.8); opacity: 0.5; }
+    50% { transform: scale(1.2); opacity: 1; }
+    100% { transform: scale(0.8); opacity: 0.5; }
+  }
+  .animate-pulse-ring {
+    animation: pulse-ring 2s infinite;
+  }
+}
