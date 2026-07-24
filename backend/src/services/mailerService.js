@@ -1,31 +1,21 @@
-import nodemailer from 'nodemailer';
+import sgMail from '@sendgrid/mail';
 
-let transporter;
+let initialized = false;
 
-const getTransporter = () => {
-    if (!transporter) {
-        transporter = nodemailer.createTransport({
-            service: 'gmail',
-            auth: {
-                user: process.env.GMAIL_USER,
-                pass: process.env.GMAIL_APP_PASSWORD,
-            },
-            connectionTimeout: 10000,
-            greetingTimeout: 10000,
-            socketTimeout: 10000,
-        });
+const getClient = () => {
+    if (!initialized) {
+        sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+        initialized = true;
     }
-    return transporter;
+    return sgMail;
 };
 
 export const sendEmail = async ({ to, subject, text, html }) => {
-    await getTransporter().sendMail({
-        from: `"Robonity RoboShare" <${process.env.GMAIL_USER}>`,
+    await getClient().send({
+        from: { email: process.env.GMAIL_USER, name: 'Robonity RoboShare' },
         to,
         subject,
         text,
         html,
     });
 };
-
-export default getTransporter;
