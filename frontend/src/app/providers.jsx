@@ -1,19 +1,14 @@
 'use client';
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-import Lenis from "lenis";
 import { Toaster } from "react-hot-toast";
 import { AuthProvider } from "../components/AuthContext";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import LayoutWrapper from "../components/LayoutWrapper";
-
-gsap.registerPlugin(ScrollTrigger);
 
 const pageVariants = {
   initial: { opacity: 0, y: 20 },
@@ -82,33 +77,6 @@ function PageShell({ children }) {
 
 export default function Providers({ children }) {
   const [queryClient] = useState(() => new QueryClient());
-
-  useEffect(() => {
-    const lenis = new Lenis({
-      duration: 1.2,
-      easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-      direction: "vertical",
-      gestureDirection: "vertical",
-      smooth: true,
-      mouseMultiplier: 1,
-      smoothTouch: false,
-      touchMultiplier: 2,
-    });
-
-    lenis.on("scroll", ScrollTrigger.update);
-
-    const update = (time) => {
-      lenis.raf(time * 1000);
-    };
-
-    gsap.ticker.add(update);
-    gsap.ticker.lagSmoothing(0);
-
-    return () => {
-      gsap.ticker.remove(update);
-      lenis.destroy();
-    };
-  }, []);
 
   return (
     <QueryClientProvider client={queryClient}>
